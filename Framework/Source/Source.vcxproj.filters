@@ -26,9 +26,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Layer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TensorND.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

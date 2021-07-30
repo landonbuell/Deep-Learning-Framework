@@ -9,6 +9,8 @@
 class Layer
 {
 
+#pragma region Feilds
+
 private: /* Private Interface */
 
 	std::string _name;
@@ -18,24 +20,28 @@ private: /* Private Interface */
 	std::vector<int> _shapeOutput;
 
 	int _batchSize;
-	bool _trainable;
 	bool _initialized;
 
 	bool _useWeights0;
-	TensorND<float>* _weights0;
-
 	bool _useWeights1;
+
+	bool _trainWeights0;
+	bool _trainWeights1;
+
+	TensorND<float>* _weights0;	
 	TensorND<float>* _weights1;
 
 	bool _useActivations;
 	TensorND<float>* _activations;
 
-public:
+#pragma endregion
 
 #pragma region Constructors and Destructors
 
+public:
+
 	// Constructor for Layer Instance
-	Layer();
+	Layer(std::string name);
 
 	// Copy-Constructor for Layer Instance
 	Layer(const Layer& rhs);
@@ -45,9 +51,11 @@ public:
 
 #pragma endregion
 
-protected:
+
 
 #pragma region Helper Functions
+
+protected:
 
 	// Common-Code for Object Construction
 	void constructCode();
@@ -60,10 +68,9 @@ protected:
 
 #pragma endregion
 
+#pragma region Getter and Setter Methods
 
 public:
-
-#pragma region Getter Methods
 
 	std::string getName() const;
 	std::string getType() const;
@@ -72,21 +79,51 @@ public:
 	std::vector<int> getShapeOutput() const;
 
 	int getBatchSize() const;
-	bool getIsTrainable() const;
-	bool getIsInit() const;
+	bool getIsInitialized() const;
 
-	bool getUseBias() const;
-	TensorND<float>* getBiases() const;
-
+	bool getUseBaises() const;
 	bool getUseWeights() const;
+
+	bool getTrainBaises() const;
+	bool getTrainWeights() const;
+
+	TensorND<float>* getBaises() const;
 	TensorND<float>* getWeights() const;
 
 	bool getUseActivations() const;
 	TensorND<float>* getActivations() const;
 
+protected:
+
+	void setName(std::string name);
+	void setType(std::string type);
+
+	void setUseBiases(bool useBias);
+	void setUseWeights(bool useWeights);
+
+	void setTrainBiases(bool trainBias);
+	void setTrainWeights(bool trainWeghts);
+
+
+	void setUseActivations(bool useActivs);
+	void setActivations(bool newActivs);
+
+public:
+
+	bool setShapeInput(std::vector<int> newShape);
+	bool setShapeOutput(std::vector<int> newShape);
+
+	void setBatchSize(int newSize);
+	void setIsInitialized(bool init);
+
+	bool setBiases(TensorND<float>* newBias);
+	bool setWeights(TensorND<float>* newWeights);
+
 #pragma endregion
 
 #pragma region Execution Methods
+
+public:
 
 	// Construct Layer
 	bool buildLayer();
@@ -106,17 +143,10 @@ public:
 	// Update Weight Vector
 	void updateWeights(TensorND<float>* diffWeight, float rate);
 
-#pragma endregion
-
-protected:
-
-#pragma region Setter Methods
+	// Describe the model at a chosen verbosity level
+	void describe(int level);
 
 #pragma endregion
-
-
-
-
 
 };
 

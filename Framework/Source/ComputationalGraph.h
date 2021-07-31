@@ -6,5 +6,7 @@
 
 class ComputationalGraph
 {
+	// A Computational Graph Maps a set of inputs to a set of outputs
+
 };
 

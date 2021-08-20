@@ -148,7 +148,7 @@
     <ClInclude Include="ComputationalGraph.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="TensorND.h" />
+    <ClInclude Include="Tensor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

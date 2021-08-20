@@ -1,4 +1,6 @@
-﻿  Layer.cpp
-  Main.cpp
-  Generating Code...
-  Source.vcxproj -> C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\Framework\Debug\Source.exe
+﻿  Main.cpp
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Framework\Source\Tensor.h(246,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Framework\Source\Tensor.h(243): message : while compiling class template member function 'int Tensor<float>::vectorProduct(const std::vector<int,std::allocator<int>> &)'
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Framework\Source\Tensor.h(256): message : see reference to function template instantiation 'int Tensor<float>::vectorProduct(const std::vector<int,std::allocator<int>> &)' being compiled
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Framework\Source\Main.cpp(28): message : see reference to class template instantiation 'Tensor<float>' being compiled
+  Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Framework\Debug\Source.exe

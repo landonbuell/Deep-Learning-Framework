@@ -24,13 +24,13 @@ protected:
 	int _size;
 	dType* _arr;
 
-public:
-
 #pragma region Constructors and Destructors
+
+public:
 
 	Tensor(const int size)
 	{
-		// Constructor for ND Array (given Size)
+		// Constructor for Tensor (given size)
 		_shape = std::vector<int>();
 		_shape.push_back(size);
 
@@ -40,7 +40,7 @@ public:
 
 	Tensor(const int size, dType val)
 	{
-		// Constructor for ND Array (given value)
+		// Constructor for Tensor (given size + value)
 		_shape = std::vector<int>();
 		_shape.push_back(size);
 
@@ -52,7 +52,7 @@ public:
 
 	Tensor(const int size, dType* arr)
 	{
-		// Constructor for ND Array (basic)
+		// Constructor for Tensor (give size + array)
 		_shape = std::vector<int>();
 		_shape.push_back(size);
 		constructCode(arr, size);
@@ -60,7 +60,7 @@ public:
 
 	Tensor(const int size, dType* arr, std::vector<int>& shape)
 	{
-		// Constructor for ND Array (given shape)
+		// Constructor for Tensor (given shape)
 		_shape = std::vector<int>(shape);
 		constructCode(arr, size);
 	}
@@ -68,14 +68,14 @@ public:
 
 	Tensor(const Tensor<dType>& rhs)
 	{
-		// Constructor for ND Array (Copy)
+		// Copy Constructor for Tensor
 		_shape = std::vector<int>(rhs._shape);
 		constructCode(rhs._arr, rhs._size);
 	}
 
 	Tensor& operator=(const Tensor<dType>& rhs)
 	{
-		// Copy Assignment Operator for ND Array
+		// Copy Assignment Operator for Tensor
 		if (this == rhs)
 			return this;
 
@@ -87,7 +87,7 @@ public:
 
 	Tensor& operator=(const Tensor<dType>&& rhs)
 	{
-		// Move Assignment Operator for ND Array
+		// Move Assignment Operator for Tensor
 		if (this == rhs)
 			return this;
 
@@ -99,7 +99,7 @@ public:
 
 	~Tensor()
 	{
-		// Destructor for ND Array Instance
+		// Destructor for Tensor Instance
 		destructCode();
 	}
 
@@ -107,13 +107,15 @@ public:
 
 #pragma region Getters and Setters
 
+public:
+
 	std::vector<int> getShape() const
 	{
 		// Return the Shape of this Array
 		return _shape;
 	}
 
-	bool setShape(const std::vector<int>& newShape)
+	bool virtual setShape(const std::vector<int>& newShape)
 	{
 		bool validShape = testReshape(newShape);
 		if (validShape == true)
@@ -151,9 +153,9 @@ public:
 
 #pragma endregion
 
-protected:
-
 #pragma region  Helper Functions
+
+protected:
 
 	void constructCode(dType* arr, const int size)
 	{
@@ -219,12 +221,16 @@ protected:
 	int fromSlice(const std::vector<int>& idxVec)
 	{
 		// Compute Indexer from vector
-		// Handle Special Case - single Index
+		
 		int idxSize = idxVec.size();
+		// Handle Special Case - single Index
 		if (idxSize == 1)
 			return this[idxVec[0]];
+		// Handle Special Case - No Index given
 		else if (idxSize == 0)
-			throw "Indexer Must have more than 0 elementes";
+			throw "Indexer must have more than 0 elementes";
+		else if (idxSize > getRank)
+			throw "Indexer size must not exceed rank";
 		else
 		{
 			// More than One index
@@ -267,9 +273,9 @@ protected:
 
 #pragma endregion
 
-public:
-
 #pragma region Utilties
+
+public:
 
 	bool virtual flatten()
 	{
@@ -277,6 +283,26 @@ public:
 		std::vector<int> newShape;
 		newShape.push_back(_size);
 		return setShape(newShape);
+	}
+
+	bool virtual squeeze()
+	{
+		// Remove any Axis w/ size == 1
+		std::vector<int> newShape;
+		for (int i = 0; i < getRank(); i++)
+		{
+			if (_shape[i] != 1)
+				newShape.push_back(_shape[i]);
+		}
+		// Set as new Shape		
+		return setShape(newShape);
+	}
+
+	bool virtual addAxis()
+	{
+		// Add Axis of Shape 1 to Tensor
+		_shape.push_back(1);
+		return setShape(_shape);
 	}
 
 	void describe(std::ostream& out)
@@ -290,10 +316,11 @@ public:
 		out << std::endl;
 	}
 
-
 #pragma endregion
 
 #pragma region Operator Overloads
+
+public:
 
 	void printData(std::ostream& out)
 	{
@@ -321,8 +348,6 @@ public:
 		int index = fromSlice(idxVect);
 		return _arr[index];
 	}
-
-
 
 #pragma endregion
 

@@ -5,6 +5,8 @@
 #include<vector>
 
 #include "Tensor.h"
+#include "Tensor1D.h"
+#include "Tensor2D.h"
 
 class Layer
 {
@@ -28,11 +30,11 @@ private: /* Private Interface */
 	bool _trainWeights0;
 	bool _trainWeights1;
 
-	//Tensor<float>* _weights0;	
-	//Tensor<float>* _weights1;
+	Tensor<float>* _weights0;	
+	Tensor<float>* _weights1;
 
-	//bool _useActivations;
-	//Tensor<float>* _activations;
+	bool _useActivations;
+	Tensor<float>* _activations;
 
 #pragma endregion
 

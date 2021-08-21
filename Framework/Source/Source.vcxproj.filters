@@ -49,5 +49,11 @@
     <ClInclude Include="Model.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="Tensor1D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor2D.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

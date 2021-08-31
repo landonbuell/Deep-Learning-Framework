@@ -19,4 +19,21 @@
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tensor.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor1D.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor2D.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor3D.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor4D.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

@@ -9,7 +9,11 @@
 * 
 */
 
+#include <iostream>
+#include <string>
 
+#include "Tensor.h"
+#include "Tensor1D.h"
 
 
 int main(int argc, char** argv)

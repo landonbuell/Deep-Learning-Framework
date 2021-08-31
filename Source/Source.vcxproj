@@ -141,6 +141,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tensor.h" />
+    <ClInclude Include="Tensor1D.h" />
+    <ClInclude Include="Tensor2D.h" />
+    <ClInclude Include="Tensor3D.h" />
+    <ClInclude Include="Tensor4D.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

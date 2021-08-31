@@ -4,7 +4,9 @@
 #include<string>
 #include<vector>
 
-#include "TensorND.h"
+#include "Tensor.h"
+#include "Tensor1D.h"
+#include "Tensor2D.h"
 
 class Layer
 {
@@ -28,11 +30,11 @@ private: /* Private Interface */
 	bool _trainWeights0;
 	bool _trainWeights1;
 
-	TensorND<float>* _weights0;	
-	TensorND<float>* _weights1;
+	Tensor<float>* _weights0;	
+	Tensor<float>* _weights1;
 
 	bool _useActivations;
-	TensorND<float>* _activations;
+	Tensor<float>* _activations;
 
 #pragma endregion
 
@@ -87,11 +89,11 @@ public:
 	bool getTrainBaises() const;
 	bool getTrainWeights() const;
 
-	TensorND<float>* getBaises() const;
-	TensorND<float>* getWeights() const;
+	Tensor<float>* getBaises() const;
+	Tensor<float>* getWeights() const;
 
 	bool getUseActivations() const;
-	TensorND<float>* getActivations() const;
+	Tensor<float>* getActivations() const;
 
 protected:
 
@@ -116,8 +118,8 @@ public:
 	void setBatchSize(int newSize);
 	void setIsInitialized(bool init);
 
-	bool setBiases(TensorND<float>* newBias);
-	bool setWeights(TensorND<float>* newWeights);
+	bool setBiases(Tensor<float>* newBias);
+	bool setWeights(Tensor<float>* newWeights);
 
 #pragma endregion
 
@@ -135,13 +137,13 @@ public:
 	void callLayer();
 
 	// Call Forward-Pass on layer
-	void callLayer(TensorND<float>* X);
+	void callLayer(Tensor<float>* X);
 
 	// Update Bias Vector
-	void updateBiases(TensorND<float>* diffBias, float rate);
+	void updateBiases(Tensor<float>* diffBias, float rate);
 
 	// Update Weight Vector
-	void updateWeights(TensorND<float>* diffWeight, float rate);
+	void updateWeights(Tensor<float>* diffWeight, float rate);
 
 	// Describe the model at a chosen verbosity level
 	void describe(int level);

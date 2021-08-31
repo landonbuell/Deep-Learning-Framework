@@ -6,7 +6,7 @@
 
 #include "ComputationalGraph.h"
 #include "Layer.h"
-#include "TensorND.h"
+#include "Tensor.h"
 
 class Model
 {
@@ -60,13 +60,13 @@ protected:
 
 public:
 
-	void Train(TensorND<float>& X, TensorND<float>& Y, int epochs);
+	void Train(Tensor<float>& X, Tensor<float>& Y, int epochs);
 
-	void Predict(TensorND<float>& X);
+	void Predict(Tensor<float>& X);
 
 protected:
 
-	void Call()
+	void Call();
 
 #pragma endregion
 

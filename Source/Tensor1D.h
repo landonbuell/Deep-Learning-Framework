@@ -23,6 +23,10 @@ private:
 
 	dType* _arr;
 
+	friend class Tensor2D;
+	friend class Tensor3D;
+	friend class Tensor4D;
+
 public:
 
 	/* Constructors and Destructors */
@@ -97,6 +101,7 @@ private:
 		_arr = new dType[size];
 		for (int i = 0; i < size; i++)
 		{
+			// Each element is val
 			_arr[i] = val;
 		}
 	}
@@ -107,6 +112,7 @@ private:
 		_arr = new dType[size];
 		for (int i = 0; i < size; i++)
 		{
+			// Copy an Array
 			_arr[i] = arr[i];
 		}
 	}
@@ -119,15 +125,6 @@ private:
 			delete[] _arr;
 			_arr = nullptr;
 		}			
-	}
-
-	bool validateIndex(const int index)
-	{
-		// Return T/F if Index is valid
-		if (index < 0 || index >= this->_size)
-			return false;
-		else
-			return true;
 	}
 
 public:

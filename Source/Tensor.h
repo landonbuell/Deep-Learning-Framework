@@ -14,6 +14,11 @@
 #include<iostream>
 #include<vector>
 
+#include "Tensor1D.h"
+#include "Tensor2D.h"
+#include "Tensor3D.h"
+#include "Tensor4D.h"
+
 template<class dType>
 class Tensor
 {
@@ -57,6 +62,6 @@ public:
 	}
 
 	// Pure virutal getShape() method
-	std::vector<int> getShape() const = 0;
+	virtual std::vector<int> getShape() const = 0;
 
 };

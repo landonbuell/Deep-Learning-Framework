@@ -82,7 +82,7 @@ public:
 
 	/* Getters and Setters */
 
-	std::vector<int> getShape() const
+	override std::vector<int> getShape() const
 	{
 		// Get Shape of Tensor as Vector
 		std::vector<int> result();
@@ -125,6 +125,12 @@ private:
 			delete[] _arr;
 			_arr = nullptr;
 		}			
+	}
+
+	void destructCode()
+	{
+		// Helper Function for Intance Destruction
+
 	}
 
 public:

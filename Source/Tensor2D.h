@@ -22,7 +22,7 @@ class Tensor2D : public Tensor<dType>
 
 private:
 
-	Tensor1D<dType>* _arr;
+	Tensor1D<dType>* _arr;	// Each Entry is a 1D Tensor
 	const int _size1;
 
 	friend class Tensor1D;
@@ -41,16 +41,22 @@ public:
 		constructCode(size0, size1, val);
 	}
 
-	~Tensor2D(const int size0, const int size1, dType** arr)
+	Tensor2D(const int size0, const int size1, dType** arr)
 	{
-		// Destructor for Tensor2D
+		// Constructor for Tensor2D
 		_arr = nullptr;
 		constructCode(size0, size1, arr);
 	}
 
+	~Tensor2D()
+	{
+		// Destructor for Tensor2D instance
+		destructCode();
+	}
+
 	/* Getters and Setters */
 
-	std::vector<int> getShape() const
+	override std::vector<int> getShape() const
 	{
 		// Get Shape of Tensor as Vector
 		std::vector<int> result();
@@ -80,7 +86,7 @@ private:
 		_arr = new Tensor1D<dType>[size0];
 		for (int i = 0; i < size0; i++)
 		{
-			// Each element is a Tensor1D of val
+			// Each element is a Tensor1D of arr[i]
 			_arr[i] = new Tensor1D<dType>(size1, arr[i]);
 		}
 	}

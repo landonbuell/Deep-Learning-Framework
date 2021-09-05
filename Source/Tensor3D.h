@@ -34,10 +34,13 @@ public:
 	/* Constructors and Destructions */
 
 	Tensor3D(const int size0, const int size1, const int size2, dType val)
+		
 	{
 		// Constructor for Tensor3D
 		_arr = nullptr;
 	}
+
+	Tensor
 
 
 private:
@@ -58,8 +61,8 @@ private:
 	void constructCode(const int size0, const int size1, const int size2, dType*** arr)
 	{
 		//Helper Function for Instance Construction
-		_arr = new Tensor2D<dType>[size0];
-		for (int i = 0; i < size0l i++)
+		_arr = new Tensor2D<dType>[this->_size0];
+		for (int i = 0; i < this->_size0l i++)
 		{
 			// Each Element is a Tensor2D of arr[i]
 			_arr[i] = new Tensor2D<dType>(size1, size2, arr[i]);

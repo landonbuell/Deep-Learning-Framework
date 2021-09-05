@@ -24,16 +24,16 @@ class Tensor
 {
 
 protected:
-
-	Tensor(const int size0, const int rank)
-	{
-		// Empty Constructor for Tensor
-		_size0 = size0;
-		_rank = rank;
-	}
 	
 	int _size0;
 	int _rank;
+
+	Tensor(const int size0, const int rank)
+	{
+		// Basic Constructor for Tensor
+		_size0 = size0;
+		_rank = rank;
+	}
 
 	/* Helper Functions */
 
@@ -63,5 +63,18 @@ public:
 
 	// Pure virutal getShape() method
 	virtual std::vector<int> getShape() const = 0;
+
+protected:
+
+	/* Helper Functions */
+
+	// Helper Function for Instance Construction
+	virtual void constructCode(dType val) = 0;
+
+	// Helper Function for Instance Construction
+	virtual void constructCode(dType* val) = 0;
+
+	// Helper Function for Instance Destruction
+	virtual void destructCode() = 0;
 
 };

@@ -14,6 +14,9 @@
 #include<iostream>
 
 #include "Tensor.h"
+#include "Tensor2D.h"
+#include "Tensor3D.h"
+#include "Tensor4D.h"
 
 template<class dType>
 class Tensor1D : public Tensor<dType>
@@ -36,7 +39,7 @@ public:
 	{
 		// Constructor for Tensor1D
 		_arr = nullptr;
-		constructCode(size, val);
+		constructCode(val);
 	}
 
 	Tensor1D(const int size, dType* arr) :
@@ -94,43 +97,41 @@ public:
 private:
 
 	/* Helper Functions */
-	
-	void constructCode(const int size, dType val)
+
+	override void constructCode(dType val)
 	{
-		// Helper Function For Instance Construction
-		_arr = new dType[size];
-		for (int i = 0; i < size; i++)
+		// Helper Function for Instance Construction
+		_arr = new dType[this->_size0];
+		for (int i = 0; i < this->_size0; i++)
 		{
-			// Each element is val
+			// Fill Each Entry w/ val
 			_arr[i] = val;
 		}
 	}
 
-	void constructCode(const int size, dType* arr)
+	override void constructCode(dType* arr)
 	{
 		// Helper Function For Instance Construction
-		_arr = new dType[size];
-		for (int i = 0; i < size; i++)
+		_arr = new dType[this->_size0];
+		for (int i = 0; i < this->_size0; i++)
 		{
 			// Copy an Array
 			_arr[i] = arr[i];
 		}
 	}
 
-	void destructCode()
+	override void destructCode()
 	{
 		// Helper Function for Instance Destruction
 		if (_arr != nullptr)
 		{
+			for (int = 0; i < this->_size0; i++)
+			{
+				delete _arr[i];
+			}
 			delete[] _arr;
 			_arr = nullptr;
 		}			
-	}
-
-	void destructCode()
-	{
-		// Helper Function for Intance Destruction
-
 	}
 
 public:

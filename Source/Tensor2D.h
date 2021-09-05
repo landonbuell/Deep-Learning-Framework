@@ -38,14 +38,28 @@ public:
 	{
 		// Constructor for Tensor2D
 		_arr = nullptr;
-		constructCode(size0, size1, val);
+		_size1 = size1;
+		constructCode(val);
 	}
 
-	Tensor2D(const int size0, const int size1, dType** arr)
+
+
+	Tensor2D(const int size0, const int size1, dType* arr) :
+		Tensor(size0, 2)
 	{
 		// Constructor for Tensor2D
 		_arr = nullptr;
-		constructCode(size0, size1, arr);
+		_size1 = size1;
+		constructCode(arr);
+	}
+
+	Tensor2D(const int size0, const int size1, dType** arr) :
+		Tensor(size0, 2)
+	{
+		// Constructor for Tensor2D
+		_arr = nullptr;
+		_size1 = size1;
+		constructCode(arr);
 	}
 
 	~Tensor2D()
@@ -69,22 +83,28 @@ private:
 
 	/* Helper Functions */
 
-	void constructCode(const int size0, const int size1, dType val)
+	override void constructCode(dType val)
 	{
 		// Helper Function For Instance Construction
-		_arr = new Tensor1D<dType>[size0];
-		for (int i = 0; i < size0; i++)
+		_arr = new Tensor1D<dType>[this->_size0];
+		for (int i = 0; i < this->_size0; i++)
 		{
 			// Each element is a Tensor1D of val
-			_arr[i] = new Tensor1D<dType>(size1,val);
+			_arr[i] = new Tensor1D<dType>(_size1,val);
 		}
 	}
 
-	void constructCode(const int size0, const int size1, dType** arr)
+	override void constructCode(dType* arr)
+	{
+		// Helper Function for Instance Construction
+		throw "Not Implemented";
+	}
+
+	void constructCode(dType** arr)
 	{
 		// Helper Function For Instance Construction
 		_arr = new Tensor1D<dType>[size0];
-		for (int i = 0; i < size0; i++)
+		for (int i = 0; i < this->_size0; i++)
 		{
 			// Each element is a Tensor1D of arr[i]
 			_arr[i] = new Tensor1D<dType>(size1, arr[i]);
@@ -97,7 +117,7 @@ private:
 		if (_arr != nullptr)
 		{
 			// Delete Each Tensor1D
-			for (int i = 0; i < _size)
+			for (int i = 0; i < this->_size0)
 			{
 				delete _arr[i];
 			}

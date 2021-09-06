@@ -1,2 +1,10 @@
 ﻿  main.cpp
-  Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\x64\Debug\Source.exe
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor4D.h(24,31): error C2143: syntax error: missing ',' before '<'
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor4D.h(27): message : see reference to class template instantiation 'Tensor4D<DATA_TYPE>' being compiled
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor3D.h(22,31): error C2143: syntax error: missing ',' before '<'
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor3D.h(25): message : see reference to class template instantiation 'Tensor3D<DATA_TYPE>' being compiled
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor2D.h(22,31): error C2143: syntax error: missing ',' before '<'
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor2D.h(25): message : see reference to class template instantiation 'Tensor2D<DATA_TYPE>' being compiled
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor1D.h(22,32): error C2143: syntax error: missing ',' before '<'
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor1D.h(25): message : see reference to class template instantiation 'Tensor1D<DATA_TYPE>' being compiled
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor1D.h(22,1): error C2518: keyword 'class' is invalid in a base class list; expected a class name

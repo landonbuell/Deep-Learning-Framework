@@ -16,6 +16,9 @@
     <Filter Include="Inc\Mathematics">
       <UniqueIdentifier>{30fd29e4-84c4-4cdf-b2ba-0396870e2962}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Mathematics">
+      <UniqueIdentifier>{07afce7c-3365-472f-bd00-a79e344cc3f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tensor.h">
@@ -36,5 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tensor.cpp">
+      <Filter>Src\Mathematics</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

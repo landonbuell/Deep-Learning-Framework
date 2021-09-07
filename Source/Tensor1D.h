@@ -3,7 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
-* File:				Tensor1D.cpp
+* File:				Tensor1D.h
 * Author:			Landon Buell
 * Date:				August 2021
 *
@@ -20,5 +20,9 @@
 
 class Tensor1D : public Tensor
 {
+
+public:
+
+	float& operator[] (const int index);
 
 };

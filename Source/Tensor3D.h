@@ -3,7 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
-* File:				Tensor3D.cpp
+* File:				Tensor3D.h
 * Author:			Landon Buell
 * Date:				August 2021
 *

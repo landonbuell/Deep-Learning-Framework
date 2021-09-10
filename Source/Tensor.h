@@ -70,7 +70,7 @@ protected:
 	virtual bool validateAccess(const int& index);
 
 	// Validate Index
-	virtual bool validateIndex(const int& index);
+	virtual bool validateIndex(const int& index, const int& axis);
 
 	// Helper Constructor
 	virtual void constructCode(float val);

@@ -125,22 +125,30 @@ bool Tensor::validateAccess(const int& index)
 	}
 }
 
-bool Tensor::validateIndex(const int& index)
+bool Tensor::validateIndex(const int& index, const int& axis)
 {
 	// Validate Index
-	if (_data == nullptr)
+	if (axis < 0 || axis >= getRank())
+	{
+		// Axis index too Big
+		std::string errMsg;
+		errMsg += "Tensor::validateIndex(const int& const int&)";
+		errMsg += " - axis must be > 0 and < getRank()";
+		throw errMsg;
+	}
+	else if (_data == nullptr)
 	{
 		// Don't Access Nullptr
 		std::string errMsg;
-		errMsg += "Tensor::validateIndex(const int)";
+		errMsg += "Tensor::validateIndex(const int&, const int &)";
 		errMsg += " - member _data is nullptr";
 		throw errMsg;
 	}
-	else if (index < 0 || index >= _shape[0])
+	else if (index < 0 || index >= _shape[axis])
 	{
 		// Over or Under indexed
 		std::string errMsg;
-		errMsg += "Tensor::validateIndex(const int)";
+		errMsg += "Tensor::validateIndex(const int&, const int&)";
 		errMsg += " - Index is out of bounds";
 		throw errMsg;
 	}
@@ -203,28 +211,38 @@ float& Tensor::operator[] (const int& index)
 
 float& Tensor::operator() (const int ii)
 {
-	// 1D Access operator
+	// 1D Access operator	
+	validateIndex(ii, 0);
 	const int index = ii;
-	return this->operator[](index);
+	return _data[index];
 }
 
 float& Tensor::operator() (const int ii, const int jj)
 {
-	// 1D Access operator
-	const int index = ii * jj;
+	// 2D Access operator
+	validateIndex(ii, 0);
+	validateIndex(jj, 1);
+	const int index = (ii * _shape[0]) +  jj;
 	return this->operator[](index);
 }
 
 float& Tensor::operator() (const int ii, const int jj, const int kk)
 {
-	// 1D Access operator
-	const int index = ii * jj * kk;
+	// 3D Access operator
+	validateIndex(ii, 0);
+	validateIndex(jj, 1);
+	validateIndex(kk, 2);
+	const int index = (ii * _shape[0]) + (jj * _shape[1]) + kk;
 	return this->operator[](index);
 }
 
 float& Tensor::operator() (const int ii, const int jj, const int kk, const int ll)
 {
-	// 1D Access operator
+	// 4D Access operator
+	validateIndex(ii, 0);
+	validateIndex(jj, 1);
+	validateIndex(kk, 2);
+	validateIndex(ll, 3);
 	const int index = ii * jj * kk *ll;
 	return this->operator[](index);
 }

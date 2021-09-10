@@ -86,4 +86,20 @@ protected:
 	// Direct Index Index operator
 	float& operator[] (const int& index);
 
+public:
+
+	/* Operator Overloads */
+
+	// 1D Access operator
+	virtual float& operator() (const int ii);
+
+	// 2D Access operator
+	virtual float& operator() (const int ii, const int jj);
+
+	// 3D Access operator 
+	virtual float& operator() (const int ii, const int jj, const int kk);
+
+	// 4D Access operator
+	virtual float& operator() (const int ii, const int jj, const int kk, const int ll);
+
 };

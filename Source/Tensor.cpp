@@ -26,7 +26,6 @@ Tensor::Tensor(const int size, float val)
 {
 	// Constructor given value
 	_data = nullptr;
-	_shape.push_back(size);
 	constructCode(val);
 }
 
@@ -34,7 +33,6 @@ Tensor::Tensor(const int size, float* arr)
 {
 	// Constructor given Array
 	_data = nullptr;
-	_shape.push_back(size);
 	constructCode(arr);
 }
 
@@ -185,13 +183,15 @@ void Tensor::destructCode()
 	}
 }
 
+/* Operator Overloads */
+
 float& Tensor::operator[] (const int& index)
 {
 	// Direct Index Access Operator
 	if (validateAccess(index) == true)
 	{
 		// Index is valid
-		return _data[index];
+		return (_data[index]);
 	}
 	else
 	{
@@ -199,4 +199,32 @@ float& Tensor::operator[] (const int& index)
 		throw "Invalid Access!";
 	}
 
+}
+
+float& Tensor::operator() (const int ii)
+{
+	// 1D Access operator
+	const int index = ii;
+	return this->operator[](index);
+}
+
+float& Tensor::operator() (const int ii, const int jj)
+{
+	// 1D Access operator
+	const int index = ii * jj;
+	return this->operator[](index);
+}
+
+float& Tensor::operator() (const int ii, const int jj, const int kk)
+{
+	// 1D Access operator
+	const int index = ii * jj * kk;
+	return this->operator[](index);
+}
+
+float& Tensor::operator() (const int ii, const int jj, const int kk, const int ll)
+{
+	// 1D Access operator
+	const int index = ii * jj * kk *ll;
+	return this->operator[](index);
 }

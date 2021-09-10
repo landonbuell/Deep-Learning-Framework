@@ -3,6 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
+* Namespace:		Mathematics
 * File:				Tensor.cpp
 * Author:			Landon Buell
 * Date:				August 2021
@@ -11,6 +12,7 @@
 
 #include<iostream>
 #include<vector>
+#include<string>
 
 #include "Tensor.h"
 #include "Tensor1D.h"
@@ -91,6 +93,7 @@ const int Tensor::getSize() const
 	int size = 1;
 	for (int i = 0; i < _shape.size(); i++)
 	{
+		// Compute Total Size
 		size = size * _shape[i];
 	}
 	return (size);
@@ -98,37 +101,56 @@ const int Tensor::getSize() const
 
 /* Helper Functions */
 
-bool Tensor::validateAccess(const int index)
+bool Tensor::validateAccess(const int& index)
 {
 	// Validate Direct Access
-	const int totalSize = getSize();
 	if (_data == nullptr)
-		return false;
-	else if (index < 0 || index >= totalSize)
-		return false;
+	{
+		// Don't Access Nullptr
+		std::string errMsg;
+		errMsg += "Tensor::validateIndex(const int)";
+		errMsg += " - member _data is nullptr";
+		throw errMsg;
+	}
+	else if (index < 0 || index >= getSize())
+	{
+		// Over or Under indexed
+		std::string errMsg;
+		errMsg += "Tensor::validateIndex(const int)";
+		errMsg += " - Index is out of bounds";
+		throw errMsg;
+	}
 	else
+	{
+		// No Index Issues
 		return true;
+	}
 }
 
-bool Tensor::validateIndex(const int index)
+bool Tensor::validateIndex(const int& index)
 {
 	// Validate Index
 	if (_data == nullptr)
-		return false;
+	{
+		// Don't Access Nullptr
+		std::string errMsg;
+		errMsg += "Tensor::validateIndex(const int)";
+		errMsg += " - member _data is nullptr";
+		throw errMsg;
+	}
 	else if (index < 0 || index >= _shape[0])
-		return false;
+	{
+		// Over or Under indexed
+		std::string errMsg;
+		errMsg += "Tensor::validateIndex(const int)";
+		errMsg += " - Index is out of bounds";
+		throw errMsg;
+	}
 	else
+	{
+		// No Index Issues
 		return true;
-}
-
-float& Tensor::item(const int index)
-{
-	// Direct Access
-	if (validateAccess(index) == true)
-		return _data[index];
-	else
-		throw "Could not acces element";
-
+	}	
 }
 
 void Tensor::constructCode(float val)
@@ -136,6 +158,7 @@ void Tensor::constructCode(float val)
 	// Helper Constructor
 	const int totalSize = getSize();
 	_data = new float[totalSize];
+	// Copy value into each element _data
 	for (int i = 0; i < totalSize; i++)
 		_data[i] = val;
 	return;
@@ -146,6 +169,7 @@ void Tensor::constructCode(float* arr)
 	// Helper Constructor
 	const int totalSize = getSize();
 	_data = new float[totalSize];
+	// Copy contents of arr into data
 	for (int i = 0; i < totalSize; i++)
 		_data[i] = arr[i];
 	return;
@@ -159,4 +183,20 @@ void Tensor::destructCode()
 		delete[] _data;
 		_data = nullptr;
 	}
+}
+
+float& Tensor::operator[] (const int& index)
+{
+	// Direct Index Access Operator
+	if (validateAccess(index) == true)
+	{
+		// Index is valid
+		return _data[index];
+	}
+	else
+	{
+		// Index is invalid
+		throw "Invalid Access!";
+	}
+
 }

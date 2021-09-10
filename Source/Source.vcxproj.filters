@@ -22,24 +22,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tensor.h">
-      <Filter>Inc</Filter>
+      <Filter>Inc\Mathematics</Filter>
     </ClInclude>
     <ClInclude Include="Tensor1D.h">
-      <Filter>Inc</Filter>
+      <Filter>Inc\Mathematics</Filter>
     </ClInclude>
     <ClInclude Include="Tensor2D.h">
-      <Filter>Inc</Filter>
+      <Filter>Inc\Mathematics</Filter>
     </ClInclude>
     <ClInclude Include="Tensor3D.h">
-      <Filter>Inc</Filter>
+      <Filter>Inc\Mathematics</Filter>
     </ClInclude>
     <ClInclude Include="Tensor4D.h">
-      <Filter>Inc</Filter>
+      <Filter>Inc\Mathematics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tensor.cpp">
+      <Filter>Src\Mathematics</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor1D.cpp">
       <Filter>Src\Mathematics</Filter>
     </ClCompile>
   </ItemGroup>

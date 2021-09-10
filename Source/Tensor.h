@@ -3,6 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
+* Namespace:		Mathematics
 * File:				Tensor.h
 * Author:			Landon Buell
 * Date:				August 2021
@@ -65,14 +66,11 @@ protected:
 
 	/* Helper Functions */
 
-	// Validate Direct Access
-	bool validateAccess(const int index);
+	// Validate Index
+	virtual bool validateAccess(const int& index);
 
 	// Validate Index
-	virtual bool validateIndex(const int index);
-
-	// Direct Acces
-	float& item(const int index);
+	virtual bool validateIndex(const int& index);
 
 	// Helper Constructor
 	virtual void constructCode(float val);
@@ -83,10 +81,9 @@ protected:
 	// Helper Destructor
 	virtual void destructCode();
 
-public:
-
 	/* Operator Overloads */
 
-
+	// Direct Index Index operator
+	float& operator[] (const int& index);
 
 };

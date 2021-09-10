@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tensor.cpp" />
+    <ClCompile Include="Tensor1D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tensor.h" />

@@ -3,7 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
-* Namespace:		Mathematics
+* Namespace:		Tensors
 * File:				Tensor.cpp
 * Author:			Landon Buell
 * Date:				August 2021
@@ -77,6 +77,34 @@ std::vector<int> Tensor::getShape() const
 {
 	// Get Shape of the Tensor
 	return (_shape);
+}
+
+bool Tensor::setShape(std::vector<int> newShape)
+{
+	// Set the Shape of the Tensor (Must keep rank)
+	if (newShape.size() != getRank())
+	{
+		// Different Ranks - throw Error
+		std::string errMsg;
+		errMsg += "Tensor::setShape( std::vector<int> ) ";
+		errMsg += " - When reShaping, a tensor must retain it's current rank";
+		throw errMsg;
+	}
+	else if (getSize() != getSize(newShape))
+	{
+		// New Sizes do not match
+		std::string errMsg;
+		errMsg += "Tensor::setShape( std::vector<int> ) ";
+		errMsg += " - When reShaping, a tensor must retain it's current rank";
+		throw errMsg;
+	}
+	else
+	{
+		// Otherwise, we're good.
+		//TODO:
+		return true;
+	}
+	
 }
 
 const int Tensor::getRank() const
@@ -157,6 +185,18 @@ bool Tensor::validateIndex(const int& index, const int& axis)
 		// No Index Issues
 		return true;
 	}	
+}
+
+const int Tensor::getSize(std::vector<int>& newShape) const
+{
+	// Get Total Size of new intended shaped Tensor
+	int size = 1;
+	for (int i = 0; i < newShape.size(); i++)
+	{
+		// Compute Total Size
+		size = size * newShape[i];
+	}
+	return (size);
 }
 
 void Tensor::constructCode(float val)

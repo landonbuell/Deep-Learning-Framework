@@ -3,7 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
-* Namespace:		Mathematics
+* Namespace:		Tensors
 * File:				Tensor1D.h
 * Author:			Landon Buell
 * Date:				August 2021

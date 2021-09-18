@@ -3,7 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
-* Namespace:		Mathematics
+* Namespace:		Tensors
 * File:				Tensor.h
 * Author:			Landon Buell
 * Date:				August 2021
@@ -17,6 +17,8 @@
 
 class Tensor
 {
+
+	friend class TensorOperations;
 
 protected:
 
@@ -51,6 +53,9 @@ public:
 	// Get Shape of the Tensor
 	std::vector<int> getShape() const;
 
+	// Set the Shape of the Tensor (Must keep rank)
+	bool setShape(std::vector<int> newShape);
+
 	// Get Rank of the Tensor
 	const int getRank() const;
 
@@ -67,6 +72,9 @@ protected:
 	// Validate Index
 	virtual bool validateIndex(const int& index, const int& axis);
 
+	// Get Total Size of new intended shaped Tensor
+	const int getSize(std::vector<int>& newShape) const;
+
 	// Helper Constructor
 	virtual void constructCode(float val);
 
@@ -78,7 +86,7 @@ protected:
 
 	/* Operator Overloads */
 
-	// Direct Index Index operator
+	// Direct Index operator
 	float& operator[] (const int& index);
 
 public:

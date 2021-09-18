@@ -15,11 +15,6 @@
 #include<iostream>
 #include<vector>
 
-#include "Tensor1D.h"
-#include "Tensor2D.h"
-#include "Tensor3D.h"
-#include "Tensor4D.h"
-
 class Tensor
 {
 
@@ -31,7 +26,7 @@ protected:
 	/* Constructors and Destructors */
 
 	// Constructor given value
-	Tensor(const int size, float val);
+	Tensor(const int size, float val = 0);
 
 	// Constructor given array
 	Tensor(const int size, float* arr);

@@ -21,7 +21,7 @@
 
 /* Constructors and Destructors*/
 
-Tensor1D::Tensor1D(const int size0, float val = 0) : 
+Tensor1D::Tensor1D(const int size0, float val) : 
 	Tensor(size0, val)
 {
 	// Constructor for Tensor1D
@@ -38,7 +38,7 @@ Tensor1D::Tensor1D(const int size0, float* arr) :
 Tensor1D::~Tensor1D()
 {
 	// Destructor for Tensor1D
-	this->destructCode();
+	destructCode();
 }
 
 /* Operator Overloads */

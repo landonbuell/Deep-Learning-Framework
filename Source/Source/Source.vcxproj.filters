@@ -13,5 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Tensors">
+      <UniqueIdentifier>{ebc6bca1-8c93-40a4-b635-e5fc3b10933c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TensorOperations">
+      <UniqueIdentifier>{a4d71de9-049d-4522-9e73-cb18d69b3c0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ComputationalGraphs">
+      <UniqueIdentifier>{976c2551-1b00-40c9-a4bf-02d0871c1ff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers">
+      <UniqueIdentifier>{3bee2d0d-c515-415f-8a2a-05fe31b01f4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

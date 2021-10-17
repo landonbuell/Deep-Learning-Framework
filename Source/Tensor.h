@@ -3,6 +3,7 @@
 * Repository:		Deep-Learning-Framework
 * Solution:			DeepLearningFramework
 * Project:			Source
+* Namespace:		Tensors
 * File:				Tensor.h
 * Author:			Landon Buell
 * Date:				August 2021
@@ -14,13 +15,10 @@
 #include<iostream>
 #include<vector>
 
-#include "Tensor1D.h"
-#include "Tensor2D.h"
-#include "Tensor3D.h"
-#include "Tensor4D.h"
-
 class Tensor
 {
+
+	friend class TensorOperations;
 
 protected:
 
@@ -30,7 +28,7 @@ protected:
 	/* Constructors and Destructors */
 
 	// Constructor given value
-	Tensor(const int size, float val);
+	Tensor(const int size, float val = 0);
 
 	// Constructor given array
 	Tensor(const int size, float* arr);
@@ -55,6 +53,9 @@ public:
 	// Get Shape of the Tensor
 	std::vector<int> getShape() const;
 
+	// Set the Shape of the Tensor (Must keep rank)
+	bool setShape(std::vector<int> newShape);
+
 	// Get Rank of the Tensor
 	const int getRank() const;
 
@@ -65,14 +66,14 @@ protected:
 
 	/* Helper Functions */
 
-	// Validate Direct Access
-	bool validateAccess(const int index);
+	// Validate Index
+	virtual bool validateAccess(const int& index);
 
 	// Validate Index
-	virtual bool validateIndex(const int index);
+	virtual bool validateIndex(const int& index, const int& axis);
 
-	// Direct Acces
-	float& item(const int index);
+	// Get Total Size of new intended shaped Tensor
+	const int getSize(std::vector<int>& newShape) const;
 
 	// Helper Constructor
 	virtual void constructCode(float val);
@@ -83,10 +84,25 @@ protected:
 	// Helper Destructor
 	virtual void destructCode();
 
+	/* Operator Overloads */
+
+	// Direct Index operator
+	float& operator[] (const int& index);
+
 public:
 
 	/* Operator Overloads */
 
+	// 1D Access operator
+	virtual float& operator() (const int ii);
 
+	// 2D Access operator
+	virtual float& operator() (const int ii, const int jj);
+
+	// 3D Access operator 
+	virtual float& operator() (const int ii, const int jj, const int kk);
+
+	// 4D Access operator
+	virtual float& operator() (const int ii, const int jj, const int kk, const int ll);
 
 };

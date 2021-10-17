@@ -9,8 +9,10 @@
 * 
 */
 
+#include <iostream>
+#include <string>
 
-
+#include "Tensor.h"
 
 int main(int argc, char** argv)
 {

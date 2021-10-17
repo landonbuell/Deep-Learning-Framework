@@ -1,0 +1,12 @@
+﻿  main.cpp
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor4D.h(24,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor3D.h(22,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor2D.h(22,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor1D.h(22,1): error C2504: 'Tensor': base class undefined
+  Tensor.cpp
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor4D.h(24,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor3D.h(22,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor2D.h(22,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor1D.h(22,1): error C2504: 'Tensor': base class undefined
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\Source\Tensor.cpp(85,24): warning C4267: 'return': conversion from 'size_t' to 'const int', possible loss of data
+  Generating Code...

@@ -15,6 +15,15 @@
 
 /* Constructors and Destructors */
 
+Tensor::Tensor()
+{
+	// Constructor for Tensor class
+	_data = nullptr;
+	_size = 0;
+	_shape = std::vector<int>();
+	_flags = new TensorFlags();
+}
+
 Tensor::Tensor(float* data, const int size)
 {
 	// Constructor for Tensor Class
@@ -39,8 +48,12 @@ Tensor::Tensor(const Tensor& other)
 	_data = nullptr;
 	_size = other._size;
 	_shape = std::vector<int>(other._shape);
-	_flags = new TensorFlags();
-	constructDeepCopy(other._data,other._size);
+	_flags = new TensorFlags(*other._flags);
+	if (_flags->_isSubtensor)
+		constructShallowCopy(other._data, other._size);
+	else
+		constructDeepCopy(other._data,other._size);
+	return;
 }
 
 Tensor& Tensor::operator=(const Tensor& other)
@@ -100,6 +113,12 @@ bool Tensor::setShape(const std::vector<int>& newShape)
 	validateNewShape(newShape);
 	_shape = std::vector<int>(newShape);
 	return true;
+}
+
+Tensor::TensorFlags Tensor::getFlags() const
+{
+	// Get the Tensor's Flags
+	return *(_flags);
 }
 
 /* Public Interface */
@@ -180,7 +199,7 @@ bool Tensor::validateNewShape(const std::vector<int>& newShape) const
 	return true;
 }
 
-Tensor* Tensor::slice(const int index)
+void Tensor::slice(Tensor* subTensor, const int index)
 {
 	// Helper Function for Slice a Sub-Tensor
 	std::vector<int> shapeSubtensor;
@@ -198,14 +217,18 @@ Tensor* Tensor::slice(const int index)
 		shapeSubtensor.push_back(_shape[i]);
 		sizeSubtensor *= _shape[i];
 	}
-	Tensor* result = new Tensor(ptrSubtensor, sizeSubtensor, shapeSubtensor);
-	return result;
+	// Set the Data to to sub-Tensor
+	subTensor->_data = ptrSubtensor;
+	subTensor->_size = sizeSubtensor;
+	subTensor->_shape = shapeSubtensor;
+	subTensor->_flags->_isSubtensor = true;
+	return;
 }
 
 void Tensor::destructCode()
 {
 	// Common code for object destruction
-	if (_data != nullptr)
+	if (_data != nullptr || !(_flags->_isSubtensor))
 	{
 		delete[] _data;
 		_data = nullptr;
@@ -223,6 +246,15 @@ Tensor::TensorFlags::TensorFlags()
 	_subTensors = std::vector<Tensor*>();
 	_usesSharedMem = true;
 	_isReadOnly = false;
+}
+
+Tensor::TensorFlags::TensorFlags(const TensorFlags& other)
+{
+	// Copy Constructor for Tensor Flags
+	_isSubtensor = other._isSubtensor;
+	_subTensors = std::vector<Tensor*>();
+	_usesSharedMem = other._usesSharedMem;
+	_isReadOnly = other._isReadOnly;
 }
 
 Tensor::TensorFlags::~TensorFlags()
@@ -245,5 +277,7 @@ Tensor Tensor::operator[] (const int index)
 	// Index/Slice Operator
 	validateSliceIndex(index, _shape[0]);
 	// Valiation successful (No Error)
-	return slice(index);
+	Tensor slicedTensor;
+	slice(&slicedTensor,index);
+	return slicedTensor;
 }

@@ -34,6 +34,9 @@ public:
 	/* Constructors and Destructors */
 
 	// Constructor 
+	Tensor();
+
+	// Constructor 
 	Tensor(float* data, const int size);
 
 	// Constructor w/ Shape
@@ -71,6 +74,9 @@ public:
 	// Set the Tensor's Shape (T/F if successful)
 	bool setShape(const std::vector<int>& newShape);
 
+	// Get the Tensor's Flags
+	TensorFlags getFlags() const;
+
 	/* Public Interface */
 
 	// Describe this Tensor
@@ -83,8 +89,14 @@ protected:
 	// Helper Function to Perform A Deep Copy
 	void constructDeepCopy(float* data, const int size);
 
+	// HelperFunction to Perform a Shallow Copy
+	void constructShallowCopy(float* data, const int size);
+
 	// Helper Function to Perform a Deep Copy w/ Chosen Shape
 	void constructDeepCopy(float* data, const int size, std::vector<int>& shape);
+
+	// Helper Function to Construct from slice
+	void constructFromSlice();
 
 	// Helper Function to Construct Data Flags
 	void constructFlags();
@@ -96,7 +108,7 @@ protected:
 	bool virtual validateNewShape(const std::vector<int>& newShape) const;
 
 	// Helper Function for Slice a Sub-Tensor
-	Tensor* virtual slice(const int index);
+	void virtual slice(Tensor* subTensor, const int index);
 
 	// Helper Destruction Function
 	void destructCode();
@@ -113,6 +125,9 @@ protected:
 
 		// Constructor for TensorFlags;
 		TensorFlags();
+
+		// Copy Constructor for Tensor Flags
+		TensorFlags(const TensorFlags& other);
 
 		// Destructor for TensorFlags
 		~TensorFlags();

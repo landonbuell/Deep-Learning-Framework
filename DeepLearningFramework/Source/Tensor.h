@@ -22,9 +22,12 @@ class Tensor
 
 protected:
 
+	struct TensorFlags;
+
 	float* _data;
 	int _size;
 	std::vector<int> _shape;
+	TensorFlags* _flags;
 
 public:
 
@@ -54,7 +57,7 @@ public:
 	float* getData() const;
 
 	// Set Pointer Directly to Data (No Recc. for usage)
-	void setData();
+	void setData(float* data);
 
 	// Get the Full Size of the Tensor
 	int getSize() const;
@@ -65,32 +68,65 @@ public:
 	// Get the Tensor's Shape
 	std::vector<int> getShape() const;
 
-	// Set the Tensor's Shape
-	void setShape(const std::vector<int> newShape);
+	// Set the Tensor's Shape (T/F if successful)
+	bool setShape(const std::vector<int>& newShape);
 
+	/* Public Interface */
+
+	// Describe this Tensor
+	void describe(std::ostream& out);
 
 protected:
+
+	/* Protected Interface */
 
 	// Helper Function to Perform A Deep Copy
 	void constructDeepCopy(float* data, const int size);
 
 	// Helper Function to Perform a Deep Copy w/ Chosen Shape
-	void constructDeepCopy(float* data, const int size, std::vector<int> shape);
+	void constructDeepCopy(float* data, const int size, std::vector<int>& shape);
+
+	// Helper Function to Construct Data Flags
+	void constructFlags();
 
 	// Helper Function to valid slice index
-	void validateSliceIndex(const int i);
+	bool validateSliceIndex(const int index, const int axisSize) const;
 
 	// Helper Function to validate new shape
-	void validateNewShape(const std::vector<int>& newShape);
+	bool virtual validateNewShape(const std::vector<int>& newShape) const;
+
+	// Helper Function for Slice a Sub-Tensor
+	Tensor* virtual slice(const int index);
 
 	// Helper Destruction Function
 	void destructCode();
+
+	/* Protected Structure - Flags*/
+
+	struct TensorFlags
+	{
+		// Class to Hold Additional Tensor data
+		bool _isSubtensor;
+		std::vector<Tensor*> _subTensors;
+		bool _usesSharedMem;
+		bool _isReadOnly;
+
+		// Constructor for TensorFlags;
+		TensorFlags();
+
+		// Destructor for TensorFlags
+		~TensorFlags();
+
+	};
 
 public:
 
 	/* Operator Overloads */
 
-	// Index Operator
+	// Direct Index Operator
+	float& item(const int index);
+
+	// Index/Slice Operator
 	Tensor virtual operator[] (const int index);
 
 };

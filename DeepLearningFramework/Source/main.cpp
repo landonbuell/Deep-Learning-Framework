@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include "Tensor.h"
+#include "TensorDynamic.h"
 
 int main(int argc, char** argv)
 {
@@ -27,22 +27,6 @@ int main(int argc, char** argv)
 		arr[i] = i;
 
 	// Create the Initial Tensor
-	std::vector<int> shapeA{ 4,2,2 };
-	Tensor tensorA(arr, size);
-	tensorA.setShape(shapeA);
-	tensorA.describe(std::cout);
-
-	// Slice Tensor A
-	Tensor tensorB = tensorA[2];
-	tensorB.describe(std::cout);
-
-	// Slice Tensor B
-	Tensor tensorC = tensorB[0];
-	tensorC.describe(std::cout);
-
-	// Slice Tensor B
-	Tensor tensorD = tensorC[1];
-	tensorD.describe(std::cout);
 
 
 	std::cout << "=)" << std::endl;

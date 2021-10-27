@@ -32,9 +32,17 @@ int main(int argc, char** argv)
 	tensorA.setShape(shapeA);
 	tensorA.describe(std::cout);
 
-	// Slice Tensor B
+	// Slice Tensor A
 	Tensor tensorB = tensorA[2];
 	tensorB.describe(std::cout);
+
+	// Slice Tensor B
+	Tensor tensorC = tensorB[0];
+	tensorC.describe(std::cout);
+
+	// Slice Tensor B
+	Tensor tensorD = tensorC[1];
+	tensorD.describe(std::cout);
 
 
 	std::cout << "=)" << std::endl;

@@ -94,8 +94,6 @@ public:
 
 protected:
 
-	/* Protected Constructors */
-
 	/* Protected Interface */
 
 	// HelperFunction to Perform a Shallow Copy
@@ -131,8 +129,6 @@ protected:
 	{
 		// Class to Hold Additional Tensor data
 		bool _isSubtensor;
-		std::vector<Tensor*> _subTensors;
-		bool _usesSharedMem;
 		bool _isReadOnly;
 
 		// Constructor for TensorFlags;

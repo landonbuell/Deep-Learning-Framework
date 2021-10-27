@@ -248,13 +248,18 @@ bool Tensor::validateNewShape(const std::vector<int>& newShape) const
 	{
 		size *= newShape[i];
 	}
+	// Check Shape
 	if (size != _size)
 	{
 		// Sizes not equal
-		throw "Tensor::validateNewShape - New Shape is not equal to the number elements in Tensor";
+		return false;
+		//"Tensor::validateNewShape - New Shape is not equal to the number elements in Tensor";
 	}
-	// Otherwise, the new shape is valid
-	return true;
+	else
+	{
+		// Otherwise, the new shape is valid
+		return true;
+	}	
 }
 
 void Tensor::slice(Tensor* subTensor, const int index)
@@ -287,15 +292,13 @@ void Tensor::slice(Tensor* subTensor, const int index)
 void Tensor::destructCode()
 {
 	// Common code for object destruction
-	
+	delete _flags;
 }
 
 Tensor::TensorFlags::TensorFlags()
 {
 	// Constructor for TensorFlags Instance
 	_isSubtensor = false;
-	_subTensors = std::vector<Tensor*>();
-	_usesSharedMem = true;
 	_isReadOnly = false;
 }
 
@@ -303,8 +306,6 @@ Tensor::TensorFlags::TensorFlags(const TensorFlags& other)
 {
 	// Copy Constructor for Tensor Flags
 	_isSubtensor = other._isSubtensor;
-	_subTensors = std::vector<Tensor*>();
-	_usesSharedMem = other._usesSharedMem;
 	_isReadOnly = other._isReadOnly;
 }
 

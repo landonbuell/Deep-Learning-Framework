@@ -24,21 +24,19 @@ int main(int argc, char** argv)
 	const int size = 16;
 	float* arr = new float[size];
 	for (int i = 0; i < size; i++)
-		arr[i] = 2.0f * i - 8;
+		arr[i] = i;
 
 	// Create the Initial Tensor
+	std::vector<int> shapeA{ 4,2,2 };
 	Tensor tensorA(arr, size);
+	tensorA.setShape(shapeA);
 	tensorA.describe(std::cout);
 
-	// Create a similar Tensor, But reshape
-	Tensor tensorB(arr, size);
-	std::vector<int> shapeB{ 4,2,2 };
-	tensorB.setShape(shapeB);
+	// Slice Tensor B
+	Tensor tensorB = tensorA[2];
 	tensorB.describe(std::cout);
 
-	// Get 0-th Item in TensorN
-	Tensor tensorC = tensorB[1];
-	tensorC.describe(std::cout);
 
-	return EXIT_STATUS;
+	std::cout << "=)" << std::endl;
+
 }

@@ -24,8 +24,9 @@ protected:
 
 	struct TensorFlags;
 
-	float* _data;
+	std::shared_ptr<float> _data;
 	int _size;
+	int _offset;
 	std::vector<int> _shape;
 	TensorFlags* _flags;
 
@@ -35,6 +36,15 @@ public:
 
 	// Constructor 
 	Tensor();
+
+	// Constructor
+	Tensor(float data);
+
+	// Constructor
+	Tensor(float data, const int size);
+
+	// Constructor
+	Tensor(float data, const int size, std::vector<int> shape);
 
 	// Constructor 
 	Tensor(float* data, const int size);
@@ -84,19 +94,21 @@ public:
 
 protected:
 
-	/* Protected Interface */
+	/* Protected Constructors */
 
-	// Helper Function to Perform A Deep Copy
-	void constructDeepCopy(float* data, const int size);
+	/* Protected Interface */
 
 	// HelperFunction to Perform a Shallow Copy
 	void constructShallowCopy(float* data, const int size);
 
-	// Helper Function to Perform a Deep Copy w/ Chosen Shape
-	void constructDeepCopy(float* data, const int size, std::vector<int>& shape);
+	// HelperFunction to Perform a Shallow Copy
+	void constructShallowCopy(float* data, const int size, std::vector<int> shape);
 
-	// Helper Function to Construct from slice
-	void constructFromSlice();
+	// HelperFunction to Perform a Deep Copy
+	void constructDeepCopy(float* data, const int size);
+
+	// HelperFunction to Perform a Deep Copy
+	void constructDeepCopy(float* data, const int size, std::vector<int> shape);
 
 	// Helper Function to Construct Data Flags
 	void constructFlags();

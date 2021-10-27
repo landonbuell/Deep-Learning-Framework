@@ -18,54 +18,79 @@
 Tensor::Tensor()
 {
 	// Constructor for Tensor class
-	_data = nullptr;
-	_size = 0;
-	_shape = std::vector<int>();
-	_flags = new TensorFlags();
+	constructShallowCopy(nullptr, 1);
+}
+
+Tensor::Tensor(float data)
+{
+	// Constructor for Tensor class
+	float* scalar = new float[1];
+	scalar[0] = data;
+
+	constructShallowCopy(scalar, 1);
+	scalar = nullptr;
+}
+
+Tensor::Tensor(float data, const int size)
+{
+	// Constructor for Tensor class
+	float* scalar = new float[size];
+	for (int i = 0; i < size; i++)
+		scalar[i] = data;
+
+	constructShallowCopy(scalar, size);
+	scalar = nullptr;
+}
+
+Tensor::Tensor(float data, const int size, std::vector<int> shape)
+{
+	// Constructor for Tensor class
+	float* scalar = new float[size];
+	for (int i = 0; i < size; i++)
+		scalar[i] = data;
+
+	constructShallowCopy(scalar, size, shape);
+	scalar = nullptr;
 }
 
 Tensor::Tensor(float* data, const int size)
 {
 	// Constructor for Tensor Class
-	_data = data;
-	_size = size;
-	_shape = std::vector<int>{ size, };
-	_flags = new TensorFlags();
+	constructShallowCopy(data, size);
 }
 
 Tensor::Tensor(float* data, const int size, std::vector<int> shape)
 {
 	// Constructor for Tensor Class
-	_data = data;
-	_size = size;
-	_shape = std::vector<int>(shape);
-	_flags = new TensorFlags();
+	constructShallowCopy(data, size, shape);
 }
 
 Tensor::Tensor(const Tensor& other)
 {
 	// Copy Constructor for Tensor Class
-	_data = nullptr;
-	_size = other._size;
-	_shape = std::vector<int>(other._shape);
-	_flags = new TensorFlags(*other._flags);
-	if (_flags->_isSubtensor)
-		constructShallowCopy(other._data, other._size);
-	else
-		constructDeepCopy(other._data,other._size);
-	return;
+	float* ptrOtherData = other._data.get();
+	constructShallowCopy(ptrOtherData, other._size, other._shape);
+	_offset = other._offset;
 }
 
 Tensor& Tensor::operator=(const Tensor& other)
 {
 	// Copy Assignment Operator
-	throw "Not Implemented!";
+	float* ptrOtherData = other._data.get();
+	constructShallowCopy(ptrOtherData, other._size, other._shape);
+	return (*this);
 }
 
 Tensor& Tensor::operator=(const Tensor&& other)
 {
 	// Move Assignment Operator
-	throw "Not Implemented!";
+	float* ptrOtherData = other._data.get();
+	constructShallowCopy(ptrOtherData, other._size, other._shape);
+
+	// Destroy this instance
+	_data = nullptr;
+	destructCode();
+	return (*this);
 }
 
 Tensor::~Tensor()
@@ -79,13 +104,13 @@ Tensor::~Tensor()
 float* Tensor::getData() const
 {
 	// Get Pointer Directly to Data
-	return _data;
+	return _data.get();
 }
 
 void Tensor::setData(float* data)
 {
 	// Set Pointer Directly to Data (No Recc. for usage)
-	_data = data;
+	_data = std::shared_ptr<float>(data);
 	return;
 }
 
@@ -126,43 +151,76 @@ Tensor::TensorFlags Tensor::getFlags() const
 void Tensor::describe(std::ostream& out)
 {
 	// Describe this Tensor
-	out << "Tensor @ " << &_data << " ";
-	out << "size: " << _size << " ";
-	out << "shape: ";
+	out << "Tensor @ " << _data.get() << " w/ offset " << _offset << "\n"
+		<< "size: " << _size << " "
+		<< "shape: ";
 	for (int i = 0; i < _shape.size(); i++)
 		out << _shape[i] << " ";
-	out << "data: ";
-	for (int i = 0; i < _size; i++)
-		out << _data[i] << " ";
+
 	out << "\n";
+	for (int i = 0; i < _size; i++)
+		out << _data.get()[_offset + i] << " ";
+	out << "\n" << std::endl;
 	return;
 }
 
 /* Protected Interface */
 
-void Tensor::constructDeepCopy(float* data, const int size)
+void Tensor::constructShallowCopy(float* data, const int size)
 {
-	// Helper Function to Perform A Deep Copy
-	_data = new float[size];
+	// Helper Function to Shallow Copy Dynamically allocated Mem
+	_data = std::shared_ptr<float>(data);
 	_size = size;
-	for (int i = 0; i < size; i++)
-	{
-		_data[i] = data[i];
-	}
-	return;
+	_offset = 0;
+	_shape = std::vector<int> { size };
+	_flags = new TensorFlags();
 }
 
-void Tensor::constructDeepCopy(float* data, const int size, std::vector<int>& shape)
+void Tensor::constructShallowCopy(float* data, const int size, std::vector<int> shape)
 {
-	// Helper Function to Perform A Deep Copy
-	_data = new float[size];
+	// Helper Function to Shallow Copy Dynamically allocated Mem
+	_data = std::shared_ptr<float>(data);
 	_size = size;
-	_shape = std::vector<int>(shape);
+	_offset = 0;
+
+	validateNewShape(shape);
+	_shape = std::vector<int>(shape);	
+	_flags = new TensorFlags();
+}
+
+void Tensor::constructDeepCopy(float* data, const int size)
+{
+	// Helper Function to Shallow Copy Dynamically allocated Mem
+	float* tempData = new float[size];
 	for (int i = 0; i < size; i++)
-	{
-		_data[i] = data[i];
-	}
-	return;
+		tempData[i] = data[i];
+
+	_data = std::shared_ptr<float>(tempData);
+	_size = size;
+	_offset = 0;
+
+	_shape = std::vector<int>{ size };
+	_flags = new TensorFlags();
+
+	tempData = nullptr;
+}
+
+void Tensor::constructDeepCopy(float* data, const int size, std::vector<int> shape)
+{
+	// Helper Function to Shallow Copy Dynamically allocated Mem
+	float* tempData = new float[size];
+	for (int i = 0; i < size; i++)
+		tempData[i] = data[i];
+
+	_data = std::shared_ptr<float>(tempData);
+	_size = size;
+	_offset = 0;
+
+	validateNewShape(shape);
+	_shape = std::vector<int>(shape);
+	_flags = new TensorFlags();
+	
+	tempData = nullptr;
 }
 
 void Tensor::constructFlags()
@@ -201,42 +259,35 @@ bool Tensor::validateNewShape(const std::vector<int>& newShape) const
 
 void Tensor::slice(Tensor* subTensor, const int index)
 {
-	// Helper Function for Slice a Sub-Tensor
-	std::vector<int> shapeSubtensor;
-	int sizeSubtensor = 1;
-	int pointerOffset = _shape[0] * index;
-	float* ptrSubtensor = &_data[pointerOffset];
+	// Helper Function for Slice a Tensor
 	if (getRank() == 1)
 	{
-		// Edge Case: Rank-1 Tensor -> use Get item
-		
+		// Edge-Case 1D Tensor
+		subTensor->_shape = std::vector<int>{ 1 };
+		subTensor->_offset += index;
+		return;
 	}
-	// All other cases
-	for (int i = 1; i < _shape.size(); i++)
+	else
 	{
-		shapeSubtensor.push_back(_shape[i]);
-		sizeSubtensor *= _shape[i];
+		// Other wise, "remove" first Axis
+		subTensor->_shape = std::vector<int>();
+		int newSize = 1;
+		int sizeAxis0 = _shape[0];
+		for (int i = 1; i < _shape.size(); i++)
+		{
+			newSize *= _shape[i];
+			subTensor->_shape.push_back(_shape[i]);
+		}		
+		subTensor->_size = newSize;
+		subTensor->_offset += (sizeAxis0 * index);
 	}
-	// Set the Data to to sub-Tensor
-	subTensor->_data = ptrSubtensor;
-	subTensor->_size = sizeSubtensor;
-	subTensor->_shape = shapeSubtensor;
-	subTensor->_flags->_isSubtensor = true;
 	return;
 }
 
 void Tensor::destructCode()
 {
 	// Common code for object destruction
-	if (_data != nullptr || !(_flags->_isSubtensor))
-	{
-		delete[] _data;
-		_data = nullptr;
-	}
-	_size = 0;
-	_shape = std::vector<int>();
-	delete _flags;
-	return;
+	
 }
 
 Tensor::TensorFlags::TensorFlags()
@@ -269,15 +320,17 @@ float& Tensor::item(const int index)
 	// Direct Index Operator
 	validateSliceIndex(index, _size);
 	// Valiation successful (No Error)
-	return _data[index];
+	return _data.get()[_offset + index];
 }
 
 Tensor Tensor::operator[] (const int index)
 {
 	// Index/Slice Operator
 	validateSliceIndex(index, _shape[0]);
-	// Valiation successful (No Error)
-	Tensor slicedTensor;
-	slice(&slicedTensor,index);
-	return slicedTensor;
+	// Valiation successful (No Error) - Perform Slice
+	Tensor* subTensor = new Tensor(*this);
+	subTensor->describe(std::cout);
+	slice(subTensor, index);
+	// Return de-refrenced tensor
+	return (*subTensor);
 }

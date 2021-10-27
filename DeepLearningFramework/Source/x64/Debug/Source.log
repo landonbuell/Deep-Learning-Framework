@@ -1,4 +1,6 @@
 ﻿  Tensor.cpp
-C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(101,22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-Tensor.obj : error LNK2019: unresolved external symbol "protected: void __cdecl Tensor::constructShallowCopy(float *,int)" (?constructShallowCopy@Tensor@@IEAAXPEAMH@Z) referenced in function "public: __cdecl Tensor::Tensor(class Tensor const &)" (??0Tensor@@QEAA@AEBV0@@Z)
-C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe : fatal error LNK1120: 1 unresolved externals
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(126,22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\main.cpp(27,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe

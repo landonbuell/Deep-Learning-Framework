@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include "TensorDynamic.h"
+#include "Tensor.h"
 
 int main(int argc, char** argv)
 {
@@ -25,6 +25,7 @@ int main(int argc, char** argv)
 	float* arr = new float[size];
 	for (int i = 0; i < size; i++)
 		arr[i] = i;
+	std::cout << "Initial Mem: " << & arr << std::endl;
 
 	// Create the Initial Tensor
 

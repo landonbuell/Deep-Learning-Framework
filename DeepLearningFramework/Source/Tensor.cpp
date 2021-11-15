@@ -87,6 +87,11 @@ Tensor::Tensor(float* data, const int size, const std::vector<int>& shape)
 	constructShallowCopy(data, size, shape);
 }
 
+Tensor::~Tensor()
+{
+	// Destructor for Tensor
+	destructCode();
+}
 
 	/* Getters and Setters */
 
@@ -219,17 +224,6 @@ bool Tensor::validateIndex(const int index) const
 		throw "Tensor::validateSliceIndex - Index must be positive";
 	if (index >= _size)
 		throw "Tensor::validateSliceIndex - Index must be smaller than " + _size;
-	// Otherwise, the index is valid
-	return true;
-}
-
-bool Tensor::validateSliceIndex(const int index, const int axisSize) const
-{
-	// Helper Function to valid slice index
-	if (index < 0)
-		throw "Tensor::validateSliceIndex - Index must be positive";
-	if (index >= axisSize)
-		throw "Tensor::validateSliceIndex - Index must be smaller than " + axisSize;
 	// Otherwise, the index is valid
 	return true;
 }

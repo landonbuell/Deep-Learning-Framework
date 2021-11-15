@@ -59,6 +59,9 @@ protected:
 	// Constructor for Tensor (From Pointer)
 	Tensor(float* data, const int size, const std::vector<int>& shape);
 	
+	// Destructor for Tensor
+	~Tensor();
+
 
 public:
 
@@ -110,9 +113,6 @@ public:
 
 	// Describe this Tensor
 	void describe(std::ostream& out);
-
-	// Slice This Tensor (Get Sub-Tensor w. Shared Mem)
-	virtual Tensor slice(const int index) = 0;
 
 	// 1D Indexer 
 	virtual float& item(const int ii) = 0;

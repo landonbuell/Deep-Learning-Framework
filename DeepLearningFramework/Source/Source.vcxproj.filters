@@ -33,6 +33,9 @@
     <ClInclude Include="Tensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tensor1D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files\Tensors</Filter>
     </ClCompile>
     <ClCompile Include="Tensor.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor1D.cpp">
       <Filter>Source Files\Tensors</Filter>
     </ClCompile>
   </ItemGroup>

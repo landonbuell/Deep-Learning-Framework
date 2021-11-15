@@ -23,14 +23,10 @@ class Tensor
 
 protected:
 
-	struct TensorFlags;
-
 	std::shared_ptr<float> _data;
 	int _size;
-	int _offset;
 	std::vector<int> _shape;
 	int _rank;
-	TensorFlags* _flags;
 
 protected:
 
@@ -45,7 +41,6 @@ protected:
 	// Generic Constructor 
 	Tensor(const int size, const std::vector<int>& shape);
 
-
 	// Constructor for 0-Tensor (From Value)
 	Tensor(float data);
 
@@ -54,7 +49,6 @@ protected:
 
 	// Constructor for Tensor (From Value)
 	Tensor(float data, const int size, const std::vector<int>& shape);
-
 
 	// Constructor for 0-Tensor (From Pointer)
 	Tensor(float* data);
@@ -98,9 +92,6 @@ public:
 
 protected:
 
-	// Get the Tensor's Flags
-	TensorFlags getFlags() const;
-
 	// Set Pointer Directly to Data (No Recc. for usage)
 	void setData(float* data);
 
@@ -110,8 +101,8 @@ protected:
 	// Set the Tensor's Shape (T/F if successful)
 	bool setShape(const std::vector<int>& newShape);
 
-	// Set the Tensor's Flags
-	void setFlags(TensorFlags& flags);
+	// Set the Tensor's Rank
+	void setRank(const int ranks);
 
 public:
 
@@ -122,6 +113,19 @@ public:
 
 	// Slice This Tensor (Get Sub-Tensor w. Shared Mem)
 	virtual Tensor slice(const int index) = 0;
+
+	// 1D Indexer 
+	virtual float& item(const int ii) = 0;
+
+	// 2D Indexer 
+	virtual float& item(const int ii, const int jj) = 0;
+
+	// 3D Indexer 
+	virtual float& item(const int ii, const int jj, const int kk) = 0;
+
+	// 4D Indexer 
+	virtual float& item(const int ii, const int jj, const int kk, const int ll) = 0;
+
 	
 protected:
 
@@ -151,43 +155,12 @@ protected:
 	// Helper Destruction Function
 	void destructCode();
 
-	/* Protected Structure - Flags*/
-
-	struct TensorFlags
-	{
-		// Class to Hold Additional Tensor data
-		bool _isSubtensor;
-		bool _isReadOnly;
-
-		// Constructor for TensorFlags;
-		TensorFlags();
-
-		// Copy Constructor for Tensor Flags
-		TensorFlags(const TensorFlags& other);
-
-		// Destructor for TensorFlags
-		~TensorFlags();
-
-	};
-
 public:
 
 	/* Operator Overloads */
 	
 	// Direct Index Operator
 	float& operator[] (const int index);
-
-	// 1D Indexer 
-	virtual float& index(const int ii) = 0;
-
-	// 2D Indexer 
-	virtual float& index(const int ii, const int jj) = 0;
-
-	// 3D Indexer 
-	virtual float& index(const int ii, const int jj, const int kk) = 0;
-
-	// 4D Indexer 
-	virtual float& index(const int ii, const int jj, const int kk, const int ll) = 0;
 
 };
 

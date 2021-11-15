@@ -114,12 +114,6 @@ std::vector<int> Tensor::getShape() const
 	return _shape;
 }
 
-Tensor::TensorFlags Tensor::getFlags() const
-{
-	// Get the Tensor's Flags
-	return (*_flags);
-}
-
 void Tensor::setData(float* data)
 {
 	// Set Pointer Directly to Data (No Recc. for usage)
@@ -145,11 +139,10 @@ bool Tensor::setShape(const std::vector<int>& newShape)
 	return;
 }
 
-void Tensor::setFlags(TensorFlags& flags)
+void Tensor::setRank(const int rank)
 {
-	// Set the Tensor's Flags
-	delete _flags;
-	_flags = new TensorFlags(flags);
+	// Set the Tensor's Rank
+	_rank = rank;
 	return;
 }
 
@@ -158,7 +151,7 @@ void Tensor::setFlags(TensorFlags& flags)
 void Tensor::describe(std::ostream& out)
 {
 	// Describe this Tensor
-	out << "Tensor @ " << _data.get() << " w/ offset " << _offset << "\n"
+	out << "Tensor @ " << _data.get() << "\n"
 		<< "size: " << _size << " "
 		<< "shape: ";
 	for (int i = 0; i < _shape.size(); i++)
@@ -166,7 +159,7 @@ void Tensor::describe(std::ostream& out)
 
 	out << "\n";
 	for (int i = 0; i < _size; i++)
-		out << _data.get()[_offset + i] << " ";
+		out << _data.get()[i] << " ";
 	out << "\n" << std::endl;
 	return;
 }
@@ -178,11 +171,10 @@ void Tensor::constructShallowCopy(float* data, const int size)
 	// Helper Function to Shallow Copy Dynamically allocated Mem
 	_data = std::shared_ptr<float>(data);
 	_size = size;
-	_offset = 0;
 
 	_shape = std::vector<int>{ size };
 	_rank = 1;
-	_flags = new TensorFlags();
+
 }
 
 void Tensor::constructShallowCopy(float* data, const int size, const std::vector<int>& shape)
@@ -190,11 +182,10 @@ void Tensor::constructShallowCopy(float* data, const int size, const std::vector
 	// Helper Function to Shallow Copy Dynamically allocated Mem
 	_data = std::shared_ptr<float>(data);
 	_size = size;
-	_offset = 0;
 
 	_shape = std::vector<int>(shape);
 	_rank = 1;
-	_flags = new TensorFlags();
+
 }
 
 void Tensor::constructDeepCopy(float* data, const int size)
@@ -268,26 +259,7 @@ bool Tensor::validateReshape(const std::vector<int>& newShape) const
 void Tensor::destructCode()
 {
 	// Common code for object destruction
-	delete _flags;
-}
-
-Tensor::TensorFlags::TensorFlags()
-{
-	// Constructor for TensorFlags Instance
-	_isSubtensor = false;
-	_isReadOnly = false;
-}
-
-Tensor::TensorFlags::TensorFlags(const TensorFlags& other)
-{
-	// Copy Constructor for Tensor Flags
-	_isSubtensor = other._isSubtensor;
-	_isReadOnly = other._isReadOnly;
-}
-
-Tensor::TensorFlags::~TensorFlags()
-{
-	// Destructor for TensorFlags Instance
+	
 }
 
 /* Operator Overloads */
@@ -296,5 +268,5 @@ float& Tensor::operator[] (const int index)
 {
 	// Index/Slice Operator
 	validateIndex(index);
-	return (_data.get()[_offset + index]);
+	return (_data.get()[index]);
 }

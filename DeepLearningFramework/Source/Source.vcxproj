@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Tensor.h" />
     <ClInclude Include="Tensor1D.h" />
+    <ClInclude Include="Tensor2D.h" />
     <ClInclude Include="TensorDynamic.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
@@ -149,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tensor.cpp" />
     <ClCompile Include="Tensor1D.cpp" />
+    <ClCompile Include="Tensor2D.cpp" />
     <ClCompile Include="TensorDynamic.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>

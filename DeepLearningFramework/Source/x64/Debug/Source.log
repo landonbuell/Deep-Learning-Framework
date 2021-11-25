@@ -1,0 +1,8 @@
+﻿  main.cpp
+C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\main.cpp(31,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Tensor1D.cpp
+  Tensor2D.cpp
+  Tensor3D.cpp
+  Tensor4D.cpp
+  Generating Code...
+  Source.vcxproj -> C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe

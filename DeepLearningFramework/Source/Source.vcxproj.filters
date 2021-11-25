@@ -26,4 +26,47 @@
       <UniqueIdentifier>{3bee2d0d-c515-415f-8a2a-05fe31b01f4c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TensorDynamic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor1D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tensor4D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TensorDynamic.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor1D.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor2D.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor3D.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tensor4D.cpp">
+      <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

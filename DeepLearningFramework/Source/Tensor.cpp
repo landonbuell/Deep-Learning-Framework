@@ -141,7 +141,7 @@ bool Tensor::setShape(const std::vector<int>& newShape)
 	// Set the Tensor's Shape (T/F if successful)
 	validateReshape(newShape);
 	_shape = std::vector<int>(newShape);
-	return;
+	return true;
 }
 
 void Tensor::setRank(const int rank)
@@ -158,9 +158,10 @@ void Tensor::describe(std::ostream& out)
 	// Describe this Tensor
 	out << "Tensor @ " << _data.get() << "\n"
 		<< "size: " << _size << " "
-		<< "shape: ";
+		<< "shape: (";
 	for (int i = 0; i < _shape.size(); i++)
-		out << _shape[i] << " ";
+		out << _shape[i] << ",";
+	out << ") ";
 
 	out << "\n";
 	for (int i = 0; i < _size; i++)

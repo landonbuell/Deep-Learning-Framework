@@ -62,7 +62,6 @@ protected:
 	// Destructor for Tensor
 	~Tensor();
 
-
 public:
 
 	// Copy Constructor
@@ -73,9 +72,6 @@ public:
 
 	// Move Assignment Operator
 	Tensor& operator=(const Tensor&& other);
-
-	// Destructor
-	~Tensor();
 
 public:
 

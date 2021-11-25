@@ -4,10 +4,11 @@
 * Solution:		DeepLearingFramework
 * Project:		Source
 * Namespace:	Tensors
-* File:			Tensor2D.h
+* File:			Tensor2D.cpp
 * Author:		Landon Buell
 * Date:			October 2021
 * Description:
+* 
 */
 
 #include "Tensor2D.h"
@@ -44,7 +45,6 @@ float& Tensor2D::item(const int ii)
 {
 	// 1D Indexer
 	throw "Tensor2D::item - Cannot use 1D indexer on 2D Tensor";
-	return;
 }
 
 float& Tensor2D::item(const int ii, const int jj)
@@ -59,12 +59,10 @@ float& Tensor2D::item(const int ii, const int jj, const int kk)
 {
 	// 3D Indexer - Raises Error
 	throw "Tensor2D::item - Cannot use 3D indexer on 2D Tensor";
-	return;
 }
 
 float& Tensor2D::item(const int ii, const int jj, const int kk, const int ll)
 {
 	// 3D Indexer - Raises Error
 	throw "Tensor2D::item - Cannot use 4D indexer on 2D Tensor";
-	return;
 }

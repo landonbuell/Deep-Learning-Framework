@@ -16,6 +16,10 @@
 #include <vector>
 
 #include "Tensor.h"
+#include "Tensor1D.h"
+#include "Tensor2D.h"
+#include "Tensor3D.h"
+#include "Tensor4D.h"
 
 int main(int argc, char** argv)
 {
@@ -25,9 +29,8 @@ int main(int argc, char** argv)
 	float* arr = new float[size];
 	for (int i = 0; i < size; i++)
 		arr[i] = i;
-	std::cout << "Initial Mem: " << & arr << std::endl;
-
-	// Create the Initial Tensor
+	
+	// Create Initial Tensor
 
 
 	std::cout << "=)" << std::endl;

@@ -45,6 +45,18 @@
     <ClInclude Include="Tensor4D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ComputationalGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Variable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -67,6 +79,18 @@
     </ClCompile>
     <ClCompile Include="Tensor4D.cpp">
       <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputationalGraph.cpp">
+      <Filter>Source Files\ComputationalGraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphNode.cpp">
+      <Filter>Source Files\ComputationalGraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="Variable.cpp">
+      <Filter>Source Files\ComputationalGraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="Operator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

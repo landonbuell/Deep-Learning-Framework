@@ -139,6 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ComputationalGraph.h" />
+    <ClInclude Include="GraphNode.h" />
+    <ClInclude Include="Operator.h" />
     <ClInclude Include="Tensor.h" />
     <ClInclude Include="Tensor1D.h" />
     <ClInclude Include="Tensor2D.h" />
@@ -147,9 +150,13 @@
     <ClInclude Include="TensorDynamic.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ComputationalGraph.cpp" />
+    <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Tensor.cpp" />
     <ClCompile Include="Tensor1D.cpp" />
     <ClCompile Include="Tensor2D.cpp" />
@@ -158,6 +165,7 @@
     <ClCompile Include="TensorDynamic.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Variable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

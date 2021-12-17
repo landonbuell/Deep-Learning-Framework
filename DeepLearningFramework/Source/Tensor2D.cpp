@@ -41,28 +41,10 @@ Tensor2D::~Tensor2D()
 
 /* Public Interface */
 
-float& Tensor2D::item(const int ii)
-{
-	// 1D Indexer
-	throw "Tensor2D::item - Cannot use 1D indexer on 2D Tensor";
-}
-
 float& Tensor2D::item(const int ii, const int jj)
 {
 	// 2D Indexer - Raises Error
 	const int index = ii * _shape[0] + jj;
 	validateIndex(index);
 	return _data.get()[index];
-}
-
-float& Tensor2D::item(const int ii, const int jj, const int kk)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor2D::item - Cannot use 3D indexer on 2D Tensor";
-}
-
-float& Tensor2D::item(const int ii, const int jj, const int kk, const int ll)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor2D::item - Cannot use 4D indexer on 2D Tensor";
 }

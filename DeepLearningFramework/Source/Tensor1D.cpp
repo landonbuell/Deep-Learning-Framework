@@ -43,24 +43,3 @@ float& Tensor1D::item(const int ii)
 	validateIndex(ii);
 	return _data.get()[ii];
 }
-
-float& Tensor1D::item(const int ii, const int jj)
-{
-	// 2D Indexer - Raises Error
-	throw "Tensor1D::item - Cannot use 2D indexer on 1D Tensor";
-	return _data.get()[0];
-}
-
-float& Tensor1D::item(const int ii, const int jj, const int kk)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor1D::item - Cannot use 3D indexer on 1D Tensor";
-	return _data.get()[0];
-}
-
-float& Tensor1D::item(const int ii, const int jj, const int kk, const int ll)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor1D::item - Cannot use 4D indexer on 1D Tensor";
-	return _data.get()[0];
-}

@@ -109,19 +109,6 @@ public:
 
 	// Describe this Tensor
 	void describe(std::ostream& out);
-
-	// 1D Indexer 
-	virtual float& item(const int ii) = 0;
-
-	// 2D Indexer 
-	virtual float& item(const int ii, const int jj) = 0;
-
-	// 3D Indexer 
-	virtual float& item(const int ii, const int jj, const int kk) = 0;
-
-	// 4D Indexer 
-	virtual float& item(const int ii, const int jj, const int kk, const int ll) = 0;
-
 	
 protected:
 
@@ -141,9 +128,6 @@ protected:
 
 	// Helper Function to validate Direct index
 	bool validateIndex(const int index) const;
-
-	// Helper Function to valid slice index
-	bool validateSliceIndex(const int index, const int axisSize) const;
 
 	// Helper Function to validate new shape
 	bool virtual validateReshape(const std::vector<int>& newShape) const;

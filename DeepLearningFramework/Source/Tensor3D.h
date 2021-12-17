@@ -32,18 +32,8 @@ public:
 
     /* Public Interface */
 
-    // 1D Indexer - Raises Error
-    float& item(const int ii) override;
-
-    // 2D Indexer - Raises Error
-    float& item(const int ii, const int jj) override;
-
     // 3D Indexer 
-    float& item(const int ii, const int jj, const int kk) override;
-
-    // 4D Indexer - Raises Error
-    float& item(const int ii, const int jj, const int kk, const int ll) override;
-
+    float& item(const int ii, const int jj, const int kk);
 
 };
 

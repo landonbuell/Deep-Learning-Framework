@@ -1,8 +1,6 @@
-﻿  main.cpp
-C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\main.cpp(31,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Tensor1D.cpp
-  Tensor2D.cpp
-  Tensor3D.cpp
-  Tensor4D.cpp
-  Generating Code...
-  Source.vcxproj -> C:\Users\Landon\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe
+﻿  Tensor.cpp
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(132,22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(171,26): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(215,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(232,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe

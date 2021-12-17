@@ -18,21 +18,22 @@
 GraphNode::GraphNode(std::string name)
 {
 	// Constructor for GraphNode Instance
-	_nodeName = name;
-	_children = std::vector<GraphNode*>();
-
+	_name = name;
 	_value = nullptr;
-	_evaluated = false;
+}
+
+GraphNode::GraphNode(std::string name, Tensor* value)
+{
+	// Constructor for GraphNode Instance
+	_name = name;
+	_value = value;
 }
 
 GraphNode::GraphNode(const GraphNode& graphNode)
 {
 	// Constructor for GraphNode Instance (Copy)
-	_nodeName = graphNode.getName();
-	_children = graphNode.getChildren();
-
+	_name = graphNode.getName();
 	_value = graphNode._value;
-	_evaluated = graphNode.getEvalStatus();
 }
 
 GraphNode::~GraphNode()
@@ -46,81 +47,42 @@ GraphNode::~GraphNode()
 std::string GraphNode::getName() const
 {
 	// Get the Name of this Node
-	return _nodeName;
+	return _name;
 }
 
-std::vector<GraphNode*> GraphNode::getChildren() const
-{
-	// Get all of the Children of this Node
-	return _children;
-}
-
-const Tensor* GraphNode::getValue() const
+Tensor* GraphNode::getValue() const
 {
 	// Get the Value of this Node
-	if (_evaluated == true)
-	{
-		return _value;
-	}
-	else
-	{
-		return nullptr;
-	}
+	return _value;
 }
 
-bool GraphNode::getEvalStatus() const
+bool GraphNode::isEvaluated() const
 {
 	// Get the Evaluation Status of this Node
-	return _evaluated;
-}
-
-void GraphNode::setValue(Tensor* value)
-{
-	// Set the Value of this Node
-	_value = value;
-	if (_value != nullptr)
-		_evaluated = true;
-	else
-		_evaluated = false;
-}
-
-void GraphNode::setEvalStatus(bool status)
-{
-	// Set the Evaluation Status
-	_evaluated = status;
-	return;
-}
-
-/* Operational Methods */
-
-bool GraphNode::add(GraphNode* node)
-{
-	// Add Child Node to this Node
-	_children.insert(node);
-	return true;
-}
-
-bool GraphNode::remove(GraphNode* node)
-{
-	// Remove Child Node from this Node
-	_children.erase(node);
-	return true;
-}
-
-void GraphNode::clearChildren()
-{
-	// Clear All Children of this Graph
-	_children.clear();
-	return;
+	return !(_value == nullptr);
 }
 
 void GraphNode::clearValue()
 {
 	// Clear the Value of This Node
 	_value = nullptr;
-	_evaluated = false;
 	return;
 }
+
+void GraphNode::setName(std::string name)
+{
+	// Set the Name of this Node
+	_name = name;
+	return;
+}
+
+void GraphNode::setValue(Tensor* value)
+{
+	// Set the Value of this Node
+	_value = value;
+	return;
+}
+
 
 void GraphNode::construct()
 {

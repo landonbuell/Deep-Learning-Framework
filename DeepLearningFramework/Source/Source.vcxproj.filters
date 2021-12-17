@@ -90,7 +90,7 @@
       <Filter>Source Files\ComputationalGraphs</Filter>
     </ClCompile>
     <ClCompile Include="Operator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ComputationalGraphs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@
 #include "Tensor0D.h"
 
 Tensor0D::Tensor0D(const float data) :
-	Tensor(data, 1)
+	Tensor(data)
 {
 	// Constructor for Tensor0D Instance
 }
@@ -21,6 +21,7 @@ Tensor0D::Tensor0D(const float data) :
 Tensor0D::~Tensor0D()
 {
 	// Destructor for Tensor0D Instance
+	destructCode();
 }
 
 float& Tensor0D::item()

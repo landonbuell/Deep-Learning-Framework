@@ -122,7 +122,7 @@ public:
 	bool virtual reshape(const TensorShape& newShape);
 
 	// Flatten this Tensor
-	void flatten();
+	void virtual flatten();
 	
 protected:
 
@@ -161,7 +161,6 @@ public:
 
 	// Multi-Dimensional Indexer Operator
 	float& operator[] (const Indexer& index);
-
 
 };
 

@@ -33,6 +33,7 @@ Tensor1D::Tensor1D(float* data, const int size) :
 Tensor1D::~Tensor1D()
 {
 	// Destructor
+	destructCode();
 }
 
 /* Public Interface */

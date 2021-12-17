@@ -37,6 +37,7 @@ Tensor4D::Tensor4D(float* data, const int size0, const int size1, const int size
 Tensor4D::~Tensor4D()
 {
 	// Destructor
+	destructCode();
 }
 
 /* Public Interface */
@@ -44,7 +45,11 @@ Tensor4D::~Tensor4D()
 float& Tensor4D::item(const int ii, const int jj, const int kk, const int ll)
 {
 	// 4D Indexer
-	const int index = (ii * _shape[0]) * (jj * _shape[1]) * (kk * _shape[2]) + ll;
-	validateIndex(index);
-	return _data.get()[index];
+	int idx = 0;
+	idx += ii * _sliceSizes[0];
+	idx += jj * _sliceSizes[1];
+	idx += kk * _sliceSizes[2];
+	idx += ll;
+	validateIndex(idx);
+	return _data.get()[idx];
 }

@@ -42,6 +42,21 @@ Tensor4D::~Tensor4D()
 
 /* Public Interface */
 
+bool Tensor4D::reshape(const TensorShape& newShape)
+{
+	// Reshape This Tensor
+	if (newShape.size() != 4)
+	{
+		// Cannot Reshape to different rank
+		return false;
+	}
+	else
+	{
+		// Shape Rank - try to reshape
+		return Tensor::validateReshape(newShape);
+	}
+}
+
 float& Tensor4D::item(const int ii, const int jj, const int kk, const int ll)
 {
 	// 4D Indexer

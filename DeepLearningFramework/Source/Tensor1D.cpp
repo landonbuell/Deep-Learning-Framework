@@ -38,6 +38,12 @@ Tensor1D::~Tensor1D()
 
 /* Public Interface */
 
+bool Tensor1D::reshape(const TensorShape& newShape)
+{
+	// Reshape This Tensor - Cannot Reshape 1D Tensor
+	return false;
+}
+
 float& Tensor1D::item(const int ii)
 {
 	// 1D Indexer

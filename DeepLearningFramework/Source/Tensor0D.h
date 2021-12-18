@@ -24,6 +24,9 @@ class Tensor0D : public Tensor
 
     /* Public Interface */
 
+    // Reshape This Tensor
+    bool reshape(const TensorShape& newShape) override;
+
     // 0D Indexer 
     float& item();
 };

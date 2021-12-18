@@ -24,6 +24,12 @@ Tensor0D::~Tensor0D()
 	destructCode();
 }
 
+bool Tensor0D::reshape(const TensorShape& newShape)
+{
+	// Reshape This Tensor - Cannot reshape 0D Tesnor
+	return false;
+}
+
 float& Tensor0D::item()
 {
 	// 0D Indexer

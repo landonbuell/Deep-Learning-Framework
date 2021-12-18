@@ -33,6 +33,9 @@ public:
 
     /* Public Interface */
 
+    // Reshape This Tensor
+    bool reshape(const TensorShape& newShape) override;
+
     // 1D Indexer 
     float& item(const int ii);
 

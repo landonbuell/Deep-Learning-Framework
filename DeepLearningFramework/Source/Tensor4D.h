@@ -31,6 +31,9 @@ class Tensor4D : public Tensor
 
     /* Public Interface */
 
+    // Reshape This Tensor
+    bool reshape(const TensorShape& newShape) override;
+
     // 4D Indexer
     float& item(const int ii, const int jj, const int kk, const int ll);
 

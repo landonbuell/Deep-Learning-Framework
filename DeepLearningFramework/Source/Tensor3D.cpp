@@ -38,6 +38,21 @@ Tensor3D::~Tensor3D()
 
 /* Public Interface */
 
+bool Tensor3D::reshape(const TensorShape& newShape)
+{
+	// Reshape This Tensor
+	if (newShape.size() != 3)
+	{
+		// Cannot Reshape to different rank
+		return false;
+	}
+	else
+	{
+		// Shape Rank - try to reshape
+		return Tensor::validateReshape(newShape);
+	}
+}
+
 float& Tensor3D::item(const int ii, const int jj, const int kk)
 {
 	// 3D Indexer 

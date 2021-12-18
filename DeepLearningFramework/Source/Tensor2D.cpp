@@ -39,6 +39,21 @@ Tensor2D::~Tensor2D()
 
 /* Public Interface */
 
+bool Tensor2D::reshape(const TensorShape& newShape)
+{
+	// Reshape This Tensor
+	if (newShape.size() != 2)
+	{
+		// Cannot Reshape to different rank
+		return false;
+	}
+	else
+	{
+		// Shape Rank - try to reshape
+		return Tensor::validateReshape(newShape);
+	}
+}
+
 float& Tensor2D::item(const int ii, const int jj)
 {
 	// 2D Indexer 

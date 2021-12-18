@@ -206,6 +206,13 @@ bool Tensor::reshape(const TensorShape& newShape)
 	return success;
 }
 
+void Tensor::flatten()
+{
+	// Flatten thid tensor
+	setShape(TensorShape{ _size });
+	return;
+}
+
 	/* Protected Interface */
 
 void Tensor::copyShallow(float data, const int size, const TensorShape& shape)

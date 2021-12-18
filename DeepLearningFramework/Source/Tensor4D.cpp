@@ -37,35 +37,34 @@ Tensor4D::Tensor4D(float* data, const int size0, const int size1, const int size
 Tensor4D::~Tensor4D()
 {
 	// Destructor
+	destructCode();
 }
 
 /* Public Interface */
 
-float& Tensor4D::item(const int ii)
+bool Tensor4D::reshape(const TensorShape& newShape)
 {
-	// 1D Indexer - Raises Error
-	throw "Tensor4D::item - Cannot use 1D indexer on 4D Tensor";
-	return _data.get()[0];
-}
-
-float& Tensor4D::item(const int ii, const int jj)
-{
-	// 2D Indexer - Raises Error
-	throw "Tensor4D::item - Cannot use 2D indexer on 4D Tensor";
-	return _data.get()[0];
-}
-
-float& Tensor4D::item(const int ii, const int jj, const int kk)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor4D::item - Cannot use 3D indexer on 4D Tensor";
-	return _data.get()[0];
+	// Reshape This Tensor
+	if (newShape.size() != 4)
+	{
+		// Cannot Reshape to different rank
+		return false;
+	}
+	else
+	{
+		// Shape Rank - try to reshape
+		return Tensor::validateReshape(newShape);
+	}
 }
 
 float& Tensor4D::item(const int ii, const int jj, const int kk, const int ll)
 {
 	// 4D Indexer
-	const int index = (ii * _shape[0]) * (jj * _shape[1]) * (kk * _shape[2]) + ll;
-	validateIndex(index);
-	return _data.get()[index];
+	int idx = 0;
+	idx += ii * _sliceSizes[0];
+	idx += jj * _sliceSizes[1];
+	idx += kk * _sliceSizes[2];
+	idx += ll;
+	validateIndex(idx);
+	return _data.get()[idx];
 }

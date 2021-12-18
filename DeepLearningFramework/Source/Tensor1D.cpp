@@ -33,34 +33,20 @@ Tensor1D::Tensor1D(float* data, const int size) :
 Tensor1D::~Tensor1D()
 {
 	// Destructor
+	destructCode();
 }
 
 /* Public Interface */
+
+bool Tensor1D::reshape(const TensorShape& newShape)
+{
+	// Reshape This Tensor - Cannot Reshape 1D Tensor
+	return false;
+}
 
 float& Tensor1D::item(const int ii)
 {
 	// 1D Indexer
 	validateIndex(ii);
 	return _data.get()[ii];
-}
-
-float& Tensor1D::item(const int ii, const int jj)
-{
-	// 2D Indexer - Raises Error
-	throw "Tensor1D::item - Cannot use 2D indexer on 1D Tensor";
-	return _data.get()[0];
-}
-
-float& Tensor1D::item(const int ii, const int jj, const int kk)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor1D::item - Cannot use 3D indexer on 1D Tensor";
-	return _data.get()[0];
-}
-
-float& Tensor1D::item(const int ii, const int jj, const int kk, const int ll)
-{
-	// 3D Indexer - Raises Error
-	throw "Tensor1D::item - Cannot use 4D indexer on 1D Tensor";
-	return _data.get()[0];
 }

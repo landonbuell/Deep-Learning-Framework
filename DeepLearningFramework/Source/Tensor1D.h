@@ -33,18 +33,11 @@ public:
 
     /* Public Interface */
 
+    // Reshape This Tensor
+    bool reshape(const TensorShape& newShape) override;
+
     // 1D Indexer 
-    float& item(const int ii) override;
-
-    // 2D Indexer - Raises Error
-    float& item(const int ii, const int jj) override;
-
-    // 3D Indexer - Raises Error
-    float& item(const int ii, const int jj, const int kk) override;
-
-    // 4D Indexer - Raises Error
-    float& item(const int ii, const int jj, const int kk, const int ll) override;
-
+    float& item(const int ii);
 
 };
 

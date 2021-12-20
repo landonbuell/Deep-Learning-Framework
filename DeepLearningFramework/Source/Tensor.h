@@ -115,6 +115,9 @@ public:
 
 	/* Public Interface */
 
+	// Make a Deep Copy of this tensor
+	Tensor copyDeep() const;
+
 	// Describe this Tensor
 	void describe(std::ostream& out);
 

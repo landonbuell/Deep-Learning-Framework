@@ -178,6 +178,17 @@ bool Tensor::setShape(const TensorShape& newShape)
 
 	/* Public Interface */
 
+Tensor Tensor::copyDeep() const
+{
+	// Make a Deep Copy of this Tensor
+	Tensor result(_size, _shape);
+	float* dataPtr = _data.get();
+	for (int i = 0; i < _size; i++)
+		result[i] = dataPtr[i];
+	dataPtr = nullptr;
+	return result;
+}
+
 void Tensor::describe(std::ostream& out)
 {
 	// Describe this Tensor

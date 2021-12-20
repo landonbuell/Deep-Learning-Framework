@@ -148,6 +148,7 @@
     <ClInclude Include="Tensor2D.h" />
     <ClInclude Include="Tensor3D.h" />
     <ClInclude Include="Tensor4D.h" />
+    <ClInclude Include="TensorOperation.h" />
     <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
     <ClCompile Include="Tensor2D.cpp" />
     <ClCompile Include="Tensor3D.cpp" />
     <ClCompile Include="Tensor4D.cpp" />
+    <ClCompile Include="TensorOperation.cpp" />
     <ClCompile Include="Variable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

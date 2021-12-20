@@ -22,7 +22,7 @@ class GraphNode
 {
 	// Parent Class for All GraphNodes
 
-private:
+protected:
 
 	// Members for Identification + Flow
 	std::string _name;

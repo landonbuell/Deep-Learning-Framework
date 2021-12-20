@@ -3,8 +3,8 @@
 * Repository:	Deep-Learning-Framework
 * Solution:		DeepLearingFramework
 * Project:		Source
-* Namespace:	Tensors
-* File:			Tensor.cpp
+* Namespace:	None
+* File:			main.cpp
 * Author:		Landon Buell
 * Date:			October 2021
 * Description:

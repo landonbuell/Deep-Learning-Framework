@@ -57,6 +57,9 @@
     <ClInclude Include="Tensor0D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TensorOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -91,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="Tensor0D.cpp">
       <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="TensorOperation.cpp">
+      <Filter>Source Files\TensorOperations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

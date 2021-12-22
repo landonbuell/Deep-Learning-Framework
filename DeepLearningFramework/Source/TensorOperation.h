@@ -34,7 +34,7 @@ public:
 	static Tensor add(Tensor& op1, Tensor& op2);
 
 	// Multiply Tensor x Tensor
-	static Tensor elementProduct(Tensor& op1, Tensor& op2);
+	static Tensor multiply(Tensor& op1, Tensor& op2);
 
 	// Compute Matrix Product
 	static Tensor matrixProduct(Tensor& op1, Tensor& op2);
@@ -54,32 +54,46 @@ private:
 
 	/* Helpers to Operate by Rank */
 
+	static Tensor matrixProduct(Tensor2D& op1, Tensor2D& op2);
+
 
 	/* Helpers to Ensure Shape or Size or Rank */
 
-	// Enforce operands have the Same Number of Elements
-	static void enforceSameSize(Tensor& op1, Tensor& op2);
+	class EnforcersBool
+	{
+		// Boolean Enforcer Methods return T/F if evaluation is successful
 
-	// Enforce operands have the Same Rank
-	static void enforceSameRank(Tensor& op1, Tensor& op2);
+		// Enforce operands have the Same Number of Elements
+		static bool sameSize(Tensor& op1, Tensor& op2);
 
-	// Enforce operands have the same shape
-	static void enforceSameShape(Tensor& op1, Tensor& op2);
+		// Enforce operands have the Same Rank
+		static bool sameRank(Tensor& op1, Tensor& op2);
 
-	// Enforce operand has particular size
-	static void enforceSize(Tensor& op1, const int size);
+		// Enforce operands have the same shape
+		static bool sameShape(Tensor& op1, Tensor& op2);
 
-	// Enforce operand has particular rank
-	static void enforceRank(Tensor& op1, const int size);
+		// Enforce operand has particular size
+		static bool isSize(Tensor& op, const int size);
 
-	// Enforce operand has particular shape
-	static void enforceShape(Tensor& op1, const TensorShape shape);
+		// Enforce operand has particular rank
+		static bool isRank(Tensor& op, const int size);
 
-	// Enforce Tensors are correct for Matrix Multplication
-	static void enforceValidMatrixMultiply(Tensor& op1, Tensor& op2);
+		// Enforce operand has particular shape
+		static bool isShape(Tensor& op, const TensorShape shape);
 
-	// Enforce Tensors are correct for Dot Product
-	static void enforceValidDotProduct(Tensor& op1, Tensor& op2);
+		// Enforce Tensors are correct for Matrix Multplication
+		static bool validMatrixMultiply(Tensor& op1, Tensor& op2);
+
+		// Enforce Tensors are correct for Dot Product
+		static bool validDotProduct(Tensor& op1, Tensor& op2);
+	};
+
+	class EnforcersFatal
+	{
+		// Fatal Enforcers throw Runtime Errors if evaluation is not sucessful
+	};
+
+	
 
 };
 

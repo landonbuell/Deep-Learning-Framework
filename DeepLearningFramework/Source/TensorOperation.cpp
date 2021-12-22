@@ -32,7 +32,7 @@ Tensor TensorOperation::add(Tensor& op1, Tensor& op2)
 	}
 }
 
-Tensor TensorOperation::multiply(Tensor& op1, Tensor& op2)
+Tensor TensorOperation::elementProduct(Tensor& op1, Tensor& op2)
 {
 	// Multiply Tensor x Tensor
 	if (op2.getRank() == 0 || op2.getSize() == 1)

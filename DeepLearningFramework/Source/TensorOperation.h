@@ -17,6 +17,11 @@
 #include<string>
 
 #include "Tensor.h"
+#include "Tensor0D.h"
+#include "Tensor1D.h"
+#include "Tensor2D.h"
+#include "Tensor3D.h"
+#include "Tensor4D.h"
 
 class TensorOperation
 {
@@ -29,7 +34,7 @@ public:
 	static Tensor add(Tensor& op1, Tensor& op2);
 
 	// Multiply Tensor x Tensor
-	static Tensor multiply(Tensor& op1, Tensor& op2);
+	static Tensor elementProduct(Tensor& op1, Tensor& op2);
 
 	// Compute Matrix Product
 	static Tensor matrixProduct(Tensor& op1, Tensor& op2);
@@ -46,6 +51,9 @@ public:
 	static Tensor multiply(Tensor& op1, float op2);
 
 private:
+
+	/* Helpers to Operate by Rank */
+
 
 	/* Helpers to Ensure Shape or Size or Rank */
 

@@ -13,18 +13,25 @@
 
 #include "TensorOperation.h"
 
+Tensor TensorOperation::null(Tensor& op1, Tensor& op2)
+{
+	// Return Null Tensor (Scaler w/ entry 0)
+	// Operands do NOT Affect Outcome
+	return Tensor();
+}
+
 Tensor TensorOperation::add(Tensor& op1, Tensor& op2)
 {
 	// Add Tensor + Tensor
 	if (op2.getRank() == 0 || op2.getSize() == 1)
 	{
 		// Operand 2 is a scalar
-		return add(op1,op2.item())
+		return add(op1, op2.item());
 	}
 	else
 	{
 		// Add Element-wise
-		enforceSameShape(op1, op2);
+		EnforcersBool::sameShape(op1, op2);
 		Tensor result = op1.copyDeep();
 		const int numElems = result.getSize();
 		for (int i = 0; i < numElems; i++)
@@ -39,12 +46,12 @@ Tensor TensorOperation::multiply(Tensor& op1, Tensor& op2)
 	if (op2.getRank() == 0 || op2.getSize() == 1)
 	{
 		// Operand 2 is a scalar
-		return multiply(op1, op2.item())
+		return multiply(op1, op2.item());
 	}
 	else
 	{
 		// Add Element-wise
-		enforceSameShape(op1, op2);
+		EnforcersBool::sameShape(op1, op2);
 		Tensor result = op1.copyDeep();
 		const int numElems = result.getSize();
 		for (int i = 0; i < numElems; i++)
@@ -56,7 +63,7 @@ Tensor TensorOperation::multiply(Tensor& op1, Tensor& op2)
 Tensor TensorOperation::matrixProduct(Tensor& op1, Tensor& op2)
 {
 	// Compute Matrix Product
-	enforceValidMatrixMultiply(op1, op2);
+	EnforcersBool::validMatrixMultiply(op1, op2);
 	const TensorShape resultShape{ op1.getShape()[0],  op2.getShape()[1] };
 	const int resultSize = resultShape[0] * resultShape[1];
 	const int commonAxis = op1.getShape()[1];
@@ -92,11 +99,11 @@ Tensor TensorOperation::matrixProduct(Tensor& op1, Tensor& op2)
 Tensor TensorOperation::dotProduct(Tensor& op1, Tensor& op2)
 {
 	// Compute Dot Product
-	enforceValidDotProduct(op1, op2);
+	EnforcersBool::sameSize(op1, op2);
 	Tensor result(0.0f);
-
 	// Calculate
-	for (int i = 0; i < op1.getSize(); i++)
+	const int numElems = op1.getSize();
+	for (int i = 0; i < numElems; i++)
 	{
 		result.item() += (op1[i] * op2[i]);
 	}

@@ -100,10 +100,15 @@ Tensor::~Tensor()
 Tensor::Tensor(const Tensor& other)
 {
 	// Copy Constructor
+	float* dataPtr = other.getData();
+	
 	_size = other.getSize();
 	_rank = other.getRank();
-	_data = std::shared_ptr<float>(other.getData());
+	_data = std::shared_ptr<float>(dataPtr);
 	_shape = other.getShape();
+	_sliceSizes = other._sliceSizes;
+
+	describe(std::cout);
 }
 
 
@@ -192,7 +197,8 @@ Tensor Tensor::copyDeep() const
 void Tensor::describe(std::ostream& out)
 {
 	// Describe this Tensor
-	out << "Tensor @ " << _data.get() << "\n"
+	float* dataPtr = _data.get();
+	out << "Tensor @ " << dataPtr << "\n"
 		<< "size: " << _size << " "
 		<< "rank: " << _rank << " "
 
@@ -205,7 +211,7 @@ void Tensor::describe(std::ostream& out)
 	// Show the Underlying Data
 	out << "\n";
 	for (int i = 0; i < _size; i++)
-		out << _data.get()[i] << " ";
+		out << dataPtr[i] << " ";
 	out << "\n\n";
 	return;
 }

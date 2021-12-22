@@ -30,6 +30,9 @@ public:
 
 	/* Generic Tensor Operations */
 
+	// Return Null Tensor
+	static Tensor null(Tensor& op1, Tensor& op2);
+
 	// Add Tensor + Tensor
 	static Tensor add(Tensor& op1, Tensor& op2);
 
@@ -62,6 +65,8 @@ private:
 	class EnforcersBool
 	{
 		// Boolean Enforcer Methods return T/F if evaluation is successful
+
+	public:
 
 		// Enforce operands have the Same Number of Elements
 		static bool sameSize(Tensor& op1, Tensor& op2);

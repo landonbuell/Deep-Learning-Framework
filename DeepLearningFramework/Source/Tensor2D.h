@@ -33,6 +33,9 @@ public:
 
     /* Public Interface */
 
+    // Construct and Return an Idenity Matrix
+    Tensor2D static identity(float value, const int size);
+
     // Reshape This Tensor
     bool reshape(const TensorShape& newShape) override;
 

@@ -15,10 +15,10 @@
 
 /* Constructors and Destructors */
 
-GraphNode::GraphNode(std::string name)
+GraphNode::GraphNode()
 {
-	// Constructor for GraphNode Instance
-	_name = name;
+	// Empty Constructor for GraphNode Instance
+	_name = "-1";
 	_value = nullptr;
 }
 
@@ -33,7 +33,7 @@ GraphNode::GraphNode(const GraphNode& graphNode)
 {
 	// Constructor for GraphNode Instance (Copy)
 	_name = graphNode.getName();
-	_value = graphNode._value;
+	_value = graphNode.getValue();
 }
 
 GraphNode::~GraphNode()
@@ -83,7 +83,6 @@ void GraphNode::setValue(Tensor* value)
 	return;
 }
 
-
 void GraphNode::construct()
 {
 	// Common Code for construction
@@ -94,6 +93,11 @@ void GraphNode::construct()
 void GraphNode::destruct()
 {
 	// Common Code for destruction
-	// TODO: Implement this
+	if (_value != nullptr)
+	{
+		// Destroy
+		delete _value;
+		_value = nullptr;
+	}
 	return;
 }

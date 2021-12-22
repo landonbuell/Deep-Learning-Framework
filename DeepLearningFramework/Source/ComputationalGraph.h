@@ -20,7 +20,7 @@
 
 #include "GraphNode.h"
 #include "Variable.h"
-#include "Operator.h"
+#include "OperatorNode.h"
 
 class ComputationalGraph
 {
@@ -30,10 +30,7 @@ private:
 
 	std::string _graphName;
 	std::vector<GraphNode*> _graphNodes;
-	std::stack<GraphNode*> _evaluationStack;
-	
-	Variable _headNode;
-
+	std::vector<GraphNode*> _evalQueue;
 
 };
 

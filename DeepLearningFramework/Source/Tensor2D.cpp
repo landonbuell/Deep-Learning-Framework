@@ -39,6 +39,20 @@ Tensor2D::~Tensor2D()
 
 /* Public Interface */
 
+Tensor2D Tensor2D::identity(float value, const int size)
+{
+	// Construct and Return an Indentity Matrix
+	Tensor2D result(0.0f, size, size);
+	Indexer idx{ 0,0 };
+	for (int i = 0; i < size; i++)
+	{
+		idx[0] = i;
+		idx[1] = i;
+		result[idx] = value;
+	}
+	return result;
+}
+
 bool Tensor2D::reshape(const TensorShape& newShape)
 {
 	// Reshape This Tensor

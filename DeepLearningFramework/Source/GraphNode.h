@@ -28,15 +28,15 @@ protected:
 	std::string _name;
 	Tensor* _value;
 
+	// Empty Constructor
+	GraphNode();
+
 public:
 
 	/* Constructors and Destructors */
 
 	// Constructor
-	GraphNode(std::string name);
-
-	// Constructor
-	GraphNode(std::string name, Tensor* value);
+	GraphNode(std::string name, Tensor* value = nullptr);
 
 	// Copy-Constructor
 	GraphNode(const GraphNode& graphNode);

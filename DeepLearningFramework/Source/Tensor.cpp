@@ -103,8 +103,8 @@ Tensor::Tensor(const Tensor& other)
 	_size = other.getSize();
 	_rank = other.getRank();
 	_data = std::shared_ptr<float>(other._data);
-	_shape = other.getShape();
-	_sliceSizes = other._sliceSizes;
+	_shape = TensorShape(other.getShape());
+	_sliceSizes = TensorShape(other._sliceSizes);
 }
 
 
@@ -200,7 +200,7 @@ void Tensor::describe(std::ostream& out)
 
 	// Show the Shape
 		<< "shape: (";
-	for (int i = 0; i < _shape.size(); i++)
+	for (int i = 0; i < _rank; i++)
 		out << _shape[i] << ",";
 	out << ") ";
 

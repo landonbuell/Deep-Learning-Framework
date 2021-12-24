@@ -80,5 +80,11 @@ public:
 	// If a VariableNode, Make sure we are not nullptr
 	// If a OperatorNode, evaluate the operator using the children and return pointer to freshly allocated 
 	void evaluate();
+
+protected:
+
+	//Common Code for destruction
+	void destruct() override;
+
 };
 

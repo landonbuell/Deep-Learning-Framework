@@ -27,6 +27,7 @@ protected:
 	// Members for Identification + Flow
 	std::string _name;
 	Tensor* _value;
+	bool _ownsMem;
 
 	// Empty Constructor
 	GraphNode();

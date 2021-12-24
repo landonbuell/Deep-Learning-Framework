@@ -22,21 +22,21 @@ class GraphNode
 {
 	// Parent Class for All GraphNodes
 
-private:
+protected:
 
 	// Members for Identification + Flow
 	std::string _name;
 	Tensor* _value;
+
+	// Empty Constructor
+	GraphNode();
 
 public:
 
 	/* Constructors and Destructors */
 
 	// Constructor
-	GraphNode(std::string name);
-
-	// Constructor
-	GraphNode(std::string name, Tensor* value);
+	GraphNode(std::string name, Tensor* value = nullptr);
 
 	// Copy-Constructor
 	GraphNode(const GraphNode& graphNode);
@@ -59,6 +59,9 @@ public:
 	void clearValue();
 
 	/* Operational Methods */
+
+	// Get description of this instance
+	void virtual describe(std::iostream& out) const = 0;
 
 	// Get T/F If is Operator Node
 	bool virtual isOperator() const = 0;

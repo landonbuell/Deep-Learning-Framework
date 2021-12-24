@@ -51,10 +51,13 @@
     <ClInclude Include="Variable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Operator.h">
+    <ClInclude Include="OperatorNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tensor0D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TensorOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,11 +89,14 @@
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\ComputationalGraphs</Filter>
     </ClCompile>
-    <ClCompile Include="Operator.cpp">
+    <ClCompile Include="OperatorNode.cpp">
       <Filter>Source Files\ComputationalGraphs</Filter>
     </ClCompile>
     <ClCompile Include="Tensor0D.cpp">
       <Filter>Source Files\Tensors</Filter>
+    </ClCompile>
+    <ClCompile Include="TensorOperation.cpp">
+      <Filter>Source Files\TensorOperations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

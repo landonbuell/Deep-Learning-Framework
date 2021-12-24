@@ -141,26 +141,28 @@
   <ItemGroup>
     <ClInclude Include="ComputationalGraph.h" />
     <ClInclude Include="GraphNode.h" />
-    <ClInclude Include="Operator.h" />
+    <ClInclude Include="OperatorNode.h" />
     <ClInclude Include="Tensor.h" />
     <ClInclude Include="Tensor0D.h" />
     <ClInclude Include="Tensor1D.h" />
     <ClInclude Include="Tensor2D.h" />
     <ClInclude Include="Tensor3D.h" />
     <ClInclude Include="Tensor4D.h" />
+    <ClInclude Include="TensorOperation.h" />
     <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComputationalGraph.cpp" />
     <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="OperatorNode.cpp" />
     <ClCompile Include="Tensor.cpp" />
     <ClCompile Include="Tensor0D.cpp" />
     <ClCompile Include="Tensor1D.cpp" />
     <ClCompile Include="Tensor2D.cpp" />
     <ClCompile Include="Tensor3D.cpp" />
     <ClCompile Include="Tensor4D.cpp" />
+    <ClCompile Include="TensorOperation.cpp" />
     <ClCompile Include="Variable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

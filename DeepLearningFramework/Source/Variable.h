@@ -24,10 +24,7 @@ class Variable : public GraphNode
 public:
 
 	// Constructor
-	Variable(std::string name);
-
-	// Constructor
-	Variable(std::string name, Tensor* value);
+	Variable(std::string name, Tensor* value = nullptr);
 
 	// Copy Constructor
 	Variable(const Variable& variable);
@@ -36,6 +33,9 @@ public:
 	~Variable();
 
 	/* Operation Methods */
+
+	// Describe this instance
+	void describe(std::iostream& out) const override;
 
 	// Get T/F If is Operator Node
 	bool isOperator() const;

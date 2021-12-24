@@ -102,8 +102,9 @@ Tensor::Tensor(const Tensor& other)
 	// Copy Constructor
 	_size = other.getSize();
 	_rank = other.getRank();
-	_data = std::shared_ptr<float>(other.getData());
+	_data = std::shared_ptr<float>(other._data);
 	_shape = other.getShape();
+	_sliceSizes = other._sliceSizes;
 }
 
 
@@ -178,10 +179,22 @@ bool Tensor::setShape(const TensorShape& newShape)
 
 	/* Public Interface */
 
+Tensor Tensor::copyDeep() const
+{
+	// Make a Deep Copy of this Tensor
+	Tensor result(_size, _shape);
+	float* dataPtr = _data.get();
+	for (int i = 0; i < _size; i++)
+		result[i] = dataPtr[i];
+	dataPtr = nullptr;
+	return result;
+}
+
 void Tensor::describe(std::ostream& out)
 {
 	// Describe this Tensor
-	out << "Tensor @ " << _data.get() << "\n"
+	float* dataPtr = _data.get();
+	out << "Tensor @ " << dataPtr << "\n"
 		<< "size: " << _size << " "
 		<< "rank: " << _rank << " "
 
@@ -194,7 +207,7 @@ void Tensor::describe(std::ostream& out)
 	// Show the Underlying Data
 	out << "\n";
 	for (int i = 0; i < _size; i++)
-		out << _data.get()[i] << " ";
+		out << dataPtr[i] << " ";
 	out << "\n\n";
 	return;
 }
@@ -325,7 +338,7 @@ bool Tensor::validateReshape(const TensorShape& newShape) const
 void Tensor::destructCode()
 {
 	// Common code for object destruction
-	_data = nullptr;
+	_data.reset();
 }
 
 /* Operator Overloads */

@@ -1,6 +1,2 @@
-﻿  Tensor1D.cpp
-  Tensor2D.cpp
-  Tensor3D.cpp
-  Tensor4D.cpp
-  Generating Code...
+﻿  main.cpp
   Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe

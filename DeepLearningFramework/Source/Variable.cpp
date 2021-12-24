@@ -15,12 +15,6 @@
 
 /* Constructors and Destructors */
 
-Variable::Variable(std::string name) :
-	GraphNode(name)
-{
-	// Constructor for Variable Instance
-}
-
 Variable::Variable(std::string name, Tensor* value) :
 	GraphNode(name, value)
 {
@@ -31,6 +25,17 @@ Variable::Variable(const Variable& variable) :
 	GraphNode(variable)
 {
 	// Copy Constructor
+}
+
+Variable::~Variable()
+{
+	// Destructor for Variable Node Instance
+}
+
+void Variable::describe(std::iostream& out) const
+{
+	//Describe the current instance
+	out << "Variable Node Instance @ " << &*(this) << "\n";
 }
 
 bool Variable::isOperator() const
@@ -49,5 +54,10 @@ void Variable::evaluate()
 {
 	// Evaluate this node
 	// Variable Nodes are already evaluated
+	if (_value == nullptr)
+	{
+		// Value is Null?
+		throw _name + " has value: nullptr";
+	}
 	return;
 }

@@ -3,8 +3,8 @@
 * Repository:	Deep-Learning-Framework
 * Solution:		DeepLearingFramework
 * Project:		Source
-* Namespace:	Tensors
-* File:			Tensor.cpp
+* Namespace:	None
+* File:			main.cpp
 * Author:		Landon Buell
 * Date:			October 2021
 * Description:
@@ -16,28 +16,38 @@
 #include <vector>
 
 #include "Tensor.h"
+#include "Tensor2D.h"
+
+#include "GraphNode.h"
+#include "Variable.h"
+#include "OperatorNode.h"
 
 int main(int argc, char** argv)
 {
 	int EXIT_STATUS = 0;
 
-	// Create a Local Array
-	const int size = 16;
-	float* arr = new float[size];
-	for (int i = 0; i < size; i++)
-		arr[i] = (float)i;
-	
-	// Create Initial Tensor
-	Tensor alpha(arr, size);
-	alpha[Indexer{ 0 }] = 4.0f;
-	alpha.describe(std::cout);
+	// Create a 4 x 4 Tensor
+	Tensor tensorA(2, 20, TensorShape{ 5,4 });
 
-	alpha.reshape(TensorShape{ 2,2,4 });
-	alpha[Indexer{ 1,0,1 }] = 70.0f;
-	alpha.describe(std::cout);
+	// Create a 4 x4 Identity Tensor
+	Tensor tensorB = Tensor2D::identity(1.0f, 4);
 
+	// Print the Tensors
+	//tensorA.describe(std::cout);
+	//tensorB.describe(std::cout);
+
+	/* Create the Graph */
+	Variable* A = new Variable("A", &(tensorA));
+	Variable* B = new Variable("B", &(tensorB));
+	OperatorNode* matmul =
+		new OperatorNode("matmul", TensorOperation::matrixProduct, nullptr, A, B);
+
+	// Evaluatethe Node
+	matmul->evaluate();
+	Tensor* result = matmul->getValue();
 
 	// Free Memory (handled by shared ptr)
-	std::cout << "=)" << std::endl;
-
+	delete A;
+	delete B;
+	return EXIT_STATUS;
 }

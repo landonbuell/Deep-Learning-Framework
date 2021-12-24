@@ -33,19 +33,13 @@ private:
 	GraphNode* _opLeft;
 	GraphNode* _opRight;
 	
-protected: 
+public:
 
 	// Empty Constructor
 	OperatorNode();
 
 	// Constructor
 	OperatorNode(std::string name, TensorOp operation, Tensor* value = nullptr,
-		GraphNode* left = nullptr, GraphNode* right = nullptr);
-
-public:
-
-	// Constructor
-	OperatorNode(Tensor* value = nullptr,
 		GraphNode* left = nullptr, GraphNode* right = nullptr);
 
 	// Copy Constructor
@@ -72,6 +66,9 @@ public:
 	void setRight(GraphNode* right);
 
 	/* Operation Methods */
+
+	//Describe the current instance
+	void describe(std::iostream& out) const override;
 
 	// Get T/F If is Operator Node
 	bool isOperator() const;

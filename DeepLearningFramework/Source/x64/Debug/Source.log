@@ -1,6 +1,2 @@
-﻿  Tensor.cpp
-C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(137,22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(176,26): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(239,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(256,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+﻿  main.cpp
   Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe

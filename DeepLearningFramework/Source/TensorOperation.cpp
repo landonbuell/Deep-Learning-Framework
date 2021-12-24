@@ -93,6 +93,7 @@ Tensor TensorOperation::matrixProduct(Tensor& op1, Tensor& op2)
 		}
 	}
 	// Return the resuling 2D array
+	result.describe(std::cout);
 	return result;
 }
 

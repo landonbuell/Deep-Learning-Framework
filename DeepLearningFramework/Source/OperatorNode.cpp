@@ -23,15 +23,6 @@ OperatorNode::OperatorNode(std::string name, TensorOp operation,
 	_opRight = right;
 }
 
-OperatorNode::OperatorNode(Tensor* value, GraphNode* left, GraphNode* right) :
-	GraphNode("-1",value)
-{
-	// Constructor
-	_operation = TensorOperation::null;
-	_opLeft = left;
-	_opRight = right;
-}
-
 OperatorNode::OperatorNode(const OperatorNode& opNode)
 {
 	// Copy Constructor
@@ -86,6 +77,12 @@ void OperatorNode::setRight(GraphNode* right)
 	// Set Left Node
 	_opRight = right;
 	return;
+}
+
+void OperatorNode::describe(std::iostream& out) const
+{
+	//Describe the current instance
+	out << "Operator Node Instance @ " << &*(this) << "\n";
 }
 
 bool OperatorNode::isOperator() const

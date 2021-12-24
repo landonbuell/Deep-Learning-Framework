@@ -18,21 +18,36 @@
 #include "Tensor.h"
 #include "Tensor2D.h"
 
+#include "GraphNode.h"
+#include "Variable.h"
+#include "OperatorNode.h"
+
 int main(int argc, char** argv)
 {
 	int EXIT_STATUS = 0;
 
 	// Create a 4 x 4 Tensor
-	//Tensor tensorA(2, 16, TensorShape{ 4,4 });
+	Tensor tensorA(2, 20, TensorShape{ 5,4 });
 
 	// Create a 4 x4 Identity Tensor
-	Tensor2D tensorB = Tensor2D::identity(1.0f, 4);
+	Tensor tensorB = Tensor2D::identity(1.0f, 4);
 
 	// Print the Tensors
 	//tensorA.describe(std::cout);
-	tensorB.describe(std::cout);
+	//tensorB.describe(std::cout);
+
+	/* Create the Graph */
+	Variable* A = new Variable("A", &(tensorA));
+	Variable* B = new Variable("B", &(tensorB));
+	OperatorNode* matmul =
+		new OperatorNode("matmul", TensorOperation::matrixProduct, nullptr, A, B);
+
+	// Evaluatethe Node
+	matmul->evaluate();
+	Tensor* result = matmul->getValue();
 
 	// Free Memory (handled by shared ptr)
-	std::cout << "=)" << std::endl;
-
+	delete A;
+	delete B;
+	return EXIT_STATUS;
 }

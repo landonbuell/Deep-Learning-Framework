@@ -60,6 +60,9 @@ public:
 
 	/* Operational Methods */
 
+	// Get description of this instance
+	void virtual describe(std::iostream& out) const = 0;
+
 	// Get T/F If is Operator Node
 	bool virtual isOperator() const = 0;
 

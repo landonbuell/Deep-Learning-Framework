@@ -27,6 +27,17 @@ Variable::Variable(const Variable& variable) :
 	// Copy Constructor
 }
 
+Variable::~Variable()
+{
+	// Destructor for Variable Node Instance
+}
+
+void Variable::describe(std::iostream& out) const
+{
+	//Describe the current instance
+	out << "Variable Node Instance @ " << &*(this) << "\n";
+}
+
 bool Variable::isOperator() const
 {
 	// Get T/F If is Operator Node

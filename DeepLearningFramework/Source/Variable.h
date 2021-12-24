@@ -34,6 +34,9 @@ public:
 
 	/* Operation Methods */
 
+	// Describe this instance
+	void describe(std::iostream& out) const override;
+
 	// Get T/F If is Operator Node
 	bool isOperator() const;
 

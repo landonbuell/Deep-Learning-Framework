@@ -100,15 +100,11 @@ Tensor::~Tensor()
 Tensor::Tensor(const Tensor& other)
 {
 	// Copy Constructor
-	float* dataPtr = other.getData();
-	
 	_size = other.getSize();
 	_rank = other.getRank();
-	_data = std::shared_ptr<float>(dataPtr);
+	_data = std::shared_ptr<float>(other._data);
 	_shape = other.getShape();
 	_sliceSizes = other._sliceSizes;
-
-	describe(std::cout);
 }
 
 
@@ -342,7 +338,7 @@ bool Tensor::validateReshape(const TensorShape& newShape) const
 void Tensor::destructCode()
 {
 	// Common code for object destruction
-	_data = nullptr;
+	_data.reset();
 }
 
 /* Operator Overloads */

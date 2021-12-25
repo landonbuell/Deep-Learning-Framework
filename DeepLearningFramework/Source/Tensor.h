@@ -21,8 +21,6 @@ typedef std::vector<int> Indexer;
 
 typedef std::vector<int> TensorShape;
 
-
-
 class Tensor
 {
 	// Base Class For All Tensors <float>
@@ -31,10 +29,10 @@ protected:
 
 	int _size;
 	int _rank;
-	std::shared_ptr<float> _data;	
+	float* _data;
+	bool _ownsData;
 	TensorShape _shape;
 	TensorShape _sliceSizes;
-
 
 public:
 
@@ -43,47 +41,47 @@ public:
 	// Generic Constructor 
 	Tensor();
 
-	// Generic Constructor 
-	Tensor(const int size);
+	// Constructor for Tensor
+	Tensor(
+		const TensorShape& shape);
 
-	// Generic Constructor 
-	Tensor(const int size, const TensorShape& shape);
+	// Constructor for Tensor
+	Tensor(
+		float data);
 
-	// Constructor for 0-Tensor (From Value)
-	Tensor(float data);
+	// Constructor for Tensor 
+	Tensor(
+		float data, 
+		const TensorShape& shape);
 
-	// Constructor for Tensor (From Value)
-	Tensor(float data, const int size);
+	// Constructor for Tensor
+	Tensor(
+		float* data,
+		const int size, 
+		bool ownsData = true);
 
-	// Constructor for Tensor (From Value)
-	Tensor(float data, const int size, const TensorShape& shape);
+	// Constructor for Tensor 
+	Tensor(
+		float* data, 
+		const TensorShape& shape, 
+		bool ownsData = true);
 
-	// Constructor for 0-Tensor (From Pointer)
-	Tensor(float* data);
+	// Copy Constructor
+	Tensor(
+		const Tensor& other);
 
-	// Constructor for Tensor (From Pointer)
-	Tensor(float* data, const int size);
+	// Copy Assignment Operator
+	Tensor& operator=(
+		const Tensor& other);
 
-	// Constructor for Tensor (From Pointer)
-	Tensor(float* data, const int size, const TensorShape& shape);
-	
+	// Move Assignment Operator
+	Tensor& operator=(
+		const Tensor&& other);
+
 	// Destructor for Tensor
 	~Tensor();
 
 public:
-
-	// Copy Constructor
-	Tensor(const Tensor& other);
-
-	// Copy Assignment Operator
-	Tensor& operator=(const Tensor& other);
-
-	// Move Assignment Operator
-	Tensor& operator=(const Tensor&& other);
-
-public:
-
-	/* Getters and Setters */
 
 	// Get the Full Size of the Tensor
 	int getSize() const;
@@ -94,9 +92,15 @@ public:
 	// Get Pointer Directly to Data
 	float* getData() const;
 
+	// Get T/F if Tensor Owns it's underlying array
+	bool getOwnsData() const;
+
 	// Get the Tensor's Shape
 	TensorShape getShape() const;
 
+	// Set T/F if Tensor Owns it's underlying array
+	void setOwnsData(bool ownsMem);
+	
 protected:
 
 	// Set the Size of this Tensor
@@ -106,7 +110,7 @@ protected:
 	void setRank(const int Rank);
 
 	// Set Pointer Directly to Data (No Recc. for usage)
-	bool setData(float* data);
+	bool setData(float* data, const int size = -1, bool ownsData = true);
 
 	// Set the Tensor's Shape (T/F if successful)
 	bool setShape(const TensorShape& newShape);
@@ -114,9 +118,6 @@ protected:
 public:
 
 	/* Public Interface */
-
-	// Make a Deep Copy of this tensor
-	Tensor copyDeep() const;
 
 	// Describe this Tensor
 	void describe(std::ostream& out);
@@ -129,34 +130,36 @@ public:
 	
 protected:
 
-	/* Protected Interface */
+	// Helper for Instance construction
+	void construct(float* data, const TensorShape& shape, bool ownsData);
 
-	// HelperFunction to Perform a Shallow Copy
-	void copyShallow(float data, const int size, const TensorShape& shape);
+	// Helper for Instance construction
+	void construct(float val, const TensorShape& shape);
 
-	// HelperFunction to Perform a Shallow Copy
-	void copyShallow(float* data, const int size, const TensorShape& shape);
+	// Helper for Instance destruction
+	void destruct();
 
-	// Helper Function to validate Direct index
-	bool validateIndex(const int index) const;
-
-	// Helper Function to get index from indexer
-	const int indexFromIndexer(const Indexer& indexer) const;
+	// Helper to copy underlying array
+	float* copyUnderlying() const;
 
 	// Find size of "pseudo-slices" when indexing
 	TensorShape sliceSizes() const;
 
+	// Get size from vector of axis shapes
+	const int sizeFromShape(const TensorShape& shape) const;
+
+	// Helper Function to get index from indexer
+	const int indexFromIndexer(const Indexer& indexer) const;
+
+	// Helper Function to validate Direct index
+	bool validateIndex(const int index) const;
+
 	// Helper Function to validate new shape
 	bool virtual validateReshape(const TensorShape& newShape) const;
 
-	// Helper Destruction Function
-	void destructCode();
-
 public:
 
-	/* Operator Overloads */
-
-	// Get 0-th Item of Array (best fo 0-D Tensors)
+	// Get 0-th Item of Array (best fors 0-D Tensors)
 	float& item();
 	
 	// Direct Index Operator
@@ -164,7 +167,6 @@ public:
 
 	// Multi-Dimensional Indexer Operator
 	float& operator[] (const Indexer& index);
-
 };
 
 

@@ -20,13 +20,22 @@ class Tensor2D :
 public:
 
     // Constructor
-    Tensor2D(const int size0, const int size1);
+    Tensor2D(
+        const int size0, 
+        const int size1);
 
     // Constructor
-    Tensor2D(float data, const int size0, const int size1);
+    Tensor2D(
+        float data, 
+        const int size0, 
+        const int size1);
 
     // Constructor
-    Tensor2D(float* data, const int size0, const int size1);
+    Tensor2D(
+        float* data, 
+        const int size0, 
+        const int size1, 
+        bool ownsData = true);
 
     // Destructor
     ~Tensor2D();

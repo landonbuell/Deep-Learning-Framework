@@ -14,30 +14,27 @@
 #include "Tensor4D.h"
 
 Tensor4D::Tensor4D(const int size0, const int size1, const int size2, const int size3) :
-	Tensor(size0* size1* size2 * size3)
+	Tensor(TensorShape{size0,size1,size2,size3})
 {
 	// Constructor (See base)
-	_shape = std::vector<int>{ size0,size1,size2,size3 };
 }
 
 Tensor4D::Tensor4D(float data, const int size0, const int size1, const int size2, const int size3) :
-	Tensor(data, size0* size1* size2 * size3)
+	Tensor(data, TensorShape{ size0,size1,size2,size3 })
 {
 	// Constructor (See base)
-	_shape = std::vector<int>{ size0,size1,size2,size3 };
 }
 
-Tensor4D::Tensor4D(float* data, const int size0, const int size1, const int size2, const int size3) :
-	Tensor(data, size0* size1* size2 * size3)
+Tensor4D::Tensor4D(float* data, const int size0, const int size1, const int size2, const int size3, bool ownsData) :
+	Tensor(data, TensorShape{ size0,size1,size2,size3 }, ownsData)
 {
 	// Constructor (See Base)
-	_shape = std::vector<int>{ size0,size1,size2,size3 };
 }
 
 Tensor4D::~Tensor4D()
 {
 	// Destructor
-	destructCode();
+	destruct();
 }
 
 /* Public Interface */
@@ -66,5 +63,5 @@ float& Tensor4D::item(const int ii, const int jj, const int kk, const int ll)
 	idx += kk * _sliceSizes[2];
 	idx += ll;
 	validateIndex(idx);
-	return _data.get()[idx];
+	return _data[idx];
 }

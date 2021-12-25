@@ -20,13 +20,19 @@ class Tensor1D :
 public:
 
     // Constructor
-    Tensor1D(const int size);
+    Tensor1D(
+        const int size);
 
     // Constructor
-    Tensor1D(float data, const int size);
+    Tensor1D(
+        float data, 
+        const int size);
 
     // Constructor
-    Tensor1D(float* data, const int size);
+    Tensor1D(
+        float* data, 
+        const int size, 
+        bool ownsData = true);
 
     // Destructor
     ~Tensor1D();

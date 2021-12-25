@@ -13,19 +13,19 @@
 #include "Tensor3D.h"
 
 Tensor3D::Tensor3D(const int size0, const int size1, const int size2) :
-	Tensor(size0 * size1 * size2, TensorShape{size0,size1,size2})
+	Tensor(TensorShape{ size0,size1,size2 })
 {
 	// Constructor (See base)
 }
 
 Tensor3D::Tensor3D(float data, const int size0, const int size1, const int size2) :
-	Tensor(data, size0* size1* size2, TensorShape{ size0,size1,size2 })
+	Tensor(data, TensorShape{ size0,size1,size2 })
 {
 	// Constructor (See base)
 }
 
-Tensor3D::Tensor3D(float* data, const int size0, const int size1, const int size2) :
-	Tensor(data, size0* size1* size2, TensorShape{ size0,size1,size2 })
+Tensor3D::Tensor3D(float* data, const int size0, const int size1, const int size2, bool ownsData) :
+	Tensor(data, TensorShape{ size0,size1,size2 }, ownsData)
 {
 	// Constructor (See Base)
 }
@@ -33,7 +33,7 @@ Tensor3D::Tensor3D(float* data, const int size0, const int size1, const int size
 Tensor3D::~Tensor3D()
 {
 	// Destructor
-	destructCode();
+	destruct();
 }
 
 /* Public Interface */
@@ -61,5 +61,5 @@ float& Tensor3D::item(const int ii, const int jj, const int kk)
 	idx += jj * _sliceSizes[1];
 	idx += kk;
 	validateIndex(idx);
-	return _data.get()[idx];
+	return _data[idx];
 }

@@ -21,7 +21,7 @@ Tensor0D::Tensor0D(const float data) :
 Tensor0D::~Tensor0D()
 {
 	// Destructor for Tensor0D Instance
-	destructCode();
+	destruct();
 }
 
 bool Tensor0D::reshape(const TensorShape& newShape)
@@ -33,5 +33,5 @@ bool Tensor0D::reshape(const TensorShape& newShape)
 float& Tensor0D::item()
 {
 	// 0D Indexer
-	return _data.get()[0];
+	return _data[0];
 }

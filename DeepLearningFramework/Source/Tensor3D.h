@@ -19,13 +19,25 @@ class Tensor3D : public Tensor
 public:
 
     // Constructor
-    Tensor3D(const int size0, const int size1, const int size2);
+    Tensor3D(
+        const int size0, 
+        const int size1, 
+        const int size2);
 
     // Constructor
-    Tensor3D(float data, const int size0, const int size1, const int size2);
+    Tensor3D(
+        float data, 
+        const int size0, 
+        const int size1, 
+        const int size2);
 
     // Constructor
-    Tensor3D(float* data, const int size0, const int size1, const int size2);
+    Tensor3D(
+        float* data, 
+        const int size0, 
+        const int size1, 
+        const int size2, 
+        bool ownsData = true);
 
     // Destructor
     ~Tensor3D();

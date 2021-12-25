@@ -20,81 +20,49 @@ Tensor::Tensor()
 	// Constructor 
 	_size = 1;
 	_rank = 0;
-	_data = std::shared_ptr<float>(new float[1]);;
+	_data = new float[1];
+	_ownsData = true;
 	_shape = TensorShape{ 1 };
 	_sliceSizes = sliceSizes();
 }
 
-Tensor::Tensor(const int size)
-{
-	// Constructor 
-	float* dataPtr = new float[size];
-	TensorShape shape{ 1 };
-	copyShallow(dataPtr, size, shape);
-	dataPtr = nullptr;
-}
 
-Tensor::Tensor(const int size, const TensorShape& shape)
+Tensor::Tensor(const TensorShape& shape)
 {
-	// Constructor for Tensor (From Value)
-	float* dataPtr = new float[size];
-	copyShallow(dataPtr, size, shape);
-	dataPtr = nullptr;
+	// Constructor for Tensor
+	_size = sizeFromShape(shape);
+	_rank = shape.size();
+	_data = new float[_size];
+	_ownsData = true;
+	_shape = TensorShape(shape);
+	_sliceSizes = sliceSizes();
 }
 
 Tensor::Tensor(float data)
 {
-	// Constructor for 0-Tensor (From Value) 
-	_size = 1;
+	// Constructor for Tensor
+	TensorShape shape{ 1, };
+	construct(data, shape);
 	_rank = 0;
-	_data = std::shared_ptr<float>(new float[1]);;
-	_shape = TensorShape{ 1 };
-	_sliceSizes = sliceSizes();
-
-	// Set Scalar to Values
-	_data.get()[0] = data;
 }
 
-Tensor::Tensor(float data, const int size)
-{
-	// Constructor for Tensor (From Value)
-	TensorShape shape{ size };
-	copyShallow(data, size, shape);
-}
-
-Tensor::Tensor(float data, const int size, const TensorShape& shape)
+Tensor::Tensor(float data, const TensorShape& shape)
 {
 	// Constructor for Tensor
-	copyShallow(data, size, shape);
+	construct(data, shape);
 }
 
-Tensor::Tensor(float* data)
+Tensor::Tensor(float* data, const int size, bool ownsData)
 {
-	// Constructor for 0-Tensor (From Pointer)
-	_size = 1;
-	_rank = 0;
-	_data = std::shared_ptr<float>(data);;
-	_shape = TensorShape{ 1 };
-	_sliceSizes = sliceSizes();
+	// Constructor for Tensor
+	TensorShape shape{ size, };
+	construct(data, shape, ownsData);
 }
 
-Tensor::Tensor(float* data, const int size)
+Tensor::Tensor(float* data, const TensorShape& shape, bool ownsData)
 {
-	// Constructor for Tensor (From Pointer)
-	TensorShape shape{ size };
-	copyShallow(data, size, shape);
-}
-
-Tensor::Tensor(float* data, const int size, const TensorShape& shape)
-{
-	// Constructor for Tensor (From Pointer)
-	copyShallow(data, size, shape);
-}
-
-Tensor::~Tensor()
-{
-	// Destructor for Tensor
-	destructCode();
+	// Constructor for Tensor
+	construct(data, shape, ownsData);
 }
 
 Tensor::Tensor(const Tensor& other)
@@ -102,18 +70,42 @@ Tensor::Tensor(const Tensor& other)
 	// Copy Constructor
 	_size = other.getSize();
 	_rank = other.getRank();
-	_data = std::shared_ptr<float>(other._data);
+	_data = other.copyUnderlying();
+	_ownsData = true;
 	_shape = TensorShape(other.getShape());
 	_sliceSizes = TensorShape(other._sliceSizes);
 }
 
+Tensor& Tensor::operator=(const Tensor& other)
+{
+	if (this == &other) { return *this; }
+	_size = sizeFromShape(other._shape);
+	_rank = other._rank;
+	_data = other._data;
+	_ownsData = true;
+	_shape = TensorShape(other._shape);
+	_sliceSizes = sliceSizes();
+	return *this;
+}
+
+Tensor::~Tensor()
+{
+	// Destructor for Tensr
+	destruct();
+}
 
 	/* Getters and Setters */
 
 float* Tensor::getData() const
 {
 	// Get Pointer Directly to Data
-	return (_data.get());
+	return _data;
+}
+
+bool Tensor::getOwnsData() const
+{
+	// Get T/F if Tensor Owns it's underlying array
+	return _ownsData;
 }
 
 int Tensor::getSize() const
@@ -125,18 +117,20 @@ int Tensor::getSize() const
 int Tensor::getRank() const
 {
 	// Get the Number of Axes in the tensor
-	if (_size == 1)
-	{
-		// Only 1 element, it's a 0-Rank Tensor
-		return 0;
-	}
-	return _shape.size();
+	return _rank;
 }
 
 TensorShape Tensor::getShape() const
 {
 	// Get the Tensor's Shape
 	return _shape;
+}
+
+void Tensor::setOwnsData(bool ownsMem)
+{
+	// Set T/F if Tensor Owns it's underlying array
+	_ownsData = ownsMem;
+	return;
 }
 
 void Tensor::setSize(const int size)
@@ -155,11 +149,13 @@ void Tensor::setRank(const int rank)
 	_rank = rank;
 }
 
-bool Tensor::setData(float* data)
+bool Tensor::setData(float* data, const int size, bool ownsData)
 {
 	// Set Pointer Directly to Data (No Recc. for usage)
-	_data = nullptr;
-	_data = std::shared_ptr<float>(data);
+	destruct();
+	if (size != -1) { _size = size; }
+	_ownsData = ownsData;
+	_data = data;
 	return true;
 }
 
@@ -179,22 +175,11 @@ bool Tensor::setShape(const TensorShape& newShape)
 
 	/* Public Interface */
 
-Tensor Tensor::copyDeep() const
-{
-	// Make a Deep Copy of this Tensor
-	Tensor result(_size, _shape);
-	float* dataPtr = _data.get();
-	for (int i = 0; i < _size; i++)
-		result[i] = dataPtr[i];
-	dataPtr = nullptr;
-	return result;
-}
 
 void Tensor::describe(std::ostream& out)
 {
 	// Describe this Tensor
-	float* dataPtr = _data.get();
-	out << "Tensor @ " << dataPtr << "\n"
+	out << "Tensor @ " << _data << "\n"
 		<< "size: " << _size << " "
 		<< "rank: " << _rank << " "
 
@@ -207,7 +192,7 @@ void Tensor::describe(std::ostream& out)
 	// Show the Underlying Data
 	out << "\n";
 	for (int i = 0; i < _size; i++)
-		out << dataPtr[i] << " ";
+		out << _data[i] << " ";
 	out << "\n\n";
 	return;
 }
@@ -228,44 +213,89 @@ void Tensor::flatten()
 
 	/* Protected Interface */
 
-void Tensor::copyShallow(float data, const int size, const TensorShape& shape)
+void Tensor::construct(float* data, const TensorShape& shape, bool ownsData)
 {
-	// HelperFunction to Perform a Shallow Copy
-	_size = size;
+	// Helper for Instance construction
+	_size = sizeFromShape(shape);
 	_rank = shape.size();
-	_data = std::shared_ptr<float>(new float[size]);
-	_shape = shape;
+	_data = data;
+	_ownsData = ownsData;
+	_shape = TensorShape(shape);
+	_sliceSizes = sliceSizes();
+	return;
+}
+
+void Tensor::construct(float val,const TensorShape& shape)
+{
+	// Helper for Instance construction
+	_size = sizeFromShape(shape);
+	_rank = shape.size();
+	_data = new float[_size];
+	_ownsData = true;
+	_shape = TensorShape(shape);
 	_sliceSizes = sliceSizes();
 
-	// Copy Value into Data
-	float* dataPtr = _data.get();
+	// Set Each element of data to the value
 	for (int i = 0; i < _size; i++)
-		dataPtr[i] = data;
-	dataPtr = nullptr;
+	{
+		_data[i] = val;
+	}
 	return;
 }
 
-void Tensor::copyShallow(float* data, const int size, const TensorShape& shape)
+void Tensor::destruct()
 {
-	// HelperFunction to Perform a Shallow Copy
-	_size = size;
-	_rank = shape.size();
-	_data = std::shared_ptr<float>(data);
-	_shape = shape;
-	_sliceSizes = sliceSizes();
-
+	// Helper for Instance destruction
+	if (_ownsData == true && _data != nullptr)
+	{
+		// We own the data, and it's not nullptr
+		delete[] _data;
+	}
+	_data = nullptr;
 	return;
 }
 
-bool Tensor::validateIndex(const int index) const
+float* Tensor::copyUnderlying() const
 {
-	// Helper Function to valid slice index
-	if (index < 0)
-		throw "Tensor::validateSliceIndex - Index must be positive";
-	if (index >= _size)
-		throw "Tensor::validateSliceIndex - Index must be smaller than " + _size;
-	// Otherwise, the index is valid
-	return true;
+	// Helper to copy underlying array
+	float* newData = new float[_size];
+	for (int i = 0; i < _size; i++)
+	{
+		newData[i] = _data[i];
+	}
+	return newData;
+}
+
+TensorShape Tensor::sliceSizes() const
+{
+	// Find size of "pseudo-slices" when indexing	
+	if (_rank > 1)
+	{
+		TensorShape result(_rank - 1, 0);
+		int sliceSize = 1;
+		for (int i = _rank - 1; i > 0; i--)
+		{
+			sliceSize *= _shape[i];
+			result[i - 1] = sliceSize;
+		}
+		return result;
+	}
+	else
+	{
+		TensorShape result{ 1 };
+		return result;
+	}
+}
+
+const int Tensor::sizeFromShape(const TensorShape& shape) const
+{
+	// Get size from vector of axis shapes
+	int result = 1;
+	for (int i = 0; i < shape.size(); i++)
+	{
+		result *= shape[i];
+	}
+	return result;
 }
 
 const int Tensor::indexFromIndexer(const Indexer& indexer) const
@@ -291,27 +321,15 @@ const int Tensor::indexFromIndexer(const Indexer& indexer) const
 	return result;
 }
 
-TensorShape Tensor::sliceSizes() const
+bool Tensor::validateIndex(const int index) const
 {
-	// Find size of "pseudo-slices" when indexing	
-	if (_rank > 1)
-	{
-		TensorShape result(_rank - 1, 0);
-		int sliceSize = 1;
-		for (int i = _rank - 1; i > 0; i--)
-		{
-			sliceSize *= _shape[i];
-			result[i - 1] = sliceSize;
-		}
-		return result;
-	}
-	else
-	{
-		TensorShape result{ 1 };
-		return result;
-	}	
-	
-
+	// Helper Function to valid slice index
+	if (index < 0)
+		throw "Tensor::validateSliceIndex - Index must be positive";
+	if (index >= _size)
+		throw "Tensor::validateSliceIndex - Index must be smaller than " + _size;
+	// Otherwise, the index is valid
+	return true;
 }
 
 bool Tensor::validateReshape(const TensorShape& newShape) const
@@ -335,25 +353,19 @@ bool Tensor::validateReshape(const TensorShape& newShape) const
 	}
 }
 
-void Tensor::destructCode()
-{
-	// Common code for object destruction
-	_data.reset();
-}
-
 /* Operator Overloads */
 
 float& Tensor::item()
 {
 	// Get a Refrence to the 0-th item (for scalars)
-	return (_data.get()[0]);
+	return _data[0];
 }
 
 float& Tensor::operator[] (const int index)
 {
 	// Index Slice Operator
 	validateIndex(index);
-	return (_data.get()[index]);
+	return _data[index];
 }
 
 float& Tensor::operator[] (const Indexer& index)
@@ -372,5 +384,5 @@ float& Tensor::operator[] (const Indexer& index)
 	// Check that The Index is Valid
 	const int idx = indexFromIndexer(index);
 	validateIndex(idx);
-	return _data.get()[idx];
+	return _data[idx];
 }

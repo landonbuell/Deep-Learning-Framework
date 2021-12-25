@@ -13,19 +13,19 @@
 #include "Tensor1D.h"
 
 Tensor1D::Tensor1D(const int size) :
-	Tensor(size)
+	Tensor(TensorShape{size})
 {
 	// Constructor (See Base)
 }
 
 Tensor1D::Tensor1D(float data, const int size) :
-	Tensor(data, size)
+	Tensor(data, TensorShape{size})
 {
 	// Constructor (See Base)
 }
 
-Tensor1D::Tensor1D(float* data, const int size) :
-	Tensor(data,size)
+Tensor1D::Tensor1D(float* data, const int size, bool ownsData) :
+	Tensor(data,TensorShape{size}, ownsData)
 {
 	// Constructor (See Base)
 }
@@ -33,7 +33,7 @@ Tensor1D::Tensor1D(float* data, const int size) :
 Tensor1D::~Tensor1D()
 {
 	// Destructor
-	destructCode();
+	destruct();
 }
 
 /* Public Interface */
@@ -48,5 +48,5 @@ float& Tensor1D::item(const int ii)
 {
 	// 1D Indexer
 	validateIndex(ii);
-	return _data.get()[ii];
+	return _data[ii];
 }

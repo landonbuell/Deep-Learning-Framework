@@ -14,19 +14,19 @@
 #include "Tensor2D.h"
 
 Tensor2D::Tensor2D(const int size0, const int size1) :
-	Tensor(size0 * size1, TensorShape{size0,size1})
+	Tensor(TensorShape{size0,size1})
 {
 	// Constructor (See Base)
 }
 
 Tensor2D::Tensor2D(float data, const int size0, const int size1) :
-	Tensor(data, size0 * size1, TensorShape{ size0,size1 })
+	Tensor(data, TensorShape{ size0,size1 })
 {
 	// Constructor (See Base)
 }
 
-Tensor2D::Tensor2D(float* data, const int size0, const int size1) :
-	Tensor(data, size0 * size1, TensorShape{ size0,size1 })
+Tensor2D::Tensor2D(float* data, const int size0, const int size1, bool ownsData) :
+	Tensor(data, TensorShape{ size0,size1 }, ownsData)
 {
 	// Constructor (See Base)
 }
@@ -34,7 +34,7 @@ Tensor2D::Tensor2D(float* data, const int size0, const int size1) :
 Tensor2D::~Tensor2D()
 {
 	// Destructor
-	destructCode();
+	destruct();
 }
 
 /* Public Interface */
@@ -75,5 +75,5 @@ float& Tensor2D::item(const int ii, const int jj)
 	idx += ii* _sliceSizes[0];
 	idx += jj;
 	validateIndex(idx);
-	return _data.get()[idx];
+	return _data[idx];
 }

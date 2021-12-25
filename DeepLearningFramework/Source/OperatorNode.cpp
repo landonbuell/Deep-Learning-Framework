@@ -114,14 +114,25 @@ void OperatorNode::evaluate()
 	}
 	if (_opRight->isEvaluated() == false)
 	{
-		// Eight operand is NOT evaluated
+		// Right operand is NOT evaluated
 		// Evaluate it (Depth-First recursive)
 		_opRight->evaluate();
 	}
 	// Evaluate the operation on  THIS node + Attatch
-	Tensor result = _operation(
+	const Tensor result = _operation(
 		*(_opLeft->getValue()),
 		*(_opRight->getValue()) );
-	_value = &(result);
+	_value = new Tensor(result);
+	return;
+}
+
+void OperatorNode::destruct()
+{
+	// Common code for Destruction
+	if (_value != nullptr)
+	{
+		delete _value;
+		_value = nullptr;
+	}
 	return;
 }

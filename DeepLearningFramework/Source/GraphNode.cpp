@@ -93,11 +93,5 @@ void GraphNode::construct()
 void GraphNode::destruct()
 {
 	// Common Code for destruction
-	if (_value != nullptr)
-	{
-		// Destroy
-		delete _value;
-		_value = nullptr;
-	}
 	return;
 }

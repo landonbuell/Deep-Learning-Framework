@@ -18,13 +18,28 @@ class Tensor4D : public Tensor
 {
 
     // Constructor
-    Tensor4D(const int size0, const int size1, const int size2, const int size3);
+    Tensor4D(
+        const int size0, 
+        const int size1, 
+        const int size2, 
+        const int size3);
 
     // Constructor
-    Tensor4D(float data, const int size0, const int size1, const int size2, const int size3);
+    Tensor4D(
+        float data, 
+        const int size0, 
+        const int size1, 
+        const int size2, 
+        const int size3);
 
     // Constructor
-    Tensor4D(float* data, const int size0, const int size1, const int size2, const int size3);
+    Tensor4D(
+        float* data, 
+        const int size0, 
+        const int size1, 
+        const int size2, 
+        const int size3,
+        bool ownsData = true);
 
     // Destructor
     ~Tensor4D();

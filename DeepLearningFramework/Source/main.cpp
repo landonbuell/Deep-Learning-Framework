@@ -27,10 +27,10 @@ int main(int argc, char** argv)
 	int EXIT_STATUS = 0;
 
 	// Create a 4 x 4 Tensor
-	Tensor tensorA(2, 20, TensorShape{ 5,4 });
+	Tensor tensorA(2, TensorShape{ 5,4 });
 
 	// Create a 4 x4 Identity Tensor
-	Tensor tensorB = Tensor2D::identity(1.0f, 4);
+	Tensor tensorB(4, TensorShape{ 4, 2 });
 
 	// Print the Tensors
 	//tensorA.describe(std::cout);
@@ -45,8 +45,9 @@ int main(int argc, char** argv)
 	// Evaluatethe Node
 	matmul->evaluate();
 	Tensor* result = matmul->getValue();
+	result->describe(std::cout);
 
-	// Free Memory (handled by shared ptr)
+	// Free Memory
 	delete A;
 	delete B;
 	return EXIT_STATUS;

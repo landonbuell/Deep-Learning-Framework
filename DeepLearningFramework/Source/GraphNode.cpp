@@ -26,20 +26,19 @@ GraphNode::GraphNode(std::string name, Tensor* value)
 {
 	// Constructor for GraphNode Instance
 	_name = name;
-	_value = value;
+	_value = std::shared_ptr<Tensor>(value);
 }
 
 GraphNode::GraphNode(const GraphNode& graphNode)
 {
 	// Constructor for GraphNode Instance (Copy)
 	_name = graphNode.getName();
-	_value = graphNode.getValue();
+	_value = std::shared_ptr<Tensor>(graphNode._value);
 }
 
 GraphNode::~GraphNode()
 {
 	// Destructor for GraphNode Instance
-	destruct();
 }
 
 /* Getters and Setters */
@@ -53,13 +52,13 @@ std::string GraphNode::getName() const
 Tensor* GraphNode::getValue() const
 {
 	// Get the Value of this Node
-	return _value;
+	return _value.get();
 }
 
 bool GraphNode::isEvaluated() const
 {
 	// Get the Evaluation Status of this Node
-	return !(_value == nullptr);
+	return !(_value.get() == nullptr);
 }
 
 void GraphNode::clearValue()
@@ -79,7 +78,7 @@ void GraphNode::setName(std::string name)
 void GraphNode::setValue(Tensor* value)
 {
 	// Set the Value of this Node
-	_value = value;
+	_value = std::shared_ptr<Tensor>(value);
 	return;
 }
 

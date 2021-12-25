@@ -16,6 +16,8 @@
 class Tensor0D : public Tensor
 {
 
+public:
+
     // Constructor
     Tensor0D(const float data);
 

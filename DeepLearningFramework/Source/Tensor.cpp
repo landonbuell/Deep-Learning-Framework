@@ -355,15 +355,9 @@ bool Tensor::validateReshape(const TensorShape& newShape) const
 
 /* Operator Overloads */
 
-float& Tensor::item()
+float& Tensor::item(const int index)
 {
 	// Get a Refrence to the 0-th item (for scalars)
-	return _data[0];
-}
-
-float& Tensor::operator[] (const int index)
-{
-	// Index Slice Operator
 	validateIndex(index);
 	return _data[index];
 }

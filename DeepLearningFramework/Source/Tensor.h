@@ -159,12 +159,9 @@ protected:
 
 public:
 
-	// Get 0-th Item of Array (best fors 0-D Tensors)
-	float& item();
+	// Direct-Index Operator
+	float& item(const int index = 0);
 	
-	// Direct Index Operator
-	float& operator[] (const int index);
-
 	// Multi-Dimensional Indexer Operator
 	float& operator[] (const Indexer& index);
 };

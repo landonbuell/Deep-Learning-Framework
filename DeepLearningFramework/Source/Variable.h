@@ -24,7 +24,9 @@ class Variable : public GraphNode
 public:
 
 	// Constructor
-	Variable(std::string name, Tensor* value = nullptr);
+	Variable(
+		std::string name, 
+		Tensor* value = nullptr);
 
 	// Copy Constructor
 	Variable(const Variable& variable);

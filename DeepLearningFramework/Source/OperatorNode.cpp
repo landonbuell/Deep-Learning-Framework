@@ -27,17 +27,10 @@ OperatorNode::OperatorNode(const OperatorNode& opNode)
 {
 	// Copy Constructor
 	_name = opNode.getName();
-	_value = nullptr;
+	_value = std::shared_ptr<Tensor>(opNode._value);
 	_operation = opNode.getOperation();
 	_opLeft = opNode.getLeft();
 	_opRight = opNode.getRight();
-
-	// Copy Value, if opNode is evaluated
-	if (opNode.isEvaluated() == true)
-	{
-		_value = opNode.getValue();
-	}
-
 }
 
 OperatorNode::~OperatorNode()
@@ -119,20 +112,13 @@ void OperatorNode::evaluate()
 		_opRight->evaluate();
 	}
 	// Evaluate the operation on  THIS node + Attatch
-	const Tensor result = _operation(
-		*(_opLeft->getValue()),
-		*(_opRight->getValue()) );
-	_value = new Tensor(result);
+	Tensor* result =
+		_operation(
+			*(_opLeft->getValue()),
+			*(_opRight->getValue())
+		);
+	_value = std::shared_ptr<Tensor>(result);
+	result = nullptr;
 	return;
 }
 
-void OperatorNode::destruct()
-{
-	// Common code for Destruction
-	if (_value != nullptr)
-	{
-		delete _value;
-		_value = nullptr;
-	}
-	return;
-}

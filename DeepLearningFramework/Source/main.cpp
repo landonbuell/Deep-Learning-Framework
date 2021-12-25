@@ -50,5 +50,6 @@ int main(int argc, char** argv)
 	// Free Memory
 	delete A;
 	delete B;
+	delete matmul;
 	return EXIT_STATUS;
 }

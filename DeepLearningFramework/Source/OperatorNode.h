@@ -22,11 +22,11 @@
 #include "TensorOperation.h"
 
 // Create a Typedef for a Tensor Operation
-typedef Tensor(*TensorOp) (Tensor&, Tensor&);
+typedef Tensor* (*TensorOp) (Tensor&, Tensor&);
 
 class OperatorNode : public GraphNode
 {
-
+	
 private:
 
 	TensorOp _operation;
@@ -39,11 +39,16 @@ public:
 	OperatorNode();
 
 	// Constructor
-	OperatorNode(std::string name, TensorOp operation, Tensor* value = nullptr,
-		GraphNode* left = nullptr, GraphNode* right = nullptr);
+	OperatorNode(
+		std::string name, 
+		TensorOp operation, 
+		Tensor* value = nullptr,
+		GraphNode* left = nullptr, 
+		GraphNode* right = nullptr);
 
 	// Copy Constructor
-	OperatorNode(const OperatorNode& op);
+	OperatorNode(
+		const OperatorNode& op);
 
 	// Destructor
 	~OperatorNode();
@@ -80,11 +85,6 @@ public:
 	// If a VariableNode, Make sure we are not nullptr
 	// If a OperatorNode, evaluate the operator using the children and return pointer to freshly allocated 
 	void evaluate();
-
-protected:
-
-	//Common Code for destruction
-	void destruct() override;
 
 };
 

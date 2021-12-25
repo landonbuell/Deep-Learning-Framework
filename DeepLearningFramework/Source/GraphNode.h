@@ -26,8 +26,7 @@ protected:
 
 	// Members for Identification + Flow
 	std::string _name;
-	Tensor* _value;
-	bool _ownsMem;
+	std::shared_ptr<Tensor> _value;
 
 	// Empty Constructor
 	GraphNode();
@@ -37,10 +36,13 @@ public:
 	/* Constructors and Destructors */
 
 	// Constructor
-	GraphNode(std::string name, Tensor* value = nullptr);
+	GraphNode(
+		std::string name, 
+		Tensor* value = nullptr);
 
 	// Copy-Constructor
-	GraphNode(const GraphNode& graphNode);
+	GraphNode(
+		const GraphNode& graphNode);
 	
 	// Destructor
 	~GraphNode();

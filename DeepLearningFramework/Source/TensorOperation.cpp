@@ -20,7 +20,7 @@ Tensor* TensorOperation::null(Tensor& op1, Tensor& op2)
 	return new Tensor();
 }
 
-Tensor* TensorOperation::add(Tensor& op1, Tensor& op2)
+Tensor* TensorOperation::tensorAdd(Tensor& op1, Tensor& op2)
 {
 	// Add Tensor + Tensor
 	if (op2.getRank() == 0 || op2.getSize() == 1)
@@ -90,7 +90,7 @@ Tensor* TensorOperation::matrixProduct(Tensor& op1, Tensor& op2)
 				(*result)[idxRes] += op1[idxOp1] * op2[idxOp2];
 			}
 		}
-	}
+	} 
 	// Return the resuling 2D array
 	return result;
 }

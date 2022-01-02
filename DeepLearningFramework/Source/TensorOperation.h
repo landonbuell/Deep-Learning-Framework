@@ -34,7 +34,7 @@ public:
 	static Tensor* null(Tensor& op1, Tensor& op2);
 
 	// Add Tensor + Tensor
-	static Tensor* add(Tensor& op1, Tensor& op2);
+	static Tensor* tensorAdd(Tensor& op1, Tensor& op2);
 
 	// Multiply Tensor x Tensor
 	static Tensor* multiply(Tensor& op1, Tensor& op2);

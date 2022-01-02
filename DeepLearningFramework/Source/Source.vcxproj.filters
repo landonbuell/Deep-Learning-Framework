@@ -51,7 +51,7 @@
     <ClInclude Include="Variable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OperatorNode.h">
+    <ClInclude Include="Operator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tensor0D.h">
@@ -89,7 +89,7 @@
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\ComputationalGraphs</Filter>
     </ClCompile>
-    <ClCompile Include="OperatorNode.cpp">
+    <ClCompile Include="Operator.cpp">
       <Filter>Source Files\ComputationalGraphs</Filter>
     </ClCompile>
     <ClCompile Include="Tensor0D.cpp">

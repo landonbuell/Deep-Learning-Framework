@@ -20,7 +20,7 @@
 
 #include "GraphNode.h"
 #include "Variable.h"
-#include "OperatorNode.h"
+#include "Operator.h"
 
 class ComputationalGraph
 {

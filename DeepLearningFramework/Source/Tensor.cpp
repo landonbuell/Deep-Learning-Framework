@@ -312,6 +312,12 @@ const int Tensor::indexFromIndexer(const Indexer& indexer) const
 		// Compute High Dimensional index
 		for (int i = 0; i < _rank - 1; i++)
 		{
+			// Check in index of Axis is valid
+			if (indexer[i] >= _shape[i])
+			{
+				// Over indexed this axis
+				throw "Tensor::validateAxes(). Invalid index for axis";
+			}
 			// Increment based on axis sizes
 			idx += (indexer[i] * _sliceSizes[i]);
 		}

@@ -20,36 +20,39 @@
 
 #include "GraphNode.h"
 #include "Variable.h"
-#include "OperatorNode.h"
+#include "Operator.h"
 
 int main(int argc, char** argv)
 {
 	int EXIT_STATUS = 0;
 
 	// Create a 4 x 4 Tensor
-	Tensor tensorA(2, TensorShape{ 5,4 });
+	Tensor p(2, TensorShape{ 1,4 });
 
-	// Create a 4 x4 Identity Tensor
-	Tensor tensorB(4, TensorShape{ 4, 2 });
+	// Create a 4 x 2 Tensor
+	Tensor q(4, TensorShape{ 4, 2 });
 
-	// Print the Tensors
-	//tensorA.describe(std::cout);
-	//tensorB.describe(std::cout);
+	// Create a 2 x Tensor
+	Tensor r(-6, TensorShape{ 1,2 });
 
-	/* Create the Graph */
-	Variable* A = new Variable("A", &(tensorA));
-	Variable* B = new Variable("B", &(tensorB));
-	OperatorNode* matmul =
-		new OperatorNode("matmul", TensorOperation::matrixProduct, nullptr, A, B);
+	// Wrap the tensors in variable nodes
+	Variable inputs("x", &p);
+	Variable weights("w", &q);
+	Variable biases("b", &r);
 
-	// Evaluatethe Node
-	matmul->evaluate();
-	Tensor* result = matmul->getValue();
-	result->describe(std::cout);
+	// Join th variables with operator nodes
+	Operator matmul("u", TensorOperation::matrixProduct,
+		&inputs, &weights);
+	Operator add("v",TensorOperation::tensorAdd,
+		&matmul, &biases);
 
-	// Free Memory
-	delete A;
-	delete B;
-	delete matmul;
+	// the Output Node is the add node.
+	GraphNode* output = &add;
+	output->evaluate();
+	output->getValue()->describe(std::cout);
+
+	// Exit
+	std::cout << "=)" << std::endl;
 	return EXIT_STATUS;
+	
 }

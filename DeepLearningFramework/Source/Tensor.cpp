@@ -206,7 +206,7 @@ bool Tensor::reshape(const TensorShape& newShape)
 
 void Tensor::flatten()
 {
-	// Flatten thid tensor
+	// Flatten this tensor
 	setShape(TensorShape{ _size });
 	return;
 }

@@ -27,18 +27,18 @@ int main(int argc, char** argv)
 	int EXIT_STATUS = 0;
 
 	// Create a 4 x 4 Tensor
-	Tensor p(2, TensorShape{ 1,4 });
+	Tensor x(2, TensorShape{ 1,4 });
 
 	// Create a 4 x 2 Tensor
-	Tensor q(4, TensorShape{ 4, 2 });
+	Tensor w(4, TensorShape{ 4, 2 });
 
 	// Create a 2 x Tensor
-	Tensor r(-6, TensorShape{ 1,2 });
+	Tensor b(-6, TensorShape{ 1,2 });
 
 	// Wrap the tensors in variable nodes
-	Variable inputs("x", &p);
-	Variable weights("w", &q);
-	Variable biases("b", &r);
+	Variable inputs("x", &x);
+	Variable weights("w", &w);
+	Variable biases("b", &b);
 
 	// Join th variables with operator nodes
 	Operator matmul("u", TensorOperation::matrixProduct,

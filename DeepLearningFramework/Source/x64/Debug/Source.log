@@ -1,2 +1,18 @@
-﻿  main.cpp
+﻿  ComputationalGraph.cpp
+  GraphNode.cpp
+  Operator.cpp
+  Tensor.cpp
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(34,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(168,26): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(220,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\Source\Tensor.cpp(232,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Tensor0D.cpp
+  Tensor1D.cpp
+  Tensor2D.cpp
+  Tensor3D.cpp
+  Tensor4D.cpp
+  TensorOperation.cpp
+  Variable.cpp
+  main.cpp
+  Generating Code...
   Source.vcxproj -> C:\Users\lando\Documents\GitHub\Deep-Learning-Framework\DeepLearningFramework\x64\Debug\Source.exe

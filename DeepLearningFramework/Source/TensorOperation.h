@@ -30,35 +30,16 @@ public:
 
 	/* Generic Tensor Operations */
 
-	// Return Null Tensor
-	static Tensor* null(Tensor& op1, Tensor& op2);
+	// Get A pointer to this instance
+	static const TensorOperation* instance();
 
-	// Add Tensor + Tensor
-	static Tensor* tensorAdd(Tensor& op1, Tensor& op2);
+	// Always return Nullptr
+	virtual Tensor* nullOp(const Tensor& op1, const Tensor& op2);
 
-	// Multiply Tensor x Tensor
-	static Tensor* multiply(Tensor& op1, Tensor& op2);
+	// Generalize Invoke Method for Arbitary rank Tensors (Returns Tensor if not overloaded)
+	virtual Tensor* invoke(const Tensor& op1, const Tensor& op2);
 
-	// Compute Matrix Product
-	static Tensor* matrixProduct(Tensor& op1, Tensor& op2);
-
-	// Compute Dot Product
-	static Tensor* dotProduct(Tensor& op1, Tensor& op2);
-
-	/* Helpers to Optimizer Scalar Cases */
-
-	// Add Tensor + Scalar
-	static Tensor* add(Tensor& op1, float op2);
-
-	// Multiply Tensor x Scalar
-	static Tensor* multiply(Tensor& op1, float op2);
-
-private:
-
-	/* Helpers to Operate by Rank */
-
-	static Tensor* matrixProduct(Tensor2D& op1, Tensor2D& op2);
-
+protected:
 
 	/* Helpers to Ensure Shape or Size or Rank */
 
@@ -98,7 +79,11 @@ private:
 		// Fatal Enforcers throw Runtime Errors if evaluation is not sucessful
 	};
 
-	
+	// Private Constructor - Does nothing!
+	TensorOperation();
+
+	// Static Memeber - Shared Ptr
+	static std::shared_ptr<TensorOperation> _instance;
 
 };
 

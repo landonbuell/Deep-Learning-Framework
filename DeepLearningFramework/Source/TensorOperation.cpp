@@ -13,120 +13,27 @@
 
 #include "TensorOperation.h"
 
-Tensor* TensorOperation::null(Tensor& op1, Tensor& op2)
+const TensorOperation* TensorOperation::instance()
 {
-	// Return Null Tensor (Scaler w/ entry 0)
-	// Operands do NOT Affect Outcome
-	return new Tensor();
-}
-
-Tensor* TensorOperation::tensorAdd(Tensor& op1, Tensor& op2)
-{
-	// Add Tensor + Tensor
-	if (op2.getRank() == 0 || op2.getSize() == 1)
+	// Get A pointer to this instance
+	if (_instance.get() == nullptr)
 	{
-		// Operand 2 is a scalar
-		return add(op1, op2.item());
+		// No Instance - Make it
+		_instance = std::shared_ptr<TensorOperation>(new TensorOperation);
 	}
-	else
-	{
-		// Add Element-wise
-		EnforcersBool::sameShape(op1, op2);
-		Tensor* result = new Tensor(op1);
-		const int numElems = result->getSize();
-		for (int i = 0; i < numElems; i++)
-			result->item(i) += op2.item(i);
-		return result;
-	}
+	return _instance.get();
 }
 
-Tensor* TensorOperation::multiply(Tensor& op1, Tensor& op2)
+Tensor* TensorOperation::nullOp(const Tensor& op1, const Tensor& op2)
 {
-	// Multiply Tensor x Tensor (Element-Wise)
-	if (op2.getRank() == 0 || op2.getSize() == 1)
-	{
-		// Operand 2 is a scalar
-		return multiply(op1, op2.item());
-	}
-	else
-	{
-		// Add Element-wise
-		EnforcersBool::sameShape(op1, op2);
-		Tensor* result = new Tensor(op1);
-		const int numElems = result->getSize();
-		for (int i = 0; i < numElems; i++)
-			result->item(i) *= op2.item(i);
-		return result;
-	}
+	// Always return Nullptr
+	return nullptr;
 }
 
-Tensor* TensorOperation::matrixProduct(Tensor& op1, Tensor& op2)
+Tensor* TensorOperation::invoke(const Tensor& op1, const Tensor& op2)
 {
-	// Compute Matrix Product
-	EnforcersBool::validMatrixMultiply(op1, op2);
-	const TensorShape resultShape{ op1.getShape()[0],  op2.getShape()[1] };
-	const int commonAxis = op1.getShape()[1];
-
-	// Make the result + the indexer objs for each matrix
-	Tensor* result = new Tensor(0.0f, resultShape);
-	Indexer idxRes{ 0,0 };
-	Indexer idxOp1{ 0,0 };
-	Indexer idxOp2{ 0,0 };
-
-	// Iterate through rows + cols
-	for (int i = 0; i < resultShape[0]; i++)
-	{
-		idxRes[0] = i;
-		idxOp1[0] = i;
-		for (int j = 0; j < resultShape[1]; j++)
-		{
-			idxRes[1] = j;
-			idxOp2[1] = j;
-			for (int k = 0; k < commonAxis; k++)
-			{
-				// Add result[i,j] += a[i,k] * b[k,j]
-				idxOp1[0] = k;
-				idxOp2[0] = k;
-				(*result)[idxRes] += op1[idxOp1] * op2[idxOp2];
-			}
-		}
-	} 
-	// Return the resuling 2D array
-	return result;
-}
-
-Tensor* TensorOperation::dotProduct(Tensor& op1, Tensor& op2)
-{
-	// Compute Dot Product
-	EnforcersBool::sameSize(op1, op2);
-	Tensor* result = new Tensor0D(0.0f);
-	// Calculate
-	const int numElems = op1.getSize();
-	for (int i = 0; i < numElems; i++)
-	{
-		result->item() += (op1.item(i) * op2.item(i));
-	}
-	return result;
-}
-
-Tensor* TensorOperation::add(Tensor& op1, float op2)
-{
-	// Add Tensor + Scaler
-	Tensor* result = new Tensor(op1);
-	const int numElems = result->getSize();
-	for (int i = 0; i < numElems; i++)
-		result->item(i) += op2;
-	return result;
-}
-
-Tensor* TensorOperation::multiply(Tensor& op1, float op2)
-{
-	// Mulitply Tensor x Scaler
-	Tensor* result = new Tensor(op1);
-	const int numElems = result->getSize();
-	for (int i = 0; i < numElems; i++)
-		result->item(i) *= op2;
-	return result;
+	// Generalize Invoke Method for Arbitary rank Tensors (Returns size1 Tensor if not overloaded)
+	return new Tensor(TensorShape{1});
 }
 
 	/* Helpers to Ensure Shape or Size or Rank */

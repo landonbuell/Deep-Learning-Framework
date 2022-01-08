@@ -127,6 +127,21 @@ public:
 
 	// Flatten this Tensor
 	void virtual flatten();
+
+	// Cast to Tensor (Base Class)
+	bool virtual toTensorND();
+
+	// Cast to 1D Tensor
+	bool virtual toTensor1D();
+
+	// Cast to 2D Tensor
+	bool virtual toTensor1D();
+
+	// Cast to 3D Tensor
+	bool virtual toTensor1D();
+
+	// Cast to 4D Tensor
+	bool virtual toTensor1D();
 	
 protected:
 
@@ -161,9 +176,15 @@ public:
 
 	// Direct-Index Operator
 	float& item(const int index = 0);
+
+	// Direct-Index Operator
+	const float& item(const int index = 0) const;
 	
 	// Multi-Dimensional Indexer Operator
 	float& operator[] (const Indexer& index);
+
+	// Multi-Dimensional Indexer Operator
+	const float& operator[] (const Indexer& index) const;
 };
 
 

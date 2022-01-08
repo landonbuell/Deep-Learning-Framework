@@ -16,7 +16,6 @@
 #include <vector>
 
 #include "Tensor.h"
-#include "Tensor2D.h"
 
 #include "GraphNode.h"
 #include "Variable.h"
@@ -39,17 +38,6 @@ int main(int argc, char** argv)
 	Variable inputs("x", &x);
 	Variable weights("w", &w);
 	Variable biases("b", &b);
-
-	// Join th variables with operator nodes
-	Operator matmul("u", TensorOperation::matrixProduct,
-		&inputs, &weights);
-	Operator add("v",TensorOperation::tensorAdd,
-		&matmul, &biases);
-
-	// the Output Node is the add node.
-	GraphNode* output = &add;
-	output->evaluate();
-	output->getValue()->describe(std::cout);
 
 	// Exit
 	std::cout << "=)" << std::endl;

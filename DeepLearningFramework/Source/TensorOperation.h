@@ -23,7 +23,7 @@
 #include "Tensor3D.h"
 #include "Tensor4D.h"
 
-class TensorOperation
+class TensorOp
 {
 
 public:
@@ -31,13 +31,16 @@ public:
 	/* Generic Tensor Operations */
 
 	// Get A pointer to this instance
-	static const TensorOperation* instance();
+	static const TensorOp* instance();
 
 	// Always return Nullptr
-	virtual Tensor* nullOp(const Tensor& op1, const Tensor& op2);
+	virtual Tensor* nullOp(const Tensor* op1, const Tensor* op2);
 
-	// Generalize Invoke Method for Arbitary rank Tensors (Returns Tensor if not overloaded)
-	virtual Tensor* invoke(const Tensor& op1, const Tensor& op2);
+	// Generalized Invoke Method for Arbitary rank Tensors (Returns Tensor if not overloaded)
+	virtual Tensor* invoke(const Tensor* op1, const Tensor* op2);
+
+	// Generalized Derivative for Arbitrary Tensor (Returns Tensor if not overloaded)
+	virtual Tensor* derivative(const Tensor* op1, const Tensor* op2);
 
 protected:
 
@@ -80,10 +83,10 @@ protected:
 	};
 
 	// Private Constructor - Does nothing!
-	TensorOperation();
+	TensorOp();
 
 	// Static Memeber - Shared Ptr
-	static std::shared_ptr<TensorOperation> _instance;
+	static std::shared_ptr<TensorOp> _instance;
 
 };
 

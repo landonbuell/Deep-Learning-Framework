@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 	Tensor w(4, TensorShape{ 4, 2 });
 
 	// Create a 2 x Tensor
-	Tensor b(-6, TensorShape{ 1,2 });
+	Tensor b(-6, TensorShape{ 2 });
 
 	// Wrap the tensors in variable nodes
 	Variable inputs("x", &x);

@@ -21,15 +21,13 @@
 #include "GraphNode.h"
 #include "TensorOperation.h"
 
-// Create a Typedef for a Tensor Operation
-typedef Tensor* (*TensorOp) (Tensor&, Tensor&);
 
 class Operator : public GraphNode
 {
 	
 private:
 
-	TensorOp _operation;
+	std::shared_ptr<TensorOp> _operation;
 	GraphNode* _opLeft;
 	GraphNode* _opRight;
 	
@@ -41,7 +39,7 @@ public:
 	// Constructor
 	Operator(
 		std::string name, 
-		TensorOp operation, 
+		std::shared_ptr<TensorOp> operation,
 		GraphNode* left = nullptr, 
 		GraphNode* right = nullptr);
 
@@ -55,7 +53,7 @@ public:
 	/* Getters and Setters */
 
 	// Get to pointer to the Tensor Operation
-	TensorOp getOperation() const;
+	TensorOp* getOperation() const;
 
 	// Left Left Operand
 	GraphNode* getLeft() const;
@@ -84,6 +82,9 @@ public:
 	// If a VariableNode, Make sure we are not nullptr
 	// If a Operator, evaluate the operator using the children and return pointer to freshly allocated 
 	void evaluate();
+
+	// Helper function for object destruction
+	void destruct() override;
 
 };
 

@@ -13,12 +13,15 @@
 
 #include "Operator.h"
 
-Operator::Operator(std::string name, TensorOp operation,
-	GraphNode* left, GraphNode* right) :
+Operator::Operator(
+	std::string name, 
+	std::shared_ptr<TensorOp> operation,
+	GraphNode* left,
+	GraphNode* right) :
 	GraphNode(name,nullptr)
 {
 	// Constructor
-	_operation = operation;
+	_operation = std::shared_ptr<TensorOp>(operation);
 	_opLeft = left;
 	_opRight = right;
 }
@@ -28,7 +31,7 @@ Operator::Operator(const Operator& opNode)
 	// Copy Constructor
 	_name = opNode.getName();
 	_value = nullptr;
-	_operation = opNode.getOperation();
+	_operation = std::shared_ptr<TensorOp>(opNode._operation);
 	_opLeft = opNode.getLeft();
 	_opRight = opNode.getRight();
 
@@ -45,10 +48,10 @@ Operator::~Operator()
 	destruct();
 }
 
-TensorOp Operator::getOperation() const
+TensorOp* Operator::getOperation() const
 {
 	// Get to pointer to the Tensor Operation
-	return _operation;
+	return _operation.get();
 }
 
 GraphNode* Operator::getLeft() const
@@ -117,13 +120,20 @@ void Operator::evaluate()
 		_opRight->evaluate();
 	}
 	// Evaluate the operation on  THIS node + Attatch
-	Tensor* result =
-		_operation(
-			*(_opLeft->getValue()),
-			*(_opRight->getValue())
+	Tensor* result = getOperation()->invoke(
+		_opLeft->getValue(),
+		_opRight->getValue()
 		);
-	_value = std::shared_ptr<Tensor>(result);
-	result = nullptr;
+	setValue(result);
 	return;
+}
+
+void Operator::destruct()
+{
+	// Helper function for object destruction
+	_value = std::shared_ptr<Tensor>(nullptr);
+	_operation = std::shared_ptr<TensorOp>(nullptr);
+	_opLeft = nullptr;
+	_opRight = nullptr;
 }
 

@@ -39,6 +39,7 @@ GraphNode::GraphNode(const GraphNode& graphNode)
 GraphNode::~GraphNode()
 {
 	// Destructor for GraphNode Instance
+	destruct();
 }
 
 /* Getters and Setters */
@@ -92,5 +93,6 @@ void GraphNode::construct()
 void GraphNode::destruct()
 {
 	// Common Code for destruction
+	_value = std::shared_ptr<Tensor>(nullptr);
 	return;
 }

@@ -13,24 +13,24 @@
 
 #include "TensorOperation.h"
 
-const TensorOperation* TensorOperation::instance()
+const TensorOp* TensorOp::instance()
 {
 	// Get A pointer to this instance
 	if (_instance.get() == nullptr)
 	{
 		// No Instance - Make it
-		_instance = std::shared_ptr<TensorOperation>(new TensorOperation);
+		_instance = std::shared_ptr<TensorOp>(new TensorOp);
 	}
 	return _instance.get();
 }
 
-Tensor* TensorOperation::nullOp(const Tensor& op1, const Tensor& op2)
+Tensor* TensorOp::nullOp(const Tensor& op1, const Tensor& op2)
 {
 	// Always return Nullptr
 	return nullptr;
 }
 
-Tensor* TensorOperation::invoke(const Tensor& op1, const Tensor& op2)
+Tensor* TensorOp::invoke(const Tensor& op1, const Tensor& op2)
 {
 	// Generalize Invoke Method for Arbitary rank Tensors (Returns size1 Tensor if not overloaded)
 	return new Tensor(TensorShape{1});
@@ -38,7 +38,7 @@ Tensor* TensorOperation::invoke(const Tensor& op1, const Tensor& op2)
 
 	/* Helpers to Ensure Shape or Size or Rank */
 
-bool TensorOperation::EnforcersBool::sameSize(Tensor& op1, Tensor& op2)
+bool TensorOp::EnforcersBool::sameSize(Tensor& op1, Tensor& op2)
 {
 	// Enforce operands have the Same Number of Elements
 	if (op1.getSize() != op2.getSize())
@@ -49,7 +49,7 @@ bool TensorOperation::EnforcersBool::sameSize(Tensor& op1, Tensor& op2)
 	return true;
 }
 
-bool TensorOperation::EnforcersBool::sameRank(Tensor& op1, Tensor& op2)
+bool TensorOp::EnforcersBool::sameRank(Tensor& op1, Tensor& op2)
 {
 	// Enforce operands have the Same Number of Elements
 	if (op1.getRank() != op2.getRank())
@@ -60,7 +60,7 @@ bool TensorOperation::EnforcersBool::sameRank(Tensor& op1, Tensor& op2)
 	return true;
 }
 
-bool TensorOperation::EnforcersBool::sameShape(Tensor& op1, Tensor& op2)
+bool TensorOp::EnforcersBool::sameShape(Tensor& op1, Tensor& op2)
 {
 	// Enforce operands have the same shape
 	if (sameRank(op1,op2) == false)
@@ -76,25 +76,25 @@ bool TensorOperation::EnforcersBool::sameShape(Tensor& op1, Tensor& op2)
 	return true;
 }
 
-bool TensorOperation::EnforcersBool::isSize(Tensor& op, const int size)
+bool TensorOp::EnforcersBool::isSize(Tensor& op, const int size)
 {
 	// Enforce operand has particular size
 	return (op.getSize() == size);
 }
 
-bool TensorOperation::EnforcersBool::isRank(Tensor& op, const int size)
+bool TensorOp::EnforcersBool::isRank(Tensor& op, const int size)
 {
 	// Enforce operand has particular rank
 	return (op.getRank() == size);
 }
 
-bool TensorOperation::EnforcersBool::isShape(Tensor& op, const TensorShape shape)
+bool TensorOp::EnforcersBool::isShape(Tensor& op, const TensorShape shape)
 {
 	// Enforce operand has particular shape
 	return (op.getShape() == shape);
 }
 
-bool TensorOperation::EnforcersBool::validMatrixMultiply(Tensor& op1, Tensor& op2)
+bool TensorOp::EnforcersBool::validMatrixMultiply(Tensor& op1, Tensor& op2)
 {
 	// Enforce Tensors are correct for Matrix Multplication
 	if (op1.getRank() != 2) { return false; }
@@ -105,7 +105,7 @@ bool TensorOperation::EnforcersBool::validMatrixMultiply(Tensor& op1, Tensor& op
 	return true;
 }
 
-bool TensorOperation::EnforcersBool::validDotProduct(Tensor& op1, Tensor& op2)
+bool TensorOp::EnforcersBool::validDotProduct(Tensor& op1, Tensor& op2)
 {
 	// Enforce Tensors are correct for Dot Product
 	if (op1.getRank() != 1) { return false; }

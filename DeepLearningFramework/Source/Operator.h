@@ -19,7 +19,7 @@
 #include<array>
 
 #include "GraphNode.h"
-#include "TensorOperation.h"
+#include "TensorOp.h"
 
 
 class Operator : public GraphNode

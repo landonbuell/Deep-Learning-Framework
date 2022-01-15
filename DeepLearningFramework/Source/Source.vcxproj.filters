@@ -57,7 +57,10 @@
     <ClInclude Include="Tensor0D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TensorOperation.h">
+    <ClInclude Include="TensorOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TensorAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,7 +98,10 @@
     <ClCompile Include="Tensor0D.cpp">
       <Filter>Source Files\Tensors</Filter>
     </ClCompile>
-    <ClCompile Include="TensorOperation.cpp">
+    <ClCompile Include="TensorOp.cpp">
+      <Filter>Source Files\TensorOperations</Filter>
+    </ClCompile>
+    <ClCompile Include="TensorAdd.cpp">
       <Filter>Source Files\TensorOperations</Filter>
     </ClCompile>
   </ItemGroup>

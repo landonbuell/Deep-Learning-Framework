@@ -368,6 +368,13 @@ float& Tensor::item(const int index)
 	return _data[index];
 }
 
+const float& Tensor::item(const int index) const
+{
+	// Get a Refrence to the 0-th item (for scalars)
+	validateIndex(index);
+	return _data[index];
+}
+
 float& Tensor::operator[] (const Indexer& index)
 {
 	// Multi-dimensional Indexer
@@ -377,6 +384,25 @@ float& Tensor::operator[] (const Indexer& index)
 		throw "Tensor::operator[] - Cannot Index Scalar Tensor";
 	}
 	else if (index.size() != _rank )
+	{
+		// Indexer must be the same size as Rank
+		throw "Tensor::operator[] - Indexer size must match rank";
+	}
+	// Check that The Index is Valid
+	const int idx = indexFromIndexer(index);
+	validateIndex(idx);
+	return _data[idx];
+}
+
+const float& Tensor::operator[](const Indexer& index) const
+{
+	// Multi-dimensional Indexer
+	if (_rank == 0)
+	{
+		// Rank-0 Tensor?
+		throw "Tensor::operator[] - Cannot Index Scalar Tensor";
+	}
+	else if (index.size() != _rank)
 	{
 		// Indexer must be the same size as Rank
 		throw "Tensor::operator[] - Indexer size must match rank";

@@ -48,7 +48,7 @@ void TensorAdd::elementWise(
 	// Add Items Element-wise
 	for (int ii = 0; ii < result->getSize(); ii++)
 	{
-		result->item(ii) = op1->item(ii) + op2->item(ii);
+		result->item(ii) += op2->item(ii);
 	}
 	return;
 }

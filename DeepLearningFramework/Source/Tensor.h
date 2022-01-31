@@ -17,6 +17,8 @@
 #include <string>
 #include <vector>
 
+#include "TensorOp.h"
+
 typedef std::vector<int> Indexer;
 
 typedef std::vector<int> TensorShape;
@@ -104,26 +106,34 @@ public:
 protected:
 
 	// Set the Size of this Tensor
-	void setSize(const int size);
+	void setSize(
+		const int size);
 
 	// Set the Rank of this Tensor
-	void setRank(const int Rank);
+	void setRank(
+		const int Rank);
 
 	// Set Pointer Directly to Data (No Recc. for usage)
-	bool setData(float* data, const int size = -1, bool ownsData = true);
+	bool setData(
+		float* data, 
+		const int size = -1, 
+		bool ownsData = true);
 
 	// Set the Tensor's Shape (T/F if successful)
-	bool setShape(const TensorShape& newShape);
+	bool setShape(
+		const TensorShape& newShape);
 
 public:
 
 	/* Public Interface */
 
 	// Describe this Tensor
-	void describe(std::ostream& out);
+	void describe(
+		std::ostream& out);
 
 	// Reshape This Tensor
-	bool virtual reshape(const TensorShape& newShape);
+	bool virtual reshape(
+		const TensorShape& newShape);
 
 	// Flatten this Tensor
 	void virtual flatten();
@@ -146,10 +156,15 @@ public:
 protected:
 
 	// Helper for Instance construction
-	void construct(float* data, const TensorShape& shape, bool ownsData);
+	void construct(
+		float* data, 
+		const TensorShape& shape, 
+		bool ownsData);
 
 	// Helper for Instance construction
-	void construct(float val, const TensorShape& shape);
+	void construct(
+		float val, 
+		const TensorShape& shape);
 
 	// Helper for Instance destruction
 	void destruct();
@@ -161,30 +176,55 @@ protected:
 	TensorShape sliceSizes() const;
 
 	// Get size from vector of axis shapes
-	const int sizeFromShape(const TensorShape& shape) const;
+	const int sizeFromShape(
+		const TensorShape& shape) const;
 
 	// Helper Function to get index from indexer
-	const int indexFromIndexer(const Indexer& indexer) const;
+	const int indexFromIndexer(
+		const Indexer& indexer) const;
 
 	// Helper Function to validate Direct index
-	bool validateIndex(const int index) const;
+	bool validateIndex(
+		const int index) const;
 
 	// Helper Function to validate new shape
-	bool virtual validateReshape(const TensorShape& newShape) const;
+	bool virtual validateReshape(
+		const TensorShape& newShape) const;
 
 public:
 
 	// Direct-Index Operator
-	float& item(const int index = 0);
+	float& item(
+		const int index = 0);
 
 	// Direct-Index Operator
-	const float& item(const int index = 0) const;
+	const float& item(
+		const int index = 0) const;
 	
 	// Multi-Dimensional Indexer Operator
-	float& operator[] (const Indexer& index);
+	float& operator[] (
+		const Indexer& index);
 
 	// Multi-Dimensional Indexer Operator
-	const float& operator[] (const Indexer& index) const;
+	const float& operator[] (
+		const Indexer& index) const;
+
+	// Addition Operator
+	Tensor* operator+ (
+		Tensor* other) const;
+
+	// Substraction Operator
+	Tensor* operator- (
+		Tensor* other) const;
+
+	// Multiplication Operator
+	Tensor* operator* (
+		Tensor* other) const;
+
+	// Division Operator 
+	Tensor* operator/ (
+		Tensor* other) const;
+
 };
 
 

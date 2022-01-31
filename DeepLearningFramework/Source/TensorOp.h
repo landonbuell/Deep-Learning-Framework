@@ -23,66 +23,67 @@
 #include "Tensor3D.h"
 #include "Tensor4D.h"
 
-#include "TensorAdd.h"
-
-typedef void (*TensorOpCallback)(
+typedef void (*TensorOpInvokeCallback)(
 	const Tensor* op1, 
+	const Tensor* op2,
+	Tensor* out);
+
+typedef void (*TensorOpDerivCallback)(
+	const Tensor* op1,
 	const Tensor* op2,
 	Tensor* out);
 
 class TensorOp
 {
 
+private:
+
+	std::string _opName;
+	TensorOpInvokeCallback _invoke;
+	TensorOpDerivCallback _deriv;
+
 public:
 
-	////////////////////////////////////////////////
-	// Static Callbacks to Invoke Tensor Methods
-	// All Callbacks accepts 3 arguments:
-	//		const Tensor* op1 - Left Operand
-	//		const Tensor* op2 - Right Operand
-	//		Tensor* out - output array. In null, fresh array is allocated
-	////////////////////////////////////////////////
+	// Construct + Return Unmanaged Instance of Operator based on string key
+	static TensorOp* instance(
+		std::string operatorName);
 
-	// Compute the Element-wise addition of two operands
-	static void add(
+	// Destructor
+	~TensorOp();
+
+	////
+	//// Public Interface
+	////
+
+	// Apply this Operation to the two input Tensors
+	virtual Tensor* invoke(
+		const Tensor* op1,
+		const Tensor* op2);
+
+	// Apply this Operation to the two input Tensors
+	virtual void invoke(
 		const Tensor* op1,
 		const Tensor* op2,
-		Tensor* out);
-
-	// Compute the Element-wise subtraction of two operands
-	static void subtract(
-		const Tensor* op1,
-		const Tensor* op2,
-		Tensor* out);
+		Tensor* out = nullptr);
 	
-	// Compute the Element-wise multiplication of two operands
-	static void multiply(
+	// Apply the derivative to the two input Tensors
+	virtual Tensor* deriv(
 		const Tensor* op1,
-		const Tensor* op2,
-		Tensor* out);
+		const Tensor* op2);
 
-	// Compute the Element-wise division of two operands
-	static void divide(
+	// Apply the derivative to the two input Tensors
+	virtual void deriv(
 		const Tensor* op1,
 		const Tensor* op2,
-		Tensor* out);
-
-	// Compute the scalar product of two operands
-	static void dotProduct(
-		const Tensor* op1,
-		const Tensor* op2,
-		Tensor* out);
-
-	// Compute the matrix product of two operands
-	static void matrixProduct(
-		const Tensor* op1,
-		const Tensor* op2,
-		Tensor* out);
+		Tensor* out = nullptr);
 
 protected:
+
 	/* Generic Tensor Operations */
 
-	
+	// Constructor
+	TensorOp(
+		std::string operatorName);
 
 
 	/* Helpers to Ensure Shape or Size or Rank */
@@ -140,7 +141,5 @@ protected:
 	};
 
 	// Private Constructor - Does nothing!
-
-
 };
 

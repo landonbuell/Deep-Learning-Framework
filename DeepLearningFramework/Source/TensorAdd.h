@@ -33,7 +33,7 @@ public:
 		const Tensor* op1,
 		const Tensor* op2) override;
 
-	Tensor* invoke(
+	void invoke(
 		const Tensor* op1,
 		const Tensor* op2,
 		Tensor* out) override;

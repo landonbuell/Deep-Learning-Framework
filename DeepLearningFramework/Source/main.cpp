@@ -26,28 +26,22 @@ int main(int argc, char** argv)
 {
 	int EXIT_STATUS = 0;
 
-	// Create a 4 x 4 Tensor
-	Tensor* x = new Tensor(2, TensorShape{ 1,4 });
+	// Create Some Tensors to work with
+	Tensor* alpha = new Tensor(TensorShape{ 2,4 });
+	Tensor* beta = new Tensor(TensorShape{ 4,3 });
+	Tensor* gamma = new Tensor(TensorShape{ 2,4 });
+	Tensor* delta = new Tensor();
 
-	// Create a 4 x 2 Tensor
-	Tensor* w = new Tensor(4, TensorShape{ 4, 2 });
-
-	// Create a 4 x 2 Tensor
-	Tensor* b = new Tensor(-6, TensorShape{ 4, 2 });
-
-	// Create a 4 x 2 Tensor
-	Tensor* z = new Tensor(TensorShape{ 4, 2 });
-
-	// Add Tensors Together
-	TensorOp::add(w, b, z);
+	// Wrap with Nodes
+	Tensor* eta = *alpha + *gamma;
 
 
-	// De-Allocate
-	delete x;
-	delete w;
-	delete b;
-	delete z;
 
+	// Deallocate
+	delete alpha;
+	delete beta;
+	delete gamma;
+	delete delta;
 
 	// Exit
 	std::cout << "=)" << std::endl;

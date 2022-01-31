@@ -27,7 +27,8 @@ Tensor::Tensor()
 }
 
 
-Tensor::Tensor(const TensorShape& shape)
+Tensor::Tensor(
+	const TensorShape& shape)
 {
 	// Constructor for Tensor
 	_size = sizeFromShape(shape);
@@ -38,7 +39,8 @@ Tensor::Tensor(const TensorShape& shape)
 	_sliceSizes = sliceSizes();
 }
 
-Tensor::Tensor(float data)
+Tensor::Tensor(
+	float data)
 {
 	// Constructor for Tensor
 	TensorShape shape{ 1, };
@@ -46,26 +48,35 @@ Tensor::Tensor(float data)
 	_rank = 0;
 }
 
-Tensor::Tensor(float data, const TensorShape& shape)
+Tensor::Tensor(
+	float data, 
+	const TensorShape& shape)
 {
 	// Constructor for Tensor
 	construct(data, shape);
 }
 
-Tensor::Tensor(float* data, const int size, bool ownsData)
+Tensor::Tensor(
+	float* data, 
+	const int size, 
+	bool ownsData)
 {
 	// Constructor for Tensor
 	TensorShape shape{ size, };
 	construct(data, shape, ownsData);
 }
 
-Tensor::Tensor(float* data, const TensorShape& shape, bool ownsData)
+Tensor::Tensor(
+	float* data, 
+	const TensorShape& shape,
+	bool ownsData)
 {
 	// Constructor for Tensor
 	construct(data, shape, ownsData);
 }
 
-Tensor::Tensor(const Tensor& other)
+Tensor::Tensor(
+	const Tensor& other)
 {
 	// Copy Constructor
 	_size = other.getSize();
@@ -76,7 +87,8 @@ Tensor::Tensor(const Tensor& other)
 	_sliceSizes = TensorShape(other._sliceSizes);
 }
 
-Tensor& Tensor::operator=(const Tensor& other)
+Tensor& Tensor::operator=(
+	const Tensor& other)
 {
 	if (this == &other) { return *this; }
 	_size = sizeFromShape(other._shape);
@@ -126,14 +138,16 @@ TensorShape Tensor::getShape() const
 	return _shape;
 }
 
-void Tensor::setOwnsData(bool ownsMem)
+void Tensor::setOwnsData(
+	bool ownsMem)
 {
 	// Set T/F if Tensor Owns it's underlying array
 	_ownsData = ownsMem;
 	return;
 }
 
-void Tensor::setSize(const int size)
+void Tensor::setSize(
+	const int size)
 {
 	// Set the Size of this Tensor
 	if (size <= _size)
@@ -143,13 +157,17 @@ void Tensor::setSize(const int size)
 	return;
 }
 
-void Tensor::setRank(const int rank)
+void Tensor::setRank(
+	const int rank)
 {
 	// Set the Rank of this Tensor
 	_rank = rank;
 }
 
-bool Tensor::setData(float* data, const int size, bool ownsData)
+bool Tensor::setData(
+	float* data, 
+	const int size, 
+	bool ownsData)
 {
 	// Set Pointer Directly to Data (No Recc. for usage)
 	destruct();
@@ -159,7 +177,8 @@ bool Tensor::setData(float* data, const int size, bool ownsData)
 	return true;
 }
 
-bool Tensor::setShape(const TensorShape& newShape)
+bool Tensor::setShape(
+	const TensorShape& newShape)
 {
 	// Set the Tensor's Shape (T/F if successful)
 	bool success = false;
@@ -176,7 +195,8 @@ bool Tensor::setShape(const TensorShape& newShape)
 	/* Public Interface */
 
 
-void Tensor::describe(std::ostream& out)
+void Tensor::describe(
+	std::ostream& out)
 {
 	// Describe this Tensor
 	out << "Tensor @ " << _data << "\n"
@@ -197,7 +217,8 @@ void Tensor::describe(std::ostream& out)
 	return;
 }
 
-bool Tensor::reshape(const TensorShape& newShape)
+bool Tensor::reshape(
+	const TensorShape& newShape)
 {
 	// Reshape This Tensor
 	bool success = setShape(newShape);
@@ -213,7 +234,10 @@ void Tensor::flatten()
 
 	/* Protected Interface */
 
-void Tensor::construct(float* data, const TensorShape& shape, bool ownsData)
+void Tensor::construct(
+	float* data,
+	const TensorShape& shape, 
+	bool ownsData)
 {
 	// Helper for Instance construction
 	_size = sizeFromShape(shape);
@@ -225,7 +249,9 @@ void Tensor::construct(float* data, const TensorShape& shape, bool ownsData)
 	return;
 }
 
-void Tensor::construct(float val,const TensorShape& shape)
+void Tensor::construct(
+	float val,
+	const TensorShape& shape)
 {
 	// Helper for Instance construction
 	_size = sizeFromShape(shape);
@@ -287,7 +313,8 @@ TensorShape Tensor::sliceSizes() const
 	}
 }
 
-const int Tensor::sizeFromShape(const TensorShape& shape) const
+const int Tensor::sizeFromShape(
+	const TensorShape& shape) const
 {
 	// Get size from vector of axis shapes
 	int result = 1;
@@ -298,7 +325,8 @@ const int Tensor::sizeFromShape(const TensorShape& shape) const
 	return result;
 }
 
-const int Tensor::indexFromIndexer(const Indexer& indexer) const
+const int Tensor::indexFromIndexer(
+	const Indexer& indexer) const
 {
 	// Helper Function to get index from indexer	
 	int idx = 0;
@@ -328,7 +356,8 @@ const int Tensor::indexFromIndexer(const Indexer& indexer) const
 	return result;
 }
 
-bool Tensor::validateIndex(const int index) const
+bool Tensor::validateIndex(
+	const int index) const
 {
 	// Helper Function to valid slice index
 	if (index < 0)
@@ -339,7 +368,8 @@ bool Tensor::validateIndex(const int index) const
 	return true;
 }
 
-bool Tensor::validateReshape(const TensorShape& newShape) const
+bool Tensor::validateReshape(
+	const TensorShape& newShape) const
 {
 	// Helper Function to validate new shape
 	int size = 1;
@@ -362,21 +392,24 @@ bool Tensor::validateReshape(const TensorShape& newShape) const
 
 /* Operator Overloads */
 
-float& Tensor::item(const int index)
+float& Tensor::item(
+	const int index)
 {
 	// Get a Refrence to the 0-th item (for scalars)
 	validateIndex(index);
 	return _data[index];
 }
 
-const float& Tensor::item(const int index) const
+const float& Tensor::item(
+	const int index) const
 {
 	// Get a Refrence to the 0-th item (for scalars)
 	validateIndex(index);
 	return _data[index];
 }
 
-float& Tensor::operator[] (const Indexer& index)
+float& Tensor::operator[] (
+	const Indexer& index)
 {
 	// Multi-dimensional Indexer
 	if (_rank == 0)
@@ -395,7 +428,8 @@ float& Tensor::operator[] (const Indexer& index)
 	return _data[idx];
 }
 
-const float& Tensor::operator[](const Indexer& index) const
+const float& Tensor::operator[](
+	const Indexer& index) const
 {
 	// Multi-dimensional Indexer
 	if (_rank == 0)
@@ -411,4 +445,147 @@ const float& Tensor::operator[](const Indexer& index) const
 	// Check that The Index is Valid
 	const int idx = indexFromIndexer(index);
 	return _data[idx];
+}
+
+
+Tensor* Tensor::operator+ (
+	Tensor* other) const
+{
+	// Addition Operator
+	if (getShape() == other->getShape())
+	{
+		// Shapes Equal - Operate element-wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] + other->_data[ii];
+		return result;
+	}
+	else if (other->getSize() == 1)
+	{
+		// Other is Scalar - Operate element wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] + other->_data[0];
+		return result;
+	}
+	else if (getSize() == 1)
+	{
+		// This is Scalar - Operate element wise
+		Tensor* result = new Tensor(*other);
+		for (int ii = 0; ii < other->getSize(); ii++)
+			result[ii] = _data[0] + other->_data[ii];
+		return result;
+	}
+	else
+	{
+		// Shape Mismatch - Return nullptr
+		return nullptr;
+	}
+}
+
+
+Tensor* Tensor::operator- (
+	Tensor* other) const
+{
+	// Substraction Operator
+	if (getShape() == other->getShape())
+	{
+		// Shapes Equal - Operate element-wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] - other->_data[ii];
+		return result;
+	}
+	else if (other->getSize() == 1)
+	{
+		// Other is Scalar - Operate element wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] - other->_data[0];
+		return result;
+	}
+	else if (getSize() == 1)
+	{
+		// This is Scalar - Operate element wise
+		Tensor* result = new Tensor(*other);
+		for (int ii = 0; ii < other->getSize(); ii++)
+			result[ii] = _data[0] - other->_data[ii];
+		return result;
+	}
+	else
+	{
+		// Shape Mismatch - Return nullptr
+		return nullptr;
+	}
+}
+
+Tensor* Tensor::operator* (
+	Tensor* other) const
+{
+	// Multiplication Operator
+	if (getShape() == other->getShape())
+	{
+		// Shapes Equal - Operate element-wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] * other->_data[ii];
+		return result;
+	}
+	else if (other->getSize() == 1)
+	{
+		// Other is Scalar - Operate element wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] * other->_data[0];
+		return result;
+	}
+	else if (getSize() == 1)
+	{
+		// This is Scalar - Operate element wise
+		Tensor* result = new Tensor(*other);
+		for (int ii = 0; ii < other->getSize(); ii++)
+			result[ii] = _data[0] * other->_data[ii];
+		return result;
+	}
+	else
+	{
+		// Shape Mismatch - Return nullptr
+		return nullptr;
+	}
+}
+
+
+Tensor* Tensor::operator/ (
+	Tensor* other) const
+{
+	// Division Operator 
+	if (getShape() == other->getShape())
+	{
+		// Shapes Equal - Operate element-wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] / other->_data[ii];
+		return result;
+	}
+	else if (other->getSize() == 1)
+	{
+		// Other is Scalar - Operate element wise
+		Tensor* result = new Tensor(*this);
+		for (int ii = 0; ii < getSize(); ii++)
+			result[ii] = _data[ii] / other->_data[0];
+		return result;
+	}
+	else if (getSize() == 1)
+	{
+		// This is Scalar - Operate element wise
+		Tensor* result = new Tensor(*other);
+		for (int ii = 0; ii < other->getSize(); ii++)
+			result[ii] = _data[0] / other->_data[ii];
+		return result;
+	}
+	else
+	{
+		// Shape Mismatch - Return nullptr
+		return nullptr;
+	}
 }

@@ -13,48 +13,21 @@
 
 #include "TensorOp.h"
 
-
-void TensorOp::add(
-	const Tensor* op1,
-	const Tensor* op2,
-	Tensor* out)
-{
-	// Compute the Element-wise addition of two operands
-	
-	TensorAdd::in
-}
-
+	////
+	//// Public Interface
+	////
 
 Tensor* TensorOp::invoke(
-	const Tensor* op1,
-	const Tensor* op2)
+	Tensor* op1,
+	Tensor* op2)
 {
-	// Invoke this Operation
-	if (op1 == nullptr)
+	// Apply this Operation to the two input Tensors
+	Tensor* result = nullptr;
+	if (EnforcersBool::sameShape(op1, op1) == true)
 	{
-		throw "TensorOp::invoke() - got nullptr for left operand";
+		result = new Tensor()
 	}
-	if (op2 == nullptr)
-	{
-		throw "TensorOp::invoke() - got nullptr for right operand";
-	}
-	return nullptr;
-}
-
-Tensor* TensorOp::derivative(
-	const Tensor* op1, 
-	const Tensor* op2)
-{
-	// Invoke the Derivate of this operation
-	if(op1 == nullptr)
-	{
-		throw "TensorOp::invoke() - got nullptr for left operand";
-	}
-	if (op2 == nullptr)
-	{
-		throw "TensorOp::invoke() - got nullptr for right operand";
-	}
-	return nullptr;
+	return result;
 }
 
 

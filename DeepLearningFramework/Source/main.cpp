@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "Tensor.h"
+#include "TensorOp.h"
 
 #include "GraphNode.h"
 #include "Variable.h"
@@ -26,18 +27,27 @@ int main(int argc, char** argv)
 	int EXIT_STATUS = 0;
 
 	// Create a 4 x 4 Tensor
-	Tensor x(2, TensorShape{ 1,4 });
+	Tensor* x = new Tensor(2, TensorShape{ 1,4 });
 
 	// Create a 4 x 2 Tensor
-	Tensor w(4, TensorShape{ 4, 2 });
+	Tensor* w = new Tensor(4, TensorShape{ 4, 2 });
 
-	// Create a 2 x Tensor
-	Tensor b(-6, TensorShape{ 2 });
+	// Create a 4 x 2 Tensor
+	Tensor* b = new Tensor(-6, TensorShape{ 4, 2 });
 
-	// Wrap the tensors in variable nodes
-	Variable inputs("x", &x);
-	Variable weights("w", &w);
-	Variable biases("b", &b);
+	// Create a 4 x 2 Tensor
+	Tensor* z = new Tensor(TensorShape{ 4, 2 });
+
+	// Add Tensors Together
+	TensorOp::add(w, b, z);
+
+
+	// De-Allocate
+	delete x;
+	delete w;
+	delete b;
+	delete z;
+
 
 	// Exit
 	std::cout << "=)" << std::endl;

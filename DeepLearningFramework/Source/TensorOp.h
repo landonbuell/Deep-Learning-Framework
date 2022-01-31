@@ -23,28 +23,67 @@
 #include "Tensor3D.h"
 #include "Tensor4D.h"
 
+#include "TensorAdd.h"
+
+typedef void (*TensorOpCallback)(
+	const Tensor* op1, 
+	const Tensor* op2,
+	Tensor* out);
+
 class TensorOp
 {
 
 public:
 
-	/* Generic Tensor Operations */
+	////////////////////////////////////////////////
+	// Static Callbacks to Invoke Tensor Methods
+	// All Callbacks accepts 3 arguments:
+	//		const Tensor* op1 - Left Operand
+	//		const Tensor* op2 - Right Operand
+	//		Tensor* out - output array. In null, fresh array is allocated
+	////////////////////////////////////////////////
 
-	// Get A pointer to this instance
-	static const TensorOp* instance();
+	// Compute the Element-wise addition of two operands
+	static void add(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out);
 
-	// Generalized Invoke Method for Arbitary rank Tensors (Returns Tensor if not overloaded)
-	virtual Tensor* invoke(
-		const Tensor* op1, 
-		const Tensor* op2);
+	// Compute the Element-wise subtraction of two operands
+	static void subtract(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out);
+	
+	// Compute the Element-wise multiplication of two operands
+	static void multiply(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out);
 
-	// Generalized Derivative for Arbitrary Tensor (Returns Tensor if not overloaded)
-	virtual Tensor* derivative(
-		const Tensor* op1, 
-		const Tensor* op2);
+	// Compute the Element-wise division of two operands
+	static void divide(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out);
 
+	// Compute the scalar product of two operands
+	static void dotProduct(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out);
+
+	// Compute the matrix product of two operands
+	static void matrixProduct(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out);
 
 protected:
+	/* Generic Tensor Operations */
+
+	
+
 
 	/* Helpers to Ensure Shape or Size or Rank */
 
@@ -101,10 +140,7 @@ protected:
 	};
 
 	// Private Constructor - Does nothing!
-	TensorOp();
 
-	// Static Memeber - Shared Ptr
-	static std::shared_ptr<TensorOp> _instance;
 
 };
 

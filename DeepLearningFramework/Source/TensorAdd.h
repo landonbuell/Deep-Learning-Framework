@@ -33,6 +33,11 @@ public:
 		const Tensor* op1,
 		const Tensor* op2) override;
 
+	Tensor* invoke(
+		const Tensor* op1,
+		const Tensor* op2,
+		Tensor* out) override;
+
 	// Generalized Derivative for Arbitrary Tensor (Returns Tensor if not overloaded)
 	virtual Tensor* derivative(
 		const Tensor* op1, 

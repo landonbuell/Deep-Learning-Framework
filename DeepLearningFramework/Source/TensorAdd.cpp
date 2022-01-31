@@ -25,7 +25,7 @@ Tensor* TensorAdd::invoke(
 	const Tensor* op2)
 {
 	// Add Two Tensors Together
-	if (EnforcersBool::sameShape(op1, op2))
+	if (EnforcersBool::sameShape(op1, op2) == true)
 	{
 		// Same Shape - Add element-wise
 		Tensor* result = new Tensor(*op1);
@@ -34,7 +34,7 @@ Tensor* TensorAdd::invoke(
 	}
 	else
 	{
-		// Different Shapes - Handle
+		// Different Shapes - Handle Accordingly
 		return nullptr;
 	}
 }

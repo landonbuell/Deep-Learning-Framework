@@ -13,22 +13,31 @@
 
 #include "TensorOp.h"
 
-const TensorOp* TensorOp::instance()
+
+void TensorOp::add(
+	const Tensor* op1,
+	const Tensor* op2,
+	Tensor* out)
 {
-	// Get A pointer to this instance
-	if (_instance.get() == nullptr)
-	{
-		// No Instance - Make it
-		_instance = std::shared_ptr<TensorOp>(new TensorOp);
-	}
-	return _instance.get();
+	// Compute the Element-wise addition of two operands
+	
+	TensorAdd::in
 }
+
 
 Tensor* TensorOp::invoke(
 	const Tensor* op1,
 	const Tensor* op2)
 {
 	// Invoke this Operation
+	if (op1 == nullptr)
+	{
+		throw "TensorOp::invoke() - got nullptr for left operand";
+	}
+	if (op2 == nullptr)
+	{
+		throw "TensorOp::invoke() - got nullptr for right operand";
+	}
 	return nullptr;
 }
 
@@ -37,6 +46,14 @@ Tensor* TensorOp::derivative(
 	const Tensor* op2)
 {
 	// Invoke the Derivate of this operation
+	if(op1 == nullptr)
+	{
+		throw "TensorOp::invoke() - got nullptr for left operand";
+	}
+	if (op2 == nullptr)
+	{
+		throw "TensorOp::invoke() - got nullptr for right operand";
+	}
 	return nullptr;
 }
 

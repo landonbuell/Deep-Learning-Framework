@@ -317,6 +317,7 @@ const int Tensor::indexFromIndexer(const Indexer& indexer) const
 			{
 				// Over indexed this axis
 				throw "Tensor::validateAxes(). Invalid index for axis";
+				return -1;
 			}
 			// Increment based on axis sizes
 			idx += (indexer[i] * _sliceSizes[i]);
@@ -409,6 +410,5 @@ const float& Tensor::operator[](const Indexer& index) const
 	}
 	// Check that The Index is Valid
 	const int idx = indexFromIndexer(index);
-	validateIndex(idx);
 	return _data[idx];
 }

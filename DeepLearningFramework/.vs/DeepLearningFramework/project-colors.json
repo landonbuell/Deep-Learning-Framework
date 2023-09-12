@@ -10,7 +10,17 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "16c06ec8-0913-41c3-8e63-25a5372dd725": {
+      "ProjectGuid": "16c06ec8-0913-41c3-8e63-25a5372dd725",
+      "DisplayName": "Tenors",
+      "ColorIndex": 1
+    },
+    "e46724d2-3d1f-4f95-9b58-5e6c20471bd5": {
+      "ProjectGuid": "e46724d2-3d1f-4f95-9b58-5e6c20471bd5",
+      "DisplayName": "Tensors",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 3
 }
